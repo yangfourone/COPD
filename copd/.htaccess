@@ -1,0 +1,6 @@
+# 开启 rewrite 功能
+Options +FollowSymlinks
+RewriteEngine on
+
+# 重写规则
+RewriteRule ^apiv1/(.*)$   api/api.php/$1/
