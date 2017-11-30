@@ -1,43 +1,60 @@
 <?php
 //----------------------------------------------------------------------------------Env
-//connet db
-require 'connect.php';
-mysqli_select_db($con,"env");
 //response by method
 class Env{
 	function getAll(){
+		//connet db
+		require 'connect.php';
+		mysqli_select_db($con,"env");
+
 		//query data by method
-		
 		$getAll_sql = "SELECT * FROM env";
 		$getAll_result = mysqli_query($con,$getAll_sql);
-		$getAll_dataArray = array();
-
-		while($row = mysqli_fetch_array($getAll_result)) {
-		    $getAll_dataArray[] = array($row["deviceid"],$row["temperature"],$row["humidity"],$row["pm25"],$row["uv"],$row['datetime']);
+		
+		if(mysqli_num_rows($getAll_result) == 0) {
+			return 'No data avaliable.';
 		}
-		echo json_encode($getAll_dataArray);
-		//return array($getAll_dataArray);
-		//return array("id"=>"ray");
+		else {
+			$getAll_dataArray = mysqli_fetch_all($getAll_result,MYSQLI_ASSOC);
+			return $getAll_dataArray;
+		}
 	}
 	
-	function getById(){
+	function getById($id){
+		//connet db
+		require 'connect.php';
+		mysqli_select_db($con,"env");
 
-		$getById_sql = "SELECT * FROM env WHERE deviceid = '$deviceid'";
+		//query data by method
+		$getById_sql = "SELECT * FROM env WHERE deviceid = '$id'";
 		$getById_result = mysqli_query($con,$getById_sql);
-		$getById_dataArray = array();
 
-		while($row = mysqli_fetch_array($getById_result)) {
-		    $getById_dataArray[] = array($row["deviceid"],$row["temperature"],$row["humidity"],$row["pm25"],$row["uv"],$row['datetime']);
+		if(mysqli_num_rows($getById_result) == 0) {
+			return 'No data avaliable.';
 		}
-		echo json_encode($getById_dataArray);
-		//return array($getById_dataArray);
-		//return array("id"=>"ray");
+		else {
+			$getById_dataArray = mysqli_fetch_all($getById_result,MYSQLI_ASSOC);
+			return $getById_dataArray;
+		}
 	}
 
-	function add(){
-		$sql_insert = "INSERT INTO env (deviceid, temperature, humidity, pm25, uv, datetime) VALUES ('$id','$temperature','$humidity','$pm25','$uv','$datetime')";
-		$result = mysqli_query($con,$sql_insert);
-	}
+	function add($input){
+		//connet db
+		require 'connect.php';
+		mysqli_select_db($con,"env");
 
+		$deviceid = $input['deviceid'];
+		$temperature = $input['temperature'];
+		$humidity = $input['humidity'];
+		$pm25 = $input['pm25'];
+		$uv = $input['uv'];
+		$datetime = date ("Y-m-d H:i:s" , mktime(date('H')+8, date('i'), date('s'), date('m'), date('d'), date('Y'))) ; 
+
+		//應該不用檢查deviceid?? 因為同一裝置會有很多資料吧?
+		$sql_insert = "INSERT INTO env (deviceid, temperature, humidity, pm25, uv, datetime) VALUES ('$deviceid','$temperature','$humidity','$pm25','$uv','$datetime')";
+		$add_result = mysqli_query($con,$sql_insert);
+		return 'ok';
+	}
 }
+
 ?>

@@ -6,6 +6,7 @@ class User{
 		//connet db
 		require 'connect.php';
 		mysqli_select_db($con,"user");
+
 		//query data by method
 		$getAll_sql = "SELECT * FROM user";
 		$getAll_result = mysqli_query($con,$getAll_sql);
@@ -23,6 +24,7 @@ class User{
 		//connet db
 		require 'connect.php';
 		mysqli_select_db($con,"user");
+		
 		//query data by method
 		$getById_sql = "SELECT * FROM user WHERE id = '$id'";
 		$getById_result = mysqli_query($con,$getById_sql);

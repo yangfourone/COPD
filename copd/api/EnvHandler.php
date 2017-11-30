@@ -1,5 +1,6 @@
 <?php
 //------------------------------------------------------------------------------------EnvHandler
+require_once('connect.php');
 require_once('SimpleRest.php');
 require_once('Env.php');
 class EnvHandler extends SimpleRest{
@@ -8,7 +9,7 @@ class EnvHandler extends SimpleRest{
 	public function __construct($method,$params,$input){
 		$this->method = strtolower($method);
 		$this->action = strtolower($params[1]);
-		if(isset($id))
+		if(isset($params[2]))
 			$this->id = strtolower($params[2]);
 		if(isset($input))
 			$this->input = $input;
@@ -33,12 +34,9 @@ class EnvHandler extends SimpleRest{
 			case 'post':
 				$env_add = new Env();
 				$this ->setHttpHeaders('application/json', 200);
-				echo $this->encodeJson($env_add->add($this->id));
-				//echo 'add';
-				break;
-			
+				echo $this->encodeJson($env_add->add($this->input));
+				break;	
 		}
-		
 	}
 	public function encodeJson($responseData) {
 		$jsonResponse = json_encode($responseData);

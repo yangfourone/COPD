@@ -1,10 +1,9 @@
 <?php
-//require_once(''); //require handler
+//require handler
 require_once('UserHandler.php');
-//require_once('EnvHandler.php');
+require_once('EnvHandler.php');
 //require_once('ActivityHandler.php');
-//require_once('DailyHandler.php');
-//require_once('TaskHandler.php');
+require_once('DailyHandler.php');
 
 $method = $_SERVER['REQUEST_METHOD'];
 $params = explode('/', trim($_SERVER['PATH_INFO'],'/'));
@@ -41,8 +40,4 @@ $queryStr = $_SERVER['QUERY_STRING'];
 		break;
  }
 
- //echo '</br>';
- //echo 'method '.$method.'</br>';
- //echo 'action '.$action[0].'</br>';
- //echo 'input: '.($input['name']).'</br>';
 ?>

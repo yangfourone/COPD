@@ -1,5 +1,6 @@
 <?php
 //-------------------------------------------------------------------------------DailyHandler
+require_once('connect.php');
 require_once('SimpleRest.php');
 require_once('Daily.php');
 class DailyHandler extends SimpleRest{
@@ -8,7 +9,7 @@ class DailyHandler extends SimpleRest{
 	public function __construct($method,$params,$input){
 		$this->method = strtolower($method);
 		$this->action = strtolower($params[1]);
-		if(isset($id))
+		if(isset($params[2]))
 			$this->id = strtolower($params[2]);
 		if(isset($input))
 			$this->input = $input;
@@ -33,13 +34,13 @@ class DailyHandler extends SimpleRest{
 			case 'post':
 				$daily_add = new Daily();
 				$this ->setHttpHeaders('application/json', 200);
-				echo $this->encodeJson($daily_add->add($this->id));
+				echo $this->encodeJson($daily_add->add($this->input));
 				//echo 'add success';
 				break;
 			case 'delete':
 				$daily_delete = new Daily();
 				$this ->setHttpHeaders('application/json', 200);
-				echo $this->encodeJson($daily_delete->delete()($this->id));
+				echo $this->encodeJson($daily_delete->delete($this->id));
 				//echo 'delete success';
 				break;
 			

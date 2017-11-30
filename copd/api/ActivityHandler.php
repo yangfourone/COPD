@@ -1,5 +1,6 @@
 <?php
 //---------------------------------------------------------------------------------ActivityHandler
+require_once('connect.php');
 require_once('SimpleRest.php');
 require_once('Activity.php');
 class ActivityHandler extends SimpleRest{
@@ -8,7 +9,7 @@ class ActivityHandler extends SimpleRest{
 	public function __construct($method,$params,$input){
 		$this->method = strtolower($method);
 		$this->action = strtolower($params[1]);
-		if(isset($id))
+		if(isset($params[2]))
 			$this->id = strtolower($params[2]);
 		if(isset($input))
 			$this->input = $input;
@@ -39,25 +40,19 @@ class ActivityHandler extends SimpleRest{
 			case 'post':
 				$activity_add = new Activity();
 				$this ->setHttpHeaders('application/json', 200);
-				//echo $this->encodeJson($activity_add->add($this->id));
-				echo 'OK';
-				break;
-			case 'put':
-				$activity_update = new Activity();
-				$this ->setHttpHeaders('application/json', 200);
-				//echo $this->encodeJson($activity_update->update($this->id));
-				echo 'OK';
+				echo $this->encodeJson($activity_add->add($this->input));
 				break;
 			case 'delete':
 				$activity_delete = new Activity();
 				$this ->setHttpHeaders('application/json', 200);
-				//echo $this->encodeJson($activity_delete->delete()($this->id));
-				echo 'OK';
+				echo $this->encodeJson($activity_delete->delete($this->id));
 				break;
-			
-			
+			case 'put':
+				$activity_update = new Activity();
+				$this ->setHttpHeaders('application/json', 200);
+				echo $this->encodeJson($activity_update->update($this->input));
+				break;
 		}
-		
 	}
 	public function encodeJson($responseData) {
 		$jsonResponse = json_encode($responseData);
