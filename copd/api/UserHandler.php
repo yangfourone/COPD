@@ -9,11 +9,10 @@ class UserHandler extends SimpleRest{
 	public function __construct($method,$params,$input){
 		$this->method = strtolower($method);
 		$this->action = strtolower($params[1]);
-		if(isset($id))
+		if(isset($params[2]))
 			$this->id = strtolower($params[2]);
 		if(isset($input))
 			$this->input = $input;
-		
 	}
 	function response(){
 		//parsing method 
@@ -34,7 +33,7 @@ class UserHandler extends SimpleRest{
 			case 'post':
 				$user_add = new User();
 				$this ->setHttpHeaders('application/json', 200);
-				echo $this->encodeJson($user_add->add($input));
+				echo $this->encodeJson($user_add->add($this->input));
 				//echo 'add success';
 				break;
 			case 'delete':
@@ -46,7 +45,7 @@ class UserHandler extends SimpleRest{
 			case 'put':
 				$user_update = new User();
 				$this ->setHttpHeaders('application/json', 200);
-				echo $this->encodeJson($user_update->update($input));
+				echo $this->encodeJson($user_update->update($this->input));
 				//echo 'update success';
 				break;
 		}
