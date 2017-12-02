@@ -40,7 +40,7 @@ class DailyHandler extends SimpleRest{
 			case 'delete':
 				$daily_delete = new Daily();
 				$this ->setHttpHeaders('application/json', 200);
-				echo $this->encodeJson($daily_delete->delete($this->id));
+				echo $this->encodeJson($daily_delete->deletebyid($this->id));
 				//echo 'delete success';
 				break;
 			

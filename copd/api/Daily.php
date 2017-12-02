@@ -52,19 +52,19 @@ class Daily{
 		return 'ok';
 	}
 
-	function delete($id){
+	function deletebyid($id){
 		//connet db
 		require 'connect.php';
 		mysqli_select_db($con,"daily");
 
 		//query data by method
-		$sql_check = "SELECT * FROM daily WHERE uid = '$id'";
+		$sql_check = "SELECT * FROM daily WHERE id = '$id'";
 		$check_result = mysqli_query($con,$sql_check);
 		if(mysqli_num_rows($check_result) == 0) {
 			return 'No data avaliable.';
 		}
 		else {
-			$sql_delete = "DELETE FROM daily WHERE uid = '$id'";
+			$sql_delete = "DELETE FROM daily WHERE id = '$id'";
 			$del_result = mysqli_query($con,$sql_delete);	
 			return 'ok';
 		}

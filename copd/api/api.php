@@ -34,9 +34,9 @@ $queryStr = $_SERVER['QUERY_STRING'];
 		$dailyHandler = new DailyHandler($method,$params,$input);
 	 	echo $dailyHandler->response();
 		break;
-	case 'task':
-		$taskHandler = new TaskHandler($method,$params,$input);
-		echo $taskHandler->response();
+	case 'login':
+		$loginHandler = new LoginHandler($method,$params,$input);
+		echo $loginHandler->response();
 		break;
  }
 
