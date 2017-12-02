@@ -1,30 +1,4 @@
 <?php
-/**
- * PHPExcel
- *
- * Copyright (c) 2006 - 2015 PHPExcel
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- *
- * @category   PHPExcel
- * @package    PHPExcel
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
- * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
- * @version    ##VERSION##, ##DATE##
- */
-
 /** Error reporting */
 error_reporting(E_ALL);
 ini_set('display_errors', TRUE);
@@ -37,7 +11,7 @@ if (PHP_SAPI == 'cli')
 	die('This example should only be run from a Web Browser');
 
 /** Include PHPExcel */
-require_once ('..\PHPExcel-1.8\Classes\PHPExcel.php');
+require_once ('../PHPExcel-1.8/Classes/PHPExcel.php');
 
 // Create new PHPExcel object
 // Search TCPDF/config/tcpdf-config.php => PDF_PAGE_ORIENTATION = L
@@ -63,26 +37,6 @@ $objPHPEXcel_PDF->AddPage();
 
 // add some datas here 
 
-/************************************************************************COMMENT OR DEFINITION*********************************************************************
-
-SetTitle($title)
-SetFont($family, $style='', $size=null, $fontfile='', $subset='default', $out=true)
-Write($h, $txt, $link='', $fill=false, $align='', $ln=false, $stretch=0, $firstline=false, $firstblock=false, $maxh=0, $wadj=0, $margin='')
-writeHTML($html, $ln=true, $fill=false, $reseth=false, $cell=false, $align='')
-
-example:
-$pdf->SetTitle('台灣科技大學電子系'.$semester.'年度專題一覽表');
-	// set font
-	$pdf->SetFont('msungstdlight', '', 25);
-	$txt = '台灣科技大學電子系'.$semester.'年度專題一覽表';
-	$pdf->Write(0, $txt, '', 0, 'L', true, 0, false, false, 0);
-	$pdf->SetFont('msungstdlight', '', 16);
-	//html
-	$txt = "<br/>";
-	$pdf->writeHTML($txt, true, false, false, false, '');
-	$pdf->SetFont('msungstdlight', '', 10);
-******************************************************************************************************************************************************************/
-
 // set title
 $objPHPEXcel_PDF->SetTitle('Patient Data');
 //$objPHPEXcel_PDF->SetFont('msungstdlight', '', 15); 可以顯示中文但會偏移
@@ -98,7 +52,7 @@ $sql_user="SELECT * FROM user";
 $result = mysqli_query($con,$sql_user);
 
 $_cnt = 0;
-
+$table_data = "";
 // 將資料庫的資料全部存在student這個陣列
 while($row = mysqli_fetch_array($result)) {
 	$_cnt++;
@@ -110,12 +64,14 @@ while($row = mysqli_fetch_array($result)) {
      		<td border=\"1\" align=\"center\" cellpadding=\"3\">{$row['bmi']}</td>
      		<td border=\"1\" align=\"center\" cellpadding=\"3\">{$row['history']}</td>
      		<td border=\"1\" align=\"center\" cellpadding=\"3\">{$row['drug']}</td>
-	 	</tr>";
+     		<td border=\"1\" align=\"center\" cellpadding=\"3\">{$row['env_id']}</td>
+     		<td border=\"1\" align=\"center\" cellpadding=\"3\">{$row['ble_id']}</td>
+     		<td border=\"1\" align=\"center\" cellpadding=\"3\">{$row['watch_id']}</td>
+     	</tr>";
 }
 
 $table = "
 <table  border=\"1\" align=\"center\" cellpadding=\"3\">
-
 	<tr>
 		<td>ID</td>
 		<td>FirstName</td>
@@ -124,6 +80,9 @@ $table = "
 		<td>BMI</td>
 		<td>History</td>
 		<td>Drug</td>
+		<td>env_id</td>
+		<td>ble_id</td>
+		<td>watch_id</td>
 	</tr>
 	". $table_data .
 	"
@@ -134,5 +93,6 @@ $objPHPEXcel_PDF->writeHTML('<br>', true, false, false, false, '');
 $objPHPEXcel_PDF->writeHTML($table, true, false, false, false, '');
 
 $file_name = 'Patient.pdf';
-ob_end_clean();
 $objPHPEXcel_PDF->Output($file_name,'I');
+
+?>

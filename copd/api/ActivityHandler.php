@@ -50,7 +50,7 @@ class ActivityHandler extends SimpleRest{
 			case 'put':
 				$activity_update = new Activity();
 				$this ->setHttpHeaders('application/json', 200);
-				echo $this->encodeJson($activity_update->update($this->input));
+				echo $this->encodeJson($activity_update->updatebyid($this->input));
 				break;
 		}
 	}

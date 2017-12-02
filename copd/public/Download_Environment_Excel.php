@@ -33,7 +33,7 @@ mysqli_select_db($con,"env");
 $sql_env="SELECT * FROM env";
 $result = mysqli_query($con,$sql_env);
 
-$_cnt = 0;
+$_cnt = 1;
 
 /** Error reporting */
 error_reporting(E_ALL);
@@ -45,7 +45,7 @@ if (PHP_SAPI == 'cli')
 	die('This example should only be run from a Web Browser');
 
 /** Include PHPExcel */
-require_once ('..\PHPExcel-1.8\Classes\PHPExcel.php');
+require_once ('../PHPExcel-1.8/Classes/PHPExcel.php');
 
 // Create new PHPExcel object
 $objPHPExcel = new PHPExcel();
@@ -55,10 +55,12 @@ while($row = mysqli_fetch_array($result)) {
 	$_cnt++;
 	$objPHPExcel->setActiveSheetIndex()
 		->setCellValue('A'.$_cnt , $row['id'])
-		->setCellValue('B'.$_cnt , $row['temperature'])
-		->setCellValue('C'.$_cnt , $row['humidity'])
-		->setCellValue('D'.$_cnt , $row['pm25'])
-		->setCellValue('E'.$_cnt , $row['uv']);
+		->setCellValue('B'.$_cnt , $row['deviceid'])
+		->setCellValue('C'.$_cnt , $row['temperature'])
+		->setCellValue('D'.$_cnt , $row['humidity'])
+		->setCellValue('E'.$_cnt , $row['pm25'])
+		->setCellValue('F'.$_cnt , $row['uv'])
+		->setCellValue('G'.$_cnt , $row['datetime']);
 }
 
 // Set document properties
@@ -73,10 +75,12 @@ $objPHPExcel->getProperties()->setCreator("Maarten Balliauw")
 // Add some data
 $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('A1', 'ID')
-            ->setCellValue('B1', 'Temperature')
-            ->setCellValue('C1', 'Humidity')
-            ->setCellValue('D1', 'PM2.5')
-            ->setCellValue('E1', 'UV');
+            ->setCellValue('B1', 'Device ID')
+            ->setCellValue('C1', 'Temperature')
+            ->setCellValue('D1', 'Humidity')
+            ->setCellValue('E1', 'PM2.5')
+            ->setCellValue('F1', 'UV')
+            ->setCellValue('G1', 'DateTime');
 			
 $data_number = 0 ;
 

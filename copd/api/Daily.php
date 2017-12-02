@@ -18,6 +18,7 @@ class Daily{
 			return $getAll_dataArray;
 		}
 	}
+	
 	function getByUser($id){
 		//connet db
 		require 'connect.php';
@@ -35,6 +36,7 @@ class Daily{
 			return $getById_dataArray;
 		}
 	}
+
 	function add($input){
 		//connet db
 		require 'connect.php';
@@ -43,13 +45,13 @@ class Daily{
 		//query data by method
 		$uid = $input['uid'];
 		$step = $input['step'];
-		$datetime = date ("Y-m-d" , mktime(date('H')+8, date('i'), date('s'), date('m'), date('d'), date('Y'))) ; 
+		$date = $input['date']; 
 
-		//應該不用檢查deviceid?? 因為同一裝置會有很多資料吧?
-		$sql_insert = "INSERT INTO daily (uid, step, datetime) VALUES ('$uid','$step','$datetime')";
+		$sql_insert = "INSERT INTO daily (uid, step, date) VALUES ('$uid','$step','$date')";
 		$add_result = mysqli_query($con,$sql_insert);
 		return 'ok';
 	}
+
 	function delete($id){
 		//connet db
 		require 'connect.php';

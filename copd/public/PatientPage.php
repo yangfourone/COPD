@@ -41,12 +41,14 @@ $(document).ready(function(){
       document.getElementById('sex').value = '';
       document.getElementById('bmi').value = '';
       document.getElementById('history').value = '';
-      document.getElementById('drug').value = ''; 
+      document.getElementById('drug').value = '';
+      document.getElementById('env_id').value = '';
+      document.getElementById('ble_id').value = '';
+      document.getElementById('watch_id').value = '';
       $("#patient_delete").hide();
       $("#patient_update").hide();
       $("#patient_save").show();
       $("#patient_close").show();
-      $("#patient_clean").show();
       $("#PatientManage").animate({
           height: 'show'
         });
@@ -60,6 +62,9 @@ $(document).ready(function(){
       document.getElementById('bmi').value = '';
       document.getElementById('history').value = '';
       document.getElementById('drug').value = ''; 
+      document.getElementById('env_id').value = '';
+      document.getElementById('ble_id').value = '';
+      document.getElementById('watch_id').value = '';
     });
 
     $("#patient_save").click(function() {
@@ -74,7 +79,10 @@ $(document).ready(function(){
                 Sex: $("#sex").val(),
                 BMI: $("#bmi").val(),
                 History: $("#history").val(),
-                Drug: $("#drug").val()
+                Drug: $("#drug").val(),
+                ENV_ID: $("#env_id").val(),
+                BLE_ID: $("#ble_id").val(),
+                Watch_ID: $("#watch_id").val()
             },
             success: function(data) {
                 if (data.FirstName) {
@@ -82,6 +90,7 @@ $(document).ready(function(){
                 } else {
                     $("#patient_Result").html(data.msg);
                 }                   
+                window.location = 'PatientPage.php';
             },
             error: function(jqXHR) {
                 alert("發生錯誤: " + jqXHR.status);
@@ -102,14 +111,18 @@ $(document).ready(function(){
                 Sex: $("#sex").val(),
                 BMI: $("#bmi").val(),
                 History: $("#history").val(),
-                Drug: $("#drug").val()
+                Drug: $("#drug").val(),
+                ENV_ID: $("#env_id").val(),
+                BLE_ID: $("#ble_id").val(),
+                Watch_ID: $("#watch_id").val()
             },
             success: function(data) {
                 if (data.FirstName) {
                     $("#patient_Result").html('Patient：' + data.FirstName + ' is UPDATE successfully!');
                 } else {
                     $("#patient_Result").html(data.msg);
-                }                   
+                }            
+                window.location = 'PatientPage.php';       
             },
             error: function(jqXHR) {
                 alert("發生錯誤: " + jqXHR.status);
@@ -132,7 +145,8 @@ $(document).ready(function(){
                     $("#patient_Result").html('Patient：' + data.FirstName + ' is deleted successfully！');
                 } else {
                     $("#patient_Result").html(data.msg);
-                }                   
+                }      
+                window.location = 'PatientPage.php';             
             },
             error: function(jqXHR) {
                 alert("發生錯誤: " + jqXHR.status);
@@ -172,6 +186,9 @@ $(document).ready(function(){
                 document.getElementById('bmi').value = data.bmi;
                 document.getElementById('history').value = data.history;
                 document.getElementById('drug').value = data.drug;
+                document.getElementById('env_id').value = data.env_id;
+                document.getElementById('ble_id').value = data.ble_id;
+                document.getElementById('watch_id').value = data.watch_id;
             },
             error: function(jqXHR) {
                 alert("發生錯誤: " + jqXHR.status);
@@ -181,7 +198,6 @@ $(document).ready(function(){
         $("#patient_update").show();
         $("#patient_save").hide();
         $("#patient_close").show();
-        $("#patient_clean").show();
 
         $("#PatientManage").animate({
           height: 'show'
@@ -204,6 +220,9 @@ $(document).ready(function(){
                 document.getElementById('bmi').value = data.bmi;
                 document.getElementById('history').value = data.history;
                 document.getElementById('drug').value = data.drug;
+                document.getElementById('env_id').value = data.env_id;
+                document.getElementById('ble_id').value = data.ble_id;
+                document.getElementById('watch_id').value = data.watch_id;
             },
             error: function(jqXHR) {
                 alert("發生錯誤: " + jqXHR.status);
@@ -213,7 +232,6 @@ $(document).ready(function(){
         $("#patient_update").show();
         $("#patient_save").hide();
         $("#patient_close").show();
-        $("#patient_clean").show();
 
         $("#PatientManage").animate({
           height: 'show'
@@ -262,22 +280,27 @@ $(document).ready(function(){
             </li>
           </ul>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Exercise">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti" data-parent="#exampleAccordion">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Daily">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseDailyPages" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text" >Exercise</span>
+            <span class="nav-link-text" id="test">Daily</span>
           </a>
-          <ul class="sidenav-second-level collapse" id="collapseMulti">
+          <ul class="sidenav-second-level collapse" id="collapseDailyPages">
             <li>
-              <a id="print_exerciseTable">Table</a>
+              <a href="">Table</a>
             </li>
           </ul>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Link">
-          <a class="nav-link" href="#">
-            <i class="fa fa-fw fa-link"></i>
-            <span class="nav-link-text">Link</span>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Activity">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseActivityPages" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-table"></i>
+            <span class="nav-link-text" id="test">Activity</span>
           </a>
+          <ul class="sidenav-second-level collapse" id="collapseActivityPages">
+            <li>
+              <a href="">Table</a>
+            </li>
+          </ul>
         </li>
       </ul>
       <ul class="navbar-nav sidenav-toggler">
@@ -330,19 +353,27 @@ $(document).ready(function(){
 
               <label for="bmi">BMI：</label>
               <input type="text" id="bmi"><br>
+
+              <label for="env_id">ENV_ID：</label>
+              <input type="text" id="env_id"><br>
+
+              <label for="ble_id">BLE_ID：</label>
+              <input type="text" id="ble_id"><br>
+
+              <label for="watch_id">Watch_ID：</label>
+              <input type="text" id="watch_id"><br>
             </div>
 
             <div class="column cright" align="right">
               <label for="history">History：</label>
-              <textarea type="text" id="history" rows="3" cols="60"></textarea><br>
+              <textarea type="text" id="history" rows="5" cols="60"></textarea><br>
               <label for="drug">Drug：</label>
-              <textarea type="text" id="drug" rows="3" cols="60"></textarea><br>
+              <textarea type="text" id="drug" rows="5" cols="60"></textarea><br>
 
               <button  class="button2" id="patient_save">Save</button>
               <button  class="button2" id="patient_delete">Delete</button>
               <button  class="button2" id="patient_update">Update</button>
-              <button  class="button2" id="patient_clean">Clean</button>
-              <button  class="button2" id="patient_close">Close</button>
+              <button  class="button2" id="patient_close">Cancel</button>
             </div>
             
           </div>
@@ -363,6 +394,9 @@ $(document).ready(function(){
 	                  <th>BMI</th>
 	                  <th>History</th>
 	                  <th>Drug</th>
+                    <th>Env_ID</th>
+                    <th>BLE_ID</th>
+                    <th>Watch_ID</th>
 	              </tr>
 	          </thead>
 	          <tfoot>
@@ -374,6 +408,9 @@ $(document).ready(function(){
 	                  <th>BMI</th>
 	                  <th>History</th>
 	                  <th>Drug</th>
+                    <th>Env_ID</th>
+                    <th>BLE_ID</th>
+                    <th>Watch_ID</th>
 	              </tr>
 	          </tfoot>
 	          

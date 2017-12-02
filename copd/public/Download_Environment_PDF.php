@@ -37,7 +37,7 @@ if (PHP_SAPI == 'cli')
 	die('This example should only be run from a Web Browser');
 
 /** Include PHPExcel */
-require_once ('..\PHPExcel-1.8\Classes\PHPExcel.php');
+require_once ('../PHPExcel-1.8/Classes/PHPExcel.php');
 
 // Create new PHPExcel object
 // Search TCPDF/config/tcpdf-config.php => PDF_PAGE_ORIENTATION = L
@@ -98,16 +98,18 @@ $sql_env="SELECT * FROM env";
 $result = mysqli_query($con,$sql_env);
 
 $_cnt = 0;
-
+$table_data = "";
 // 將資料庫的資料全部存在student這個陣列
 while($row = mysqli_fetch_array($result)) {
 	$_cnt++;
 	$table_data = $table_data . "<tr>
      		<td border=\"1\" align=\"center\" cellpadding=\"3\">{$row['id']}</td>
+     		<td border=\"1\" align=\"center\" cellpadding=\"3\">{$row['deviceid']}</td>
      		<td border=\"1\" align=\"center\" cellpadding=\"3\">{$row['temperature']}</td>
      		<td border=\"1\" align=\"center\" cellpadding=\"3\">{$row['humidity']}</td>
      		<td border=\"1\" align=\"center\" cellpadding=\"3\">{$row['pm25']}</td>
      		<td border=\"1\" align=\"center\" cellpadding=\"3\">{$row['uv']}</td>
+     		<td border=\"1\" align=\"center\" cellpadding=\"3\">{$row['datetime']}</td>
 	 	</tr>";
 }
 
@@ -116,10 +118,12 @@ $table = "
 
 	<tr>
 		<td>ID</td>
+		<td>Device ID</td>
 		<td>Temperature</td>
 		<td>Humidity</td>
 		<td>PM2.5</td>
 		<td>UV</td>
+		<td>DateTime</td>
 	</tr>
 	". $table_data .
 	"
@@ -130,5 +134,5 @@ $objPHPEXcel_PDF->writeHTML('<br>', true, false, false, false, '');
 $objPHPEXcel_PDF->writeHTML($table, true, false, false, false, '');
 
 $file_name = 'Environment.pdf';
-ob_end_clean();
 $objPHPEXcel_PDF->Output($file_name,'I');
+

@@ -7,7 +7,7 @@ $result = mysqli_query($con,$sql);
 $dataArray = array();
 
 while($row = mysqli_fetch_array($result)) {
-    $dataArray[] = array($row["id"],$row["temperature"],$row["humidity"],$row["pm25"],$row["uv"]);
+    $dataArray[] = array($row["id"],$row["deviceid"],$row["temperature"],$row["humidity"],$row["pm25"],$row["uv"],$row["datetime"]);
 }
 echo json_encode($dataArray);
 ?>

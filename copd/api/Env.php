@@ -24,7 +24,7 @@ class Env{
 		//connet db
 		require 'connect.php';
 		mysqli_select_db($con,"env");
-
+		
 		//query data by method
 		$getById_sql = "SELECT * FROM env WHERE deviceid = '$id'";
 		$getById_result = mysqli_query($con,$getById_sql);
@@ -48,9 +48,8 @@ class Env{
 		$humidity = $input['humidity'];
 		$pm25 = $input['pm25'];
 		$uv = $input['uv'];
-		$datetime = date ("Y-m-d H:i:s" , mktime(date('H')+8, date('i'), date('s'), date('m'), date('d'), date('Y'))) ; 
+		$datetime = $input['datetime'];
 
-		//應該不用檢查deviceid?? 因為同一裝置會有很多資料吧?
 		$sql_insert = "INSERT INTO env (deviceid, temperature, humidity, pm25, uv, datetime) VALUES ('$deviceid','$temperature','$humidity','$pm25','$uv','$datetime')";
 		$add_result = mysqli_query($con,$sql_insert);
 		return 'ok';

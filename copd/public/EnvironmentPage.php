@@ -31,6 +31,8 @@ $(document).ready(function(){
     $.ajax({
     type : 'POST',
     url  : 'datatable_env.php',
+    //type : 'GET',
+    //url : 'http://140.118.122.159/copd/apiv1/env/getall',
     dataType: 'json',
     cache: false,
     success :  function(result)
@@ -84,22 +86,27 @@ $(document).ready(function(){
             </li>
           </ul>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Exercise">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti" data-parent="#exampleAccordion">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Daily">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseDailyPages" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text" >Exercise</span>
+            <span class="nav-link-text" id="test">Daily</span>
           </a>
-          <ul class="sidenav-second-level collapse" id="collapseMulti">
+          <ul class="sidenav-second-level collapse" id="collapseDailyPages">
             <li>
-              <a id="print_exerciseTable">Table</a>
+              <a href="">Table</a>
             </li>
           </ul>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Link">
-          <a class="nav-link" href="#">
-            <i class="fa fa-fw fa-link"></i>
-            <span class="nav-link-text">Link</span>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Activity">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseActivityPages" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-table"></i>
+            <span class="nav-link-text" id="test">Activity</span>
           </a>
+          <ul class="sidenav-second-level collapse" id="collapseActivityPages">
+            <li>
+              <a href="">Table</a>
+            </li>
+          </ul>
         </li>
       </ul>
       <ul class="navbar-nav sidenav-toggler">
@@ -137,19 +144,23 @@ $(document).ready(function(){
               <thead>
                   <tr>
                       <th>ID</th>
+                      <th>DeviceID</th>
                       <th>Temperature</th>
                       <th>Humidity</th>
                       <th>PM2.5</th>
                       <th>UV</th>
+                      <th>DateTime</th>
                   </tr>
               </thead>
               <tfoot>
                   <tr>
                       <th>ID</th>
+                      <th>DeviceID</th>
                       <th>Temperature</th>
                       <th>Humidity</th>
                       <th>PM2.5</th>
                       <th>UV</th>
+                      <th>DateTime</th>
                   </tr>
               </tfoot>
               

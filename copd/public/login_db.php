@@ -1,11 +1,11 @@
 <?php
 session_start();
 require 'connect.php';
-mysqli_select_db($con,"acc");
+mysqli_select_db($con,"admin");
 $account = $_POST['Account'];
 $password = $_POST['Password'];
 
-$sql_query = "SELECT * FROM acc WHERE account = '$account' AND password = '$password'";
+$sql_query = "SELECT * FROM admin WHERE account = '$account' AND pwd = '$password'";
 $result = mysqli_query($con,$sql_query); 
 	
 $_cnt = 0;

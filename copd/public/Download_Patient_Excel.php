@@ -33,7 +33,7 @@ mysqli_select_db($con,"user");
 $sql_user="SELECT * FROM user";
 $result = mysqli_query($con,$sql_user);
 
-$_cnt = 0;
+$_cnt = 1;
 
 /** Error reporting */
 error_reporting(E_ALL);
@@ -45,7 +45,7 @@ if (PHP_SAPI == 'cli')
 	die('This example should only be run from a Web Browser');
 
 /** Include PHPExcel */
-require_once ('..\PHPExcel-1.8\Classes\PHPExcel.php');
+require_once ('../PHPExcel-1.8/Classes/PHPExcel.php');
 
 // Create new PHPExcel object
 $objPHPExcel = new PHPExcel();
@@ -60,7 +60,10 @@ while($row = mysqli_fetch_array($result)) {
 		->setCellValue('D'.$_cnt , $row['sex'])
 		->setCellValue('E'.$_cnt , $row['bmi'])
 		->setCellValue('F'.$_cnt , $row['history'])
-		->setCellValue('G'.$_cnt , $row['drug']);
+		->setCellValue('G'.$_cnt , $row['drug'])
+		->setCellValue('H'.$_cnt , $row['env_id'])
+		->setCellValue('I'.$_cnt , $row['ble_id'])
+		->setCellValue('J'.$_cnt , $row['watch_id']);
 }
 
 // Set document properties
@@ -80,7 +83,10 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('D1', 'Sex')
             ->setCellValue('E1', 'BMI')
             ->setCellValue('F1', 'History')
-            ->setCellValue('G1', 'Drug');
+            ->setCellValue('G1', 'Drug')
+            ->setCellValue('H1', 'env_id')
+            ->setCellValue('I1', 'ble_id')
+            ->setCellValue('J1', 'watch_id');
 			
 $data_number = 0 ;
 

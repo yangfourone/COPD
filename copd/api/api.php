@@ -2,7 +2,7 @@
 //require handler
 require_once('UserHandler.php');
 require_once('EnvHandler.php');
-//require_once('ActivityHandler.php');
+require_once('ActivityHandler.php');
 require_once('DailyHandler.php');
 
 $method = $_SERVER['REQUEST_METHOD'];
@@ -22,7 +22,7 @@ $queryStr = $_SERVER['QUERY_STRING'];
 	case 'env':
 	 	//to-do handler
 		$envHandler = new EnvHandler($method,$params,$input);
-	 	echo $envHandler->response();
+	 	echo Array($envHandler->response());
 		break;
 	case 'activity':
 		//to-do handler

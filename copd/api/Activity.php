@@ -60,9 +60,17 @@ class Activity{
 		//connet db
 		require 'connect.php';
 		mysqli_select_db($con,"activity");
+
+		$uid = $input['uid'];
+		$step = $input['step'];
+		$bp = json_encode($input['bp']);
+		$data = json_encode($input['data']);
+		$start_time = $input['start_time'];
+		$end_time = $input['end_time'];
 		
-		$sql_insert = "INSERT INTO activity (uid,step,bp,data,start_time,end_time) VALUES ('$uid','$step','$bp','$data',$start_time','$end_time')";
-		$add_result = mysqli_query($con,$sql_insert);	
+		$sql_insert = "INSERT INTO activity (uid,step,bp,data,start_time,end_time) VALUES ('$uid','$step','$bp','$data','$start_time','$end_time')";
+		$add_result = mysqli_query($con,$sql_insert);
+		return 'ok';
 	}
 
 	function delete($id){
@@ -71,25 +79,40 @@ class Activity{
 		mysqli_select_db($con,"activity");
 		
 		//query data by method
-		$sql_check = "SELECT * FROM activity WHERE uid = '$id'";
+		$sql_check = "SELECT * FROM activity WHERE id = '$id'";
 		$check_result = mysqli_query($con,$sql_check);
 		if(mysqli_num_rows($check_result) == 0) {
 			return 'No data avaliable.';
 		}
 		else {
-			$sql_delete = "DELETE FROM activity WHERE uid = '$id'";
+			$sql_delete = "DELETE FROM activity WHERE id = '$id'";
 			$del_result = mysqli_query($con,$sql_delete);	
 			return 'ok';
 		}
 	}
 
-	function update($input){
+	function updatebyid($input){
 		//connet db
 		require 'connect.php';
 		mysqli_select_db($con,"activity");
 		
-		$sql_update = "UPDATE activity SET id='$id', uid='$uid', step='$step', bp='$bp', data='$data', start_time='$start_time', end_time='$end_time' WHERE id='$id'";
-		$update_result = mysqli_query($con,$sql_update);	
+		$id = $input['id'];
+		$step = $input['step'];
+		$bp = json_encode($input['bp']);
+		$data = json_encode($input['data']);
+		$start_time = $input['start_time'];
+		$end_time = $input['end_time'];
+
+		$sql_check = "SELECT * FROM activity WHERE id = '$id'";
+		$check_result = mysqli_query($con,$sql_check);
+		if(mysqli_num_rows($check_result) == 0) {
+			return 'No data avaliable.';
+		}
+		else {
+			$sql_update ="UPDATE activity SET step='$step', bp='$bp', data='$data', start_time='$start_time', end_time='$end_time' WHERE id='$id'";
+			$update_result = mysqli_query($con,$sql_update);	
+			return 'ok';
+		}
 	}
 }
 

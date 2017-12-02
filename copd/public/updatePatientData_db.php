@@ -10,7 +10,10 @@ if (!isset($_POST['ID']) || empty($_POST['ID']) ||
 	!isset($_POST['Sex']) ||
 	!isset($_POST['BMI']) || empty($_POST['BMI']) ||
 	!isset($_POST['History']) || empty($_POST['History']) || 
-	!isset($_POST['Drug']) || empty($_POST['Drug'])) 
+	!isset($_POST['Drug']) || empty($_POST['Drug']) || 
+	!isset($_POST['ENV_ID']) || empty($_POST['ENV_ID']) || 
+	!isset($_POST['BLE_ID']) || empty($_POST['BLE_ID']) || 
+	!isset($_POST['Watch_ID']) || empty($_POST['Watch_ID'])) 
 	{
     	echo json_encode(array('msg' => 'The UPDATE data is not complete!!'));
         return;
@@ -24,7 +27,10 @@ else{
 	$bmi = $_POST['BMI'];
 	$history = $_POST['History'];
 	$drug = $_POST['Drug'];
-	$sql_update = "UPDATE user SET fname='$fname', lname='$lname', sex='sex', bmi='$bmi', history='$history', drug='$drug' WHERE id='$id'";
+	$env_id = $_POST['ENV_ID'];
+	$ble_id = $_POST['BLE_ID'];
+	$watch_id = $_POST['Watch_ID'];
+	$sql_update = "UPDATE user SET fname='$fname', lname='$lname', sex='sex', bmi='$bmi', history='$history', drug='$drug', env_id='$env_id', ble_id='$ble_id', watch_id='$watch_id' WHERE id='$id'";
 	$result = mysqli_query($con,$sql_update);	
 	
 	}

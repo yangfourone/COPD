@@ -68,22 +68,27 @@ $(document).ready(function(){
             </li>
           </ul>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Exercise">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti" data-parent="#exampleAccordion">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Daily">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseDailyPages" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text" >Exercise</span>
+            <span class="nav-link-text" id="test">Daily</span>
           </a>
-          <ul class="sidenav-second-level collapse" id="collapseMulti" onclick="document.getElementById('datatable_exercise_visible').style = 'display:none'">
+          <ul class="sidenav-second-level collapse" id="collapseDailyPages">
             <li>
-              <a id="print_exerciseTable">Table</a>
+              <a href="">Table</a>
             </li>
           </ul>
         </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Link">
-          <a class="nav-link" href="#">
-            <i class="fa fa-fw fa-link"></i>
-            <span class="nav-link-text">Link</span>
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Activity">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseActivityPages" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-table"></i>
+            <span class="nav-link-text" id="test">Activity</span>
           </a>
+          <ul class="sidenav-second-level collapse" id="collapseActivityPages">
+            <li>
+              <a href="">Table</a>
+            </li>
+          </ul>
         </li>
       </ul>
       <ul class="navbar-nav sidenav-toggler">
