@@ -20,14 +20,6 @@
 <script type="text/JavaScript">
 $(document).ready(function(){
     $("#login").click(function() {
-        /*
-        if (typeof(Storage) !== "undefined") {
-          // Store
-          localStorage.setItem("username", $("#account").val());
-        } else {
-          document.getElementById("login_msg").innerHTML = "Sorry, your browser does not support Web Storage...";
-        }
-        */
         $.ajax({
             type: "POST",
             url: "login_db.php",

@@ -265,7 +265,7 @@ $(document).ready(function(){
           </a>
           <ul class="sidenav-second-level collapse" id="collapseComponents">
             <li>
-              <a id="print_patientTable">Table</a>
+              <a href="PatientPage.php">Table</a>
             </li>
           </ul>
         </li>
@@ -287,7 +287,7 @@ $(document).ready(function(){
           </a>
           <ul class="sidenav-second-level collapse" id="collapseDailyPages">
             <li>
-              <a href="">Table</a>
+              <a href="DailyPage.php">Table</a>
             </li>
           </ul>
         </li>
@@ -298,7 +298,7 @@ $(document).ready(function(){
           </a>
           <ul class="sidenav-second-level collapse" id="collapseActivityPages">
             <li>
-              <a href="">Table</a>
+              <a href="ActivityPage.php">Table</a>
             </li>
           </ul>
         </li>
@@ -348,8 +348,14 @@ $(document).ready(function(){
               <label for="lname">LastName：</label>
               <input type="text" id="lname"><br>
 
+              <!-- <label for="sex">Sex：</label>
+              <input type="text" id="sex"><br> -->
+
               <label for="sex">Sex：</label>
-              <input type="text" id="sex"><br>
+              <select id="sex" style="padding-right: 138px">
+                <option value="1">男</option>
+                <option value="0">女</option>
+              </select><br>
 
               <label for="bmi">BMI：</label>
               <input type="text" id="bmi"><br>

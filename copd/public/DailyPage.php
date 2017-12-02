@@ -30,7 +30,7 @@ $(document).ready(function(){
 
     $.ajax({
     type : 'POST',
-    url  : 'datatable_env.php',
+    url  : 'datatable_daily.php',
     //type : 'GET',
     //url : 'http://140.118.122.159/copd/apiv1/env/getall',
     dataType: 'json',
@@ -39,7 +39,7 @@ $(document).ready(function(){
         {
             //pass data to datatable
             console.log(result); // just to see I'm getting the correct data.
-            $('#evnTable').DataTable({
+            $('#dailyTable').DataTable({
                 "aaData": result, //here we get the array data from the ajax call.
             });
         }
@@ -131,36 +131,25 @@ $(document).ready(function(){
 
   <div class="content-wrapper" style="padding-left: 5px">
     <div class="container-fluid">
-        <div class="download_table" align="right">
-              <button onclick="window.location.href='Download_Environment_PDF.php'">PDF Download</button>
-              <button onclick="window.location.href='Download_Environment_Excel.php'">EXCEL Download</button>
-            <br></br>
-        </div>
 	    <!-- /.container-fluid-->
 	    <!-- Download Page -->
 	    <!-- EnvDataTable-->
         <div id="datatable_env_visible">
-          <table id="evnTable" class="display" cellspacing="0" width="100%">
+          <table id="dailyTable" class="display" cellspacing="0" width="100%">
               <thead>
                   <tr>
                       <th>ID</th>
-                      <th>DeviceID</th>
-                      <th>Temperature</th>
-                      <th>Humidity</th>
-                      <th>PM2.5</th>
-                      <th>UV</th>
-                      <th>DateTime</th>
+                      <th>User ID</th>
+                      <th>Step</th>
+                      <th>Date</th>
                   </tr>
               </thead>
               <tfoot>
                   <tr>
                       <th>ID</th>
-                      <th>DeviceID</th>
-                      <th>Temperature</th>
-                      <th>Humidity</th>
-                      <th>PM2.5</th>
-                      <th>UV</th>
-                      <th>DateTime</th>
+                      <th>User ID</th>
+                      <th>Step</th>
+                      <th>Date</th>
                   </tr>
               </tfoot>
               

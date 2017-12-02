@@ -75,7 +75,7 @@ $(document).ready(function(){
           </a>
           <ul class="sidenav-second-level collapse" id="collapseDailyPages">
             <li>
-              <a href="">Table</a>
+              <a href="DailyPage.php">Table</a>
             </li>
           </ul>
         </li>
@@ -86,7 +86,7 @@ $(document).ready(function(){
           </a>
           <ul class="sidenav-second-level collapse" id="collapseActivityPages">
             <li>
-              <a href="">Table</a>
+              <a href="ActivityPage.php">Table</a>
             </li>
           </ul>
         </li>
