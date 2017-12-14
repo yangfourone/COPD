@@ -15,11 +15,61 @@ class Activity{
 			return 'No data avaliable.';
 		}
 		else {
-			$getAll_dataArray = mysqli_fetch_all($getAll_result,MYSQLI_ASSOC);
-			return $getAll_dataArray;
+			$dataArray = array();
+			while($row = mysqli_fetch_array($getAll_result)) {
+			    $dataArray[] = array($row["id"],$row["uid"],$row["step"],$row["start_time"],$row["end_time"]);
+			}
+			return $dataArray;
+			//$getAll_dataArray = mysqli_fetch_all($getAll_result,MYSQLI_ASSOC);
+			//return $getAll_dataArray;
 		}
 	}
+	function getAll_week(){
+		//connet db
+		require 'connect.php';
+		mysqli_select_db($con,"activity");
 
+		//make time
+		$starttime = date ("Y-m-d H:i:s" , mktime(date('H')+7, date('i'), date('s'), date('m'), date('d'), date('Y'))) ;
+		$endtime = date ("Y-m-d H:i:s" , mktime(date('H')+7, date('i'), date('s'), date('m'), date('d')-7, date('Y'))) ;
+
+		//query data by method
+		$getAll_week_sql = "SELECT * FROM activity WHERE start_time BETWEEN '$endtime' AND '$starttime'";
+		$getAll_week_result = mysqli_query($con,$getAll_week_sql);
+
+		if(mysqli_num_rows($getAll_week_result) == 0) {
+			return 'No data avaliable.';
+		}
+		else {
+			$getAll_week_dataArray = array();
+			while($row = mysqli_fetch_array($getAll_week_result)) {
+			    $getAll_week_dataArray[] = array($row["id"],$row["uid"],$row["step"],$row["start_time"],$row["end_time"]);
+			}
+			return $getAll_week_dataArray;
+			//$getAll_week_dataArray = mysqli_fetch_array($getAll_week_result,MYSQLI_ASSOC);
+			//return $getAll_week_dataArray;
+		}
+	}
+	function getAll_month(){
+		//connet db
+		require 'connect.php';
+		mysqli_select_db($con,"activity");
+
+		//query data by method
+		$starttime = date ("Y-m-d H:i:s" , mktime(date('H')+7, date('i'), date('s'), date('m'), date('d'), date('Y'))) ;
+		$endtime = date ("Y-m-d H:i:s" , mktime(date('H')+7, date('i'), date('s'), date('m')-1, date('d'), date('Y'))) ;
+		mysqli_select_db($con,"activity");
+		$getAll_month_sql = "SELECT * FROM activity WHERE start_time BETWEEN '$endtime' AND '$starttime'";
+		$getAll_month_result = mysqli_query($con,$getAll_month_sql);
+
+		if(mysqli_num_rows($getAll_month_result) == 0) {
+			return 'No data avaliable.';
+		}
+		else {
+			$getAll_month_dataArray = mysqli_fetch_all($getAll_month_result,MYSQLI_ASSOC);
+			return $getAll_month_dataArray;
+		}
+	}
 	function getById($id){
 		//connet db
 		require 'connect.php';
@@ -68,9 +118,14 @@ class Activity{
 		$start_time = $input['start_time'];
 		$end_time = $input['end_time'];
 		
-		$sql_insert = "INSERT INTO activity (uid,step,bp,data,start_time,end_time) VALUES ('$uid','$step','$bp','$data','$start_time','$end_time')";
-		$add_result = mysqli_query($con,$sql_insert);
-		return 'ok';
+		if(!isset($uid)||empty($uid)||!isset($step)||empty($step)||!isset($bp)||empty($bp)||!isset($data)||empty($data)||!isset($start_time)||empty($start_time)||!isset($end_time)||empty($end_time)){
+			return 'NULL Data Exist.';
+		}
+		else {
+			$sql_insert = "INSERT INTO activity (uid,step,bp,data,start_time,end_time) VALUES ('$uid','$step','$bp','$data','$start_time','$end_time')";
+			$add_result = mysqli_query($con,$sql_insert);
+			return 'ok';
+		}
 	}
 
 	function delete($id){

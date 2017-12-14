@@ -5,9 +5,10 @@ require 'connect.php';
 mysqli_select_db($con,"user");
 
 if (!isset($_POST['ID']) || empty($_POST['ID']) ||
+	!isset($_POST['Password']) || empty($_POST['Password']) ||
 	!isset($_POST['FirstName']) || empty($_POST['FirstName']) ||
     !isset($_POST['LastName']) || empty($_POST['LastName']) ||
-	!isset($_POST['Sex']) ||
+	!isset($_POST['Sex']) || 
 	!isset($_POST['BMI']) || empty($_POST['BMI']) ||
 	!isset($_POST['History']) || empty($_POST['History']) || 
 	!isset($_POST['Drug']) || empty($_POST['Drug']) || 
@@ -15,12 +16,13 @@ if (!isset($_POST['ID']) || empty($_POST['ID']) ||
 	!isset($_POST['BLE_ID']) || empty($_POST['BLE_ID']) || 
 	!isset($_POST['Watch_ID']) || empty($_POST['Watch_ID'])) 
 	{
-    	echo json_encode(array('msg' => 'The UPDATE data is not complete!!'));
+    	echo json_encode(array('msg' => '更新之資料填寫未完全'));
         return;
     }
 
 else{
 	$id = $_POST['ID'];
+	$pwd = $_POST['Password'];
 	$fname = $_POST['FirstName'];
 	$lname = $_POST['LastName'];
 	$sex = $_POST['Sex'];
@@ -30,7 +32,7 @@ else{
 	$env_id = $_POST['ENV_ID'];
 	$ble_id = $_POST['BLE_ID'];
 	$watch_id = $_POST['Watch_ID'];
-	$sql_update = "UPDATE user SET fname='$fname', lname='$lname', sex='sex', bmi='$bmi', history='$history', drug='$drug', env_id='$env_id', ble_id='$ble_id', watch_id='$watch_id' WHERE id='$id'";
+	$sql_update = "UPDATE user SET pwd='$pwd', fname='$fname', lname='$lname', sex='$sex', bmi='$bmi', history='$history', drug='$drug', env_id='$env_id', ble_id='$ble_id', watch_id='$watch_id' WHERE id='$id'";
 	$result = mysqli_query($con,$sql_update);	
 	
 	}

@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <?php
 session_start();
+if(empty($_SESSION['account'])){
+  header("Location: index.php"); 
+}
+else{
+}
 ?>
 <html lang="en">
 <head>
@@ -36,6 +41,7 @@ $(document).ready(function(){
 
     $("#NewPatient").click(function(){
       document.getElementById('pid').value = '';
+      document.getElementById('pwd').value = '';
       document.getElementById('fname').value = '';
       document.getElementById('lname').value = '';
       document.getElementById('sex').value = '';
@@ -49,31 +55,23 @@ $(document).ready(function(){
       $("#patient_update").hide();
       $("#patient_save").show();
       $("#patient_close").show();
+      $("#newid_label").show();
+      $("#pid_label").hide();
+      $("#newid").show();
+      $("#pid").hide();
       $("#PatientManage").animate({
           height: 'show'
         });
     })
-
-    $("#patient_clean").click(function(){
-      document.getElementById('pid').value = '';
-      document.getElementById('fname').value = '';
-      document.getElementById('lname').value = '';
-      document.getElementById('sex').value = '';
-      document.getElementById('bmi').value = '';
-      document.getElementById('history').value = '';
-      document.getElementById('drug').value = ''; 
-      document.getElementById('env_id').value = '';
-      document.getElementById('ble_id').value = '';
-      document.getElementById('watch_id').value = '';
-    });
-
+    //---------------------------------------------------save by POST
     $("#patient_save").click(function() {
         $.ajax({
             type: "POST",
-            url: "addpatientdata_db.php",
+            url: "../apiv1/user/add",
             dataType: "json",
             data: {
-                ID: $("#pid").val(),
+                ID: $("#newid").val(),
+                Password: $("#pwd").val(),
                 FirstName: $("#fname").val(),
                 LastName: $("#lname").val(),
                 Sex: $("#sex").val(),
@@ -85,10 +83,11 @@ $(document).ready(function(){
                 Watch_ID: $("#watch_id").val()
             },
             success: function(data) {
-                if (data.FirstName) {
-                    $("#patient_Result").html('Patient：' + data.FirstName + ' is saved successfully!');
-                } else {
-                    $("#patient_Result").html(data.msg);
+                if (data=='ok') {
+                    alert('add successfully');
+                } 
+                else {
+                    alert(data);
                 }                   
                 window.location = 'PatientPage.php';
             },
@@ -98,14 +97,15 @@ $(document).ready(function(){
         })
         
     })
-
+    //---------------------------------------------------update by POST
     $("#patient_update").click(function() {
         $.ajax({
             type: "POST",
-            url: "updatePatientData_db.php",
+            url: "../apiv1/user/update",
             dataType: "json",
             data: {
                 ID: $("#pid").val(),
+                Password: $("#pwd").val(),
                 FirstName: $("#fname").val(),
                 LastName: $("#lname").val(),
                 Sex: $("#sex").val(),
@@ -117,12 +117,13 @@ $(document).ready(function(){
                 Watch_ID: $("#watch_id").val()
             },
             success: function(data) {
-                if (data.FirstName) {
-                    $("#patient_Result").html('Patient：' + data.FirstName + ' is UPDATE successfully!');
-                } else {
-                    $("#patient_Result").html(data.msg);
-                }            
-                window.location = 'PatientPage.php';       
+                if (data=='ok') {
+                    alert('update successfully');
+                } 
+                else {
+                    alert(data);
+                }                   
+                window.location = 'PatientPage.php';    
             },
             error: function(jqXHR) {
                 alert("發生錯誤: " + jqXHR.status);
@@ -130,22 +131,21 @@ $(document).ready(function(){
         })
         
     })
-    
+    //---------------------------------------------------delete by DELETE
     $("#patient_delete").click(function() {
         $.ajax({
-            type: "POST",
-            url: "deletepatientdata_db.php",
+            type: "DELETE",
+            url: "../apiv1/user/delete/" + $("#pid").val(),
             dataType: "json",
-            data: {
-                ID: $("#pid").val(),
-                FirstName: $("#fname").val()                  
+            data: {                
             },
             success: function(data) {
-                if (data.FirstName) {
-                    $("#patient_Result").html('Patient：' + data.FirstName + ' is deleted successfully！');
-                } else {
-                    $("#patient_Result").html(data.msg);
-                }      
+                if (data=='ok') {
+                    alert('delete successfully');
+                } 
+                else {
+                    alert(data);
+                }                   
                 window.location = 'PatientPage.php';             
             },
             error: function(jqXHR) {
@@ -154,10 +154,10 @@ $(document).ready(function(){
         })
         
     })
-
+    //---------------------------------------------------datatable by GET
     $.ajax({
-    type : 'POST',
-    url  : 'datatable_patient.php',
+    type : 'GET',
+    url  : '../apiv1/user/getall',
     dataType: 'json',
     cache: false,
     success :  function(result)
@@ -169,26 +169,26 @@ $(document).ready(function(){
             });
         }
     });
+
     $(document).on("click", "tr[class='even']", function(){
-        //var edit_target_id = $(this).children('td:first-child').text();
         $.ajax({
-            type: "POST",
-            url: "GetEditTableClickData.php",
+            type: "GET",
+            url: "../apiv1/user/getbyid/" + $(this).children('td:first-child').text(),
             dataType: "json",
             data: {
-                ID: $(this).children('td:first-child').text(),              
             },
             success: function(data) {
-                document.getElementById('pid').value = data.id;
-                document.getElementById('fname').value = data.fname;
-                document.getElementById('lname').value = data.lname;
-                document.getElementById('sex').value = data.sex;
-                document.getElementById('bmi').value = data.bmi;
-                document.getElementById('history').value = data.history;
-                document.getElementById('drug').value = data.drug;
-                document.getElementById('env_id').value = data.env_id;
-                document.getElementById('ble_id').value = data.ble_id;
-                document.getElementById('watch_id').value = data.watch_id;
+              document.getElementById('pid').value = data.id;
+              document.getElementById('pwd').value = data.pwd;
+              document.getElementById('fname').value = data.fname;
+              document.getElementById('lname').value = data.lname;
+              document.getElementById('sex').value = data.sex;
+              document.getElementById('bmi').value = data.bmi;
+              document.getElementById('history').value = data.history;
+              document.getElementById('drug').value = data.drug;
+              document.getElementById('env_id').value = data.env_id;
+              document.getElementById('ble_id').value = data.ble_id;
+              document.getElementById('watch_id').value = data.watch_id;
             },
             error: function(jqXHR) {
                 alert("發生錯誤: " + jqXHR.status);
@@ -198,31 +198,33 @@ $(document).ready(function(){
         $("#patient_update").show();
         $("#patient_save").hide();
         $("#patient_close").show();
-
+        $("#newid_label").hide();
+        $("#pid_label").show();
+        $("#newid").hide();
+        $("#pid").show();
         $("#PatientManage").animate({
           height: 'show'
         });
     });
     $(document).on("click", "tr[class='odd']", function(){
-        //var edit_target_id = $(this).children('td:first-child').text();
         $.ajax({
-            type: "POST",
-            url: "GetEditTableClickData.php",
+            type: "GET",
+            url: "../apiv1/user/getbyid/" + $(this).children('td:first-child').text(),
             dataType: "json",
             data: {
-                ID: $(this).children('td:first-child').text(),              
             },
             success: function(data) {
-                document.getElementById('pid').value = data.id;
-                document.getElementById('fname').value = data.fname;
-                document.getElementById('lname').value = data.lname;
-                document.getElementById('sex').value = data.sex;
-                document.getElementById('bmi').value = data.bmi;
-                document.getElementById('history').value = data.history;
-                document.getElementById('drug').value = data.drug;
-                document.getElementById('env_id').value = data.env_id;
-                document.getElementById('ble_id').value = data.ble_id;
-                document.getElementById('watch_id').value = data.watch_id;
+              document.getElementById('pid').value = data.id;
+              document.getElementById('pwd').value = data.pwd;
+              document.getElementById('fname').value = data.fname;
+              document.getElementById('lname').value = data.lname;
+              document.getElementById('sex').value = data.sex;
+              document.getElementById('bmi').value = data.bmi;
+              document.getElementById('history').value = data.history;
+              document.getElementById('drug').value = data.drug;
+              document.getElementById('env_id').value = data.env_id;
+              document.getElementById('ble_id').value = data.ble_id;
+              document.getElementById('watch_id').value = data.watch_id;
             },
             error: function(jqXHR) {
                 alert("發生錯誤: " + jqXHR.status);
@@ -232,7 +234,10 @@ $(document).ready(function(){
         $("#patient_update").show();
         $("#patient_save").hide();
         $("#patient_close").show();
-
+        $("#newid_label").hide();
+        $("#pid_label").show();
+        $("#newid").hide();
+        $("#pid").show();
         $("#PatientManage").animate({
           height: 'show'
         });
@@ -255,13 +260,13 @@ $(document).ready(function(){
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="HomePage">
           <a class="nav-link" href="homepage.php">
             <i class="fa fa-fw fa-dashboard"></i>
-            <span class="nav-link-text">HomePage</span>
+            <span class="nav-link-text">COPD首頁</span>
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Patient">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text" id="test">Patient</span>
+            <span class="nav-link-text" id="test">病患資料</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseComponents">
             <li>
@@ -272,7 +277,7 @@ $(document).ready(function(){
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Environment">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text" id="test">Environment</span>
+            <span class="nav-link-text" id="test">環境資料</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseExamplePages">
             <li>
@@ -283,7 +288,7 @@ $(document).ready(function(){
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Daily">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseDailyPages" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text" id="test">Daily</span>
+            <span class="nav-link-text" id="test">每日統計</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseDailyPages">
             <li>
@@ -294,7 +299,7 @@ $(document).ready(function(){
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Activity">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseActivityPages" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text" id="test">Activity</span>
+            <span class="nav-link-text" id="test">活動紀錄</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseActivityPages">
             <li>
@@ -329,33 +334,39 @@ $(document).ready(function(){
               <button onclick="window.location.href='Download_Patient_PDF.php'">PDF Download</button>
               <button onclick="window.location.href='Download_Patient_Excel.php'">EXCEL Download</button>&nbsp;
               &nbsp;<button id="NewPatient">New Data</button>
-            <br></br>
         </div>
 	    <!-- /.container-fluid-->
 	    <!-- Download Page -->
 	    <!-- PatientManage-->
-      <div class="edit_table" id="PatientManage" style="display:none">
-        <h2 align="center">Edit The Patient Data</h2>
-        <p></p>
+      <div class="edit_table" id="PatientManage" style="display:none; width: 79%">
+        <h2 align="center">病患資料表</h2><br>
           <div class="row">
-            <div class="column cleft" align="right">
-              <label for="pid">User's ID：</label>
-              <input type="text" id="pid"><br>
+            <div class="column" align="right" style="padding-left: 30px;">
+              <label for="fname">姓氏：</label>
+              <input type="text" id="fname"> <br>
 
-              <label for="fname">FirstName：</label>
-              <input type="text" id="fname"><br>
+              <label for="newid" id="newid_label">帳號：</label>
+              <input type="text" id="newid">
+              
+              <label for="pid" id="pid_label">帳號：</label>
+              <input type="text" id="pid" disabled> <br>
 
-              <label for="lname">LastName：</label>
-              <input type="text" id="lname"><br>
-
-              <!-- <label for="sex">Sex：</label>
-              <input type="text" id="sex"><br> -->
-
-              <label for="sex">Sex：</label>
+              <label for="sex">性別：</label>
               <select id="sex" style="padding-right: 138px">
                 <option value="1">男</option>
                 <option value="0">女</option>
-              </select><br>
+              </select> <br>              
+
+              <label for="ble_id">BLE_ID：</label>
+              <input type="text" id="ble_id"> <br>
+            </div>
+
+            <div class="column" align="right" style="padding-left: 30px;">
+              <label for="lname">名字：</label>
+              <input type="text" id="lname"><br>
+
+              <label for="pwd">密碼：</label>
+              <input type="password" id="pwd"><br>
 
               <label for="bmi">BMI：</label>
               <input type="text" id="bmi"><br>
@@ -363,23 +374,20 @@ $(document).ready(function(){
               <label for="env_id">ENV_ID：</label>
               <input type="text" id="env_id"><br>
 
-              <label for="ble_id">BLE_ID：</label>
-              <input type="text" id="ble_id"><br>
-
               <label for="watch_id">Watch_ID：</label>
               <input type="text" id="watch_id"><br>
             </div>
 
-            <div class="column cright" align="right">
-              <label for="history">History：</label>
-              <textarea type="text" id="history" rows="5" cols="60"></textarea><br>
-              <label for="drug">Drug：</label>
-              <textarea type="text" id="drug" rows="5" cols="60"></textarea><br>
+            <div class="column" align="right" style="padding-left: 30px;">
+              <label for="history">病例：</label>
+              <textarea type="text" id="history" rows="3" cols="60"></textarea><br>
+              <label for="drug">藥物：</label>
+              <textarea type="text" id="drug" rows="3" cols="60"></textarea><br>
 
-              <button  class="button2" id="patient_save">Save</button>
-              <button  class="button2" id="patient_delete">Delete</button>
-              <button  class="button2" id="patient_update">Update</button>
-              <button  class="button2" id="patient_close">Cancel</button>
+              <button  class="button2" id="patient_save">儲存</button>
+              <button  class="button2" id="patient_delete">刪除</button>
+              <button  class="button2" id="patient_update">更新</button>
+              <button  class="button2" id="patient_close">取消</button>
             </div>
             
           </div>
@@ -393,13 +401,13 @@ $(document).ready(function(){
             
 	          <thead>
 	              <tr>
-	                  <th>ID</th>
-	                  <th>FirstName</th>
-	                  <th>LastName</th>
-	                  <th>Sex</th>
+	                  <th>帳號</th>
+	                  <th>名字</th>
+	                  <th>姓氏</th>
+	                  <th>性別</th>
 	                  <th>BMI</th>
-	                  <th>History</th>
-	                  <th>Drug</th>
+	                  <th>病例</th>
+	                  <th>藥物</th>
                     <th>Env_ID</th>
                     <th>BLE_ID</th>
                     <th>Watch_ID</th>
@@ -407,13 +415,13 @@ $(document).ready(function(){
 	          </thead>
 	          <tfoot>
 	              <tr>
-	                  <th>ID</th>
-	                  <th>FirstName</th>
-	                  <th>LastName</th>
-	                  <th>Sex</th>
-	                  <th>BMI</th>
-	                  <th>History</th>
-	                  <th>Drug</th>
+	                  <th>帳號</th>
+                    <th>名字</th>
+                    <th>姓氏</th>
+                    <th>性別</th>
+                    <th>BMI</th>
+                    <th>病例</th>
+                    <th>藥物</th>
                     <th>Env_ID</th>
                     <th>BLE_ID</th>
                     <th>Watch_ID</th>

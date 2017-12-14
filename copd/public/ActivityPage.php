@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <?php
 session_start();
+if(empty($_SESSION['account'])){
+  header("Location: index.php"); 
+}
+else{
+}
 ?>
 <html lang="en">
 <head>
@@ -27,14 +32,14 @@ session_start();
 
 <script type="text/JavaScript">
 $(document).ready(function(){
-
+  //var table = $('#activityTable').DataTable();
+  $("#time_select").change(function(){
     $.ajax({
-    type : 'POST',
-    url  : 'datatable_activity.php',
-    //type : 'GET',
-    //url : 'http://140.118.122.159/copd/apiv1/env/getall',
+    type : 'GET',
+    url : '../apiv1/activity/' + $("#time_select").val(),
     dataType: 'json',
-    cache: false,
+    result :{
+    },
     success :  function(result)
         {
             //pass data to datatable
@@ -44,7 +49,7 @@ $(document).ready(function(){
             });
         }
     });
-
+  });
 });
 
 </script>
@@ -61,13 +66,13 @@ $(document).ready(function(){
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="HomePage">
           <a class="nav-link" href="homepage.php">
             <i class="fa fa-fw fa-dashboard"></i>
-            <span class="nav-link-text">HomePage</span>
+            <span class="nav-link-text">COPD首頁</span>
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Patient">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text" id="test">Patient</span>
+            <span class="nav-link-text" id="test">病患資料</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseComponents">
             <li>
@@ -78,7 +83,7 @@ $(document).ready(function(){
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Environment">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text" id="test">Environment</span>
+            <span class="nav-link-text" id="test">環境資料</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseExamplePages">
             <li>
@@ -89,7 +94,7 @@ $(document).ready(function(){
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Daily">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseDailyPages" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text" id="test">Daily</span>
+            <span class="nav-link-text" id="test">每日統計</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseDailyPages">
             <li>
@@ -100,7 +105,7 @@ $(document).ready(function(){
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Activity">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseActivityPages" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text" id="test">Activity</span>
+            <span class="nav-link-text" id="test">活動紀錄</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseActivityPages">
             <li>
@@ -127,31 +132,59 @@ $(document).ready(function(){
   </nav>
 
 
-<!-- center   -->
-
+  <!-- center   -->
   <div class="content-wrapper" style="padding-left: 5px">
+    <!-- click activity record -->
+    <div class="edit_table" id="ActivityRecord" >
+      <h2>活動紀錄</h2>
+      <br>
+
+      <label>姓名：</label><label id="name">132</label><br>
+      <label>年齡：</label><label id="age">321</label><br>
+      <label>前測 舒張壓：</label><label id="before_sbp">321</label><label>hmmg 收縮壓：</label><label id="before_dbp">70</label><label>hmmg</label><br>
+      <label>後測 舒張壓：</label><label id="after_sbp">80</label><label>hmmg 收縮壓：</label><label id="after_dbp">120</label><label>hmmg</label><br>
+      <label>運動時間：</label><label id="exercise_time">27分24秒</label><br>
+      <label>高強度運動時間：</label><label id="h_i_time">2分</label><br>
+      
+    </div>
+    <!-- Datatable -->
+    <br>
+    <div class="container-fluid">
+        <select id="time_select">
+          <option value="getallweek">本周</option>
+          <option value="getallmonth">本月</option>
+          <option value="getall">全部</option>
+        </select>
+        <select id="human">
+          <option value="1"></option>
+          <option value="2"></option>
+        </select>
+        <button onclick="window.location.href='Download_Activity_PDF.php'" style="margin-left: 1260px">PDF Download</button>
+        <button onclick="window.location.href='Download_Activity_Excel.php'">EXCEL Download</button>
+    </div>
+    <br>
     <div class="container-fluid">
 	    <!-- /.container-fluid-->
 	    <!-- Download Page -->
 	    <!-- EnvDataTable-->
-        <div id="datatable_env_visible">
+        <div id="datatable_activity_visible">
           <table id="activityTable" class="display" cellspacing="0" width="100%">
               <thead>
                   <tr>
-                      <th>ID</th>
-                      <th>User ID</th>
-                      <th>Step</th>
-                      <th>Start Time</th>
-                      <th>End Time</th>
+                      <th>編號</th>
+                      <th>帳號</th>
+                      <th>步數</th>
+                      <th>開始時間</th>
+                      <th>結束時間</th>
                   </tr>
               </thead>
               <tfoot>
                   <tr>
-                      <th>ID</th>
-                      <th>User ID</th>
-                      <th>Step</th>
-                      <th>Start Time</th>
-                      <th>End Time</th>
+                      <th>編號</th>
+                      <th>帳號</th>
+                      <th>步數</th>
+                      <th>開始時間</th>
+                      <th>結束時間</th>
                   </tr>
               </tfoot>
               

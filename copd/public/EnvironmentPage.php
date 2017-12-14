@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <?php
 session_start();
+if(empty($_SESSION['account'])){
+  header("Location: index.php"); 
+}
+else{
+}
 ?>
 <html lang="en">
 <head>
@@ -61,13 +66,13 @@ $(document).ready(function(){
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="HomePage">
           <a class="nav-link" href="homepage.php">
             <i class="fa fa-fw fa-dashboard"></i>
-            <span class="nav-link-text">HomePage</span>
+            <span class="nav-link-text">COPD首頁</span>
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Patient">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text" id="test">Patient</span>
+            <span class="nav-link-text" id="test">病患資料</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseComponents">
             <li>
@@ -78,7 +83,7 @@ $(document).ready(function(){
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Environment">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text" id="test">Environment</span>
+            <span class="nav-link-text" id="test">環境資料</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseExamplePages">
             <li>
@@ -89,7 +94,7 @@ $(document).ready(function(){
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Daily">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseDailyPages" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text" id="test">Daily</span>
+            <span class="nav-link-text" id="test">每日統計</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseDailyPages">
             <li>
@@ -100,7 +105,7 @@ $(document).ready(function(){
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Activity">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseActivityPages" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text" id="test">Activity</span>
+            <span class="nav-link-text" id="test">活動紀錄</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseActivityPages">
             <li>
@@ -143,24 +148,24 @@ $(document).ready(function(){
           <table id="evnTable" class="display" cellspacing="0" width="100%">
               <thead>
                   <tr>
-                      <th>ID</th>
-                      <th>DeviceID</th>
-                      <th>Temperature</th>
-                      <th>Humidity</th>
+                      <th>編號</th>
+                      <th>裝置編號</th>
+                      <th>溫度</th>
+                      <th>濕度</th>
                       <th>PM2.5</th>
-                      <th>UV</th>
-                      <th>DateTime</th>
+                      <th>紫外線指數</th>
+                      <th>時間</th>
                   </tr>
               </thead>
               <tfoot>
                   <tr>
-                      <th>ID</th>
-                      <th>DeviceID</th>
-                      <th>Temperature</th>
-                      <th>Humidity</th>
+                      <th>編號</th>
+                      <th>裝置編號</th>
+                      <th>溫度</th>
+                      <th>濕度</th>
                       <th>PM2.5</th>
-                      <th>UV</th>
-                      <th>DateTime</th>
+                      <th>紫外線指數</th>
+                      <th>時間</th>
                   </tr>
               </tfoot>
               

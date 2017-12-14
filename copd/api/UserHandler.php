@@ -31,23 +31,35 @@ class UserHandler extends SimpleRest{
 					break;
 				}
 			case 'post':
-				$user_add = new User();
-				$this ->setHttpHeaders('application/json', 200);
-				echo $this->encodeJson($user_add->add($this->input));
-				//echo 'add success';
-				break;
+				if($this->action == 'add'){
+					$user_add = new User();
+					$this ->setHttpHeaders('application/json', 200);
+					echo $this->encodeJson($user_add->add());
+					//echo 'add success';
+					break;
+				}
+				//------------------------UPDATE------------------------
+				else if($this->action == 'update'){
+					$user_update = new User();
+					$this ->setHttpHeaders('application/json', 200);
+					echo $this->encodeJson($user_update->update());
+					//echo 'add success';
+					break;
+				}
 			case 'delete':
 				$user_delete = new User();
 				$this ->setHttpHeaders('application/json', 200);
 				echo $this->encodeJson($user_delete->delete($this->id));
 				//echo 'delete success';
 				break;
+			/*
 			case 'put':
 				$user_update = new User();
 				$this ->setHttpHeaders('application/json', 200);
 				echo $this->encodeJson($user_update->update($this->input));
 				//echo 'update success';
 				break;
+			*/
 		}
 		
 	}

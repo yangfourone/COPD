@@ -23,19 +23,26 @@ class EnvHandler extends SimpleRest{
 					$env_all = new Env();
 					$this ->setHttpHeaders('application/json', 200);
 					echo $this->encodeJson($env_all->getAll());
-					break;
 				}
 				else if($this->action == 'getbyid'){
 					$env_id = new Env();
 					$this ->setHttpHeaders('application/json', 200);
 					echo $this->encodeJson($env_id->getById($this->id));
-					break;
+				}else if($this->action == 'getbyuser'){
+					$env_id = new Env();
+					$this ->setHttpHeaders('application/json', 200);
+					echo $this->encodeJson($env_id->getByUser($this->id));
 				}
+				break;
 			case 'post':
-				$env_add = new Env();
-				$this ->setHttpHeaders('application/json', 200);
-				echo $this->encodeJson($env_add->add($this->input));
-				break;	
+				if($this->action == 'add'){
+					$env_add = new Env();
+					$this ->setHttpHeaders('application/json', 200);
+					echo $this->encodeJson($env_add->add($this->input));
+				}
+				break;
+			default:
+				
 		}
 	}
 	public function encodeJson($responseData) {

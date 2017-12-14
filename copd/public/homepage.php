@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <?php
 session_start();
+if(empty($_SESSION['account'])){
+	header("Location: index.php"); 
+}
+else{
+}
 ?>
 <html lang="en">
 <head>
@@ -43,13 +48,13 @@ $(document).ready(function(){
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="HomePage">
           <a class="nav-link" href="homepage.php">
             <i class="fa fa-fw fa-dashboard"></i>
-            <span class="nav-link-text">HomePage</span>
+            <span class="nav-link-text">COPD首頁</span>
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Patient">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text" id="test">Patient</span>
+            <span class="nav-link-text" id="test">病患資料</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseComponents">
             <li>
@@ -60,7 +65,7 @@ $(document).ready(function(){
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Environment">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text" id="test">Environment</span>
+            <span class="nav-link-text" id="test">環境資料</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseExamplePages">
             <li>
@@ -71,7 +76,7 @@ $(document).ready(function(){
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Daily">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseDailyPages" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text" id="test">Daily</span>
+            <span class="nav-link-text" id="test">每日統計</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseDailyPages">
             <li>
@@ -82,7 +87,7 @@ $(document).ready(function(){
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Activity">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseActivityPages" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text" id="test">Activity</span>
+            <span class="nav-link-text" id="test">活動統計</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseActivityPages">
             <li>
@@ -185,91 +190,6 @@ $(document).ready(function(){
 	        <h5 id="patient_Result" align="right" style="color:red"></h5>
 	    </div>
 	    <br>
-	    <!-- EnvDataTable-->
-	    <div style="display:none" id="datatable_env_visible">
-	      <table id="evnTable" class="display" cellspacing="0" width="100%">
-	          <thead>
-	              <tr>
-	                  <th>ID</th>
-	                  <th>Temperature</th>
-	                  <th>Humidity</th>
-	                  <th>PM2.5</th>
-	                  <th>UV</th>
-	              </tr>
-	          </thead>
-	          <tfoot>
-	              <tr>
-	                  <th>ID</th>
-	                  <th>Temperature</th>
-	                  <th>Humidity</th>
-	                  <th>PM2.5</th>
-	                  <th>UV</th>
-	              </tr>
-	          </tfoot>
-	          
-	      </table>
-	    </div>
-	    <!-- PatientDataTable-->
-	    <div style="display: none" id="datatable_patient_visible">
-	      <table id="patientTable" class="display" cellspacing="0" width="100%" >
-            
-	          <thead>
-	              <tr>
-	                  <th>ID</th>
-	                  <th>FirstName</th>
-	                  <th>LastName</th>
-	                  <th>Sex</th>
-	                  <th>BMI</th>
-	                  <th>History</th>
-	                  <th>Drug</th>
-	              </tr>
-	          </thead>
-	          <tfoot>
-	              <tr>
-	                  <th>ID</th>
-	                  <th>FirstName</th>
-	                  <th>LastName</th>
-	                  <th>Sex</th>
-	                  <th>BMI</th>
-	                  <th>History</th>
-	                  <th>Drug</th>
-	              </tr>
-	          </tfoot>
-	          
-	      </table>
-          <div class="row" align="right">
-            <a href="Download_Environment_PDF.php">PDF Download</a>
-          </div>
-	    </div>
-
-	    <div style="display: none" id="datatable_exercise_visible">
-	      <table id="exerciseTable" class="display" cellspacing="0" width="100%" >
-	          <thead>
-	              <tr>
-	                  <th>ID</th>
-	                  <th>FirstName</th>
-	                  <th>LastName</th>
-	                  <th>Sex</th>
-	                  <th>BMI</th>
-	                  <th>History</th>
-	                  <th>Drug</th>
-	              </tr>
-	          </thead>
-	          <tfoot>
-	              <tr>
-	                  <th>ID</th>
-	                  <th>FirstName</th>
-	                  <th>LastName</th>
-	                  <th>Sex</th>
-	                  <th>BMI</th>
-	                  <th>History</th>
-	                  <th>Drug</th>
-	              </tr>
-	          </tfoot>
-	          
-	      </table>
-	    </div>
-
 	    <!-- /.content-wrapper-->
 	    <footer class="sticky-footer">
 	      <div class="container">

@@ -15,8 +15,13 @@ class User{
 			return 'No data avaliable.';
 		}
 		else {
-			$getAll_dataArray = mysqli_fetch_all($getAll_result,MYSQLI_ASSOC);
-			return $getAll_dataArray;
+			$dataArray = array();
+			while($row = mysqli_fetch_array($getAll_result)) {
+			    $dataArray[] = array($row["id"],$row["fname"],$row["lname"],$row["sex"],$row["bmi"],$row["history"],$row["drug"],$row["env_id"],$row["ble_id"],$row["watch_id"]);
+			}
+			return $dataArray;
+			//$getAll_dataArray = mysqli_fetch_all($getAll_result,MYSQLI_ASSOC);
+			//return $getAll_dataArray;
 		}
 	}
 
@@ -33,36 +38,42 @@ class User{
 			return 'No data avaliable.';
 		}
 		else {
-			$getById_dataArray = mysqli_fetch_all($getById_result,MYSQLI_ASSOC);
+			$getById_dataArray = mysqli_fetch_array($getById_result,MYSQLI_ASSOC);
 			return $getById_dataArray;
 		}
 	}
 
-	function add($input){
+	function add(){
 		//connet db
 		require 'connect.php';
 		mysqli_select_db($con,"user");
-		$id = $input['id'];
-		$pwd = $input['pwd'];
-		$fname = $input['fname'];
-		$lname = $input['lname'];
-		$sex = $input['sex'];
-		$bmi = $input['bmi'];
-		$history = $input['history'];
-		$drug = $input['drug'];
-		$env_id = $input['env_id'];
-		$ble_id = $input['ble_id'];
-		$watch_id = $input['watch_id'];
 
-		$sql_check = "SELECT * FROM user WHERE id = '$id'";
-		$check_result = mysqli_query($con,$sql_check);
-		if(mysqli_num_rows($check_result) == 0) {
-			$sql_insert = "INSERT INTO user (id,pwd,fname,lname,sex,bmi,history,drug,env_id,ble_id,watch_id) VALUES ('$id','$pwd','$fname','$lname','$sex','$bmi','$history','$drug','$env_id','$ble_id','$watch_id')";
-			$add_result = mysqli_query($con,$sql_insert);
-			return 'ok';
+		$id = $_POST['ID'];
+		$pwd = $_POST['Password'];
+		$fname = $_POST['FirstName'];
+		$lname = $_POST['LastName'];
+		$sex = $_POST['Sex'];
+		$bmi = $_POST['BMI'];
+		$history = $_POST['History'];
+		$drug = $_POST['Drug'];
+		$env_id = $_POST['ENV_ID'];
+		$ble_id = $_POST['BLE_ID'];
+		$watch_id = $_POST['Watch_ID'];
+
+		if(!isset($id)||empty($id)||!isset($pwd)||empty($pwd)||!isset($fname)||empty($fname)||!isset($lname)||empty($lname)||!isset($sex)||!isset($bmi)||empty($bmi)||!isset($history)||empty($history)||!isset($drug)||empty($drug)||!isset($env_id)||empty($env_id)||!isset($ble_id)||empty($ble_id)||!isset($watch_id)||empty($watch_id)){
+			return 'NULL Data Exist.';
 		}
 		else {
-			return 'The id '.$id.' is existense.';
+			$sql_check = "SELECT * FROM user WHERE id = '$id'";
+			$check_result = mysqli_query($con,$sql_check);
+			if(mysqli_num_rows($check_result) == 0) {
+				$sql_insert = "INSERT INTO user (id,pwd,fname,lname,sex,bmi,history,drug,env_id,ble_id,watch_id) VALUES ('$id','$pwd','$fname','$lname','$sex','$bmi','$history','$drug','$env_id','$ble_id','$watch_id')";
+				$add_result = mysqli_query($con,$sql_insert);
+				return 'ok';
+			}
+			else {
+				return 'The id '.$id.' is existense.';
+			}
 		}
 	}
 
@@ -82,25 +93,27 @@ class User{
 			return 'ok';
 		}
 	}
-
-	function update($input){
+	
+	function update(){
 		//connet db
 		require 'connect.php';
 		mysqli_select_db($con,"user");
-		$id = $input['id'];
-		$pwd = $input['pwd'];
-		$fname = $input['fname'];
-		$lname = $input['lname'];
-		$sex = $input['sex'];
-		$bmi = $input['bmi'];
-		$history = $input['history'];
-		$drug = $input['drug'];
-		$env_id = $input['env_id'];
-		$ble_id = $input['ble_id'];
-		$watch_id = $input['watch_id'];
+		
+		$id = $_POST['ID'];
+		$pwd = $_POST['Password'];
+		$fname = $_POST['FirstName'];
+		$lname = $_POST['LastName'];
+		$sex = $_POST['Sex'];
+		$bmi = $_POST['BMI'];
+		$history = $_POST['History'];
+		$drug = $_POST['Drug'];
+		$env_id = $_POST['ENV_ID'];
+		$ble_id = $_POST['BLE_ID'];
+		$watch_id = $_POST['Watch_ID'];
 
 		$sql_check = "SELECT * FROM user WHERE id = '$id'";
 		$check_result = mysqli_query($con,$sql_check);
+
 		if(mysqli_num_rows($check_result) == 0) {
 			return 'No data avaliable.';
 		}

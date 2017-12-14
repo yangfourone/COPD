@@ -47,11 +47,15 @@ class Daily{
 		$step = $input['step'];
 		$date = $input['date']; 
 
-		$sql_insert = "INSERT INTO daily (uid, step, date) VALUES ('$uid','$step','$date')";
-		$add_result = mysqli_query($con,$sql_insert);
-		return 'ok';
+		if(!isset($uid)||empty($uid)||!isset($step)||empty($step)||!isset($date)||empty($date)){
+			return 'NULL Data Exist.';
+		}
+		else {
+			$sql_insert = "INSERT INTO daily (uid, step, date) VALUES ('$uid','$step','$date')";
+			$add_result = mysqli_query($con,$sql_insert);
+			return 'ok';
+		}
 	}
-
 	function deletebyid($id){
 		//connet db
 		require 'connect.php';

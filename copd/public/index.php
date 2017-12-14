@@ -1,6 +1,9 @@
+<?php
+session_start();
+session_destroy();
+?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,7 +22,7 @@
 <script type="text/JavaScript" src="jquery-1.11.3.min.js"></script>
 <script type="text/JavaScript">
 $(document).ready(function(){
-    $("#login").click(function() {
+    /*$("#login").click(function() {
         $.ajax({
             type: "POST",
             url: "login_db.php",
@@ -34,6 +37,28 @@ $(document).ready(function(){
                 }
                 else{
                   $("#login_msg").html('error account or password!');
+                }
+            },
+            error: function(jqXHR) {
+                alert("發生錯誤: " + jqXHR.status);
+            }
+        })
+    })*/
+    $("#login").click(function() {
+        $.ajax({
+            type: "POST",
+            url: "../apiv1/admin/login",
+            dataType: "json",
+            data: {
+                account: $("#account").val(),
+                pwd: $("#password").val()           
+            },
+            success: function(data) {
+                if(data=='login success'){
+                  window.location = 'homepage.php';
+                }
+                else{
+                  $("#login_msg").html(data);
                 }
             },
             error: function(jqXHR) {
@@ -70,7 +95,7 @@ $(document).ready(function(){
         </form>
         <div class="text-center">
           <a class="d-block small mt-3" href="register.php">Register an Account</a>
-          <a class="d-block small" href="forgot-password.html">Forgot Password?</a>
+          <a class="d-block small" href="">Forgot Password?</a>
         </div>
       </div>
     </div>

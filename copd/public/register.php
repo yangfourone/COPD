@@ -33,7 +33,7 @@ $(document).ready(function(){
             },
             success: function(data) {
                 if (data.accountName) {
-                    $("#acc_result").html(data.accountName + ' is saved successfully!');
+                    $("#acc_result").html(data.accountName + ' 儲存成功');
                 } else {
                     $("#acc_result").html(data.msg);
                 }                
@@ -50,7 +50,7 @@ $(document).ready(function(){
   <div class="container">
     <div class="card card-register mx-auto mt-5">
       <div class="card-header">Register an Account
-      <h5 id="acc_result" align="right"></h5>
+      <h5 id="acc_result" align="right" style="color:red;"></h5>
       </div>
       <div class="card-body">
         <form>
@@ -59,34 +59,18 @@ $(document).ready(function(){
             <input class="form-control" id="exampleAccount" placeholder="Enter Account">
           </div>
           <div class="form-group">
-            <div class="form-row">
-              <div class="col-md-6">
-                <label for="exampleInputPassword">Password</label>
-                <input class="form-control" id="exampleInputPassword" type="password" placeholder="Password">
-              </div>
-              <div class="col-md-6">
-                <label for="exampleConfirmPassword">Confirm password</label>
-                <input class="form-control" id="exampleConfirmPassword" type="password" placeholder="Confirm password">
-              </div>
-            </div>
+            <label for="exampleInputPassword">Password</label>
+            <input class="form-control" id="exampleInputPassword" type="password" placeholder="Password">
           </div>
           <div class="form-group">
-            <div class="form-row">
-              <div class="col-md-6">
-                <label for="exampleInputFirstName">First name</label>
-                <input class="form-control" id="exampleInputFirstName" type="text" aria-describedby="nameHelp" placeholder="Enter first name">
-              </div>
-              <div class="col-md-6">
-                <label for="exampleInputLastName">Last name</label>
-                <input class="form-control" id="exampleInputLastName" type="text" aria-describedby="nameHelp" placeholder="Enter last name">
-              </div>
-            </div>
+            <label for="exampleConfirmPassword">Confirm password</label>
+            <input class="form-control" id="exampleConfirmPassword" type="password" placeholder="Confirm password">
           </div>
           <a class="btn btn-primary btn-block"  id="register_button" style="color:white">Register</a>
         </form>
         <div class="text-center">
           <a class="d-block small mt-3" href="index.php">Login Page</a>
-          <a class="d-block small" href="forgot-password.html">Forgot Password?</a>
+          <a class="d-block small" href="">Forgot Password?</a>
         </div>
       </div>
     </div>

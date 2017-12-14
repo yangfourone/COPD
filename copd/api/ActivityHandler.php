@@ -25,6 +25,18 @@ class ActivityHandler extends SimpleRest{
 					echo $this->encodeJson($activity_all->getAll());
 					break;
 				}
+				else if($this->action == 'getallweek'){
+					$activity_all_week = new Activity();
+					$this ->setHttpHeaders('application/json', 200);
+					echo $this->encodeJson($activity_all_week->getAll_week());
+					break;
+				}
+				else if($this->action == 'getallmonth'){
+					$activity_all_month = new Activity();
+					$this ->setHttpHeaders('application/json', 200);
+					echo $this->encodeJson($activity_all_month->getAll_month());
+					break;
+				}
 				else if($this->action == 'getbyid'){
 					$activity_id = new Activity();
 					$this ->setHttpHeaders('application/json', 200);

@@ -80,9 +80,9 @@ $table = "
 		<td>BMI</td>
 		<td>History</td>
 		<td>Drug</td>
-		<td>env_id</td>
-		<td>ble_id</td>
-		<td>watch_id</td>
+		<td>Env-ID</td>
+		<td>BLE-ID</td>
+		<td>Watch-ID</td>
 	</tr>
 	". $table_data .
 	"
