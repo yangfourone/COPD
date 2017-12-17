@@ -34,10 +34,8 @@ else{
 $(document).ready(function(){
 
     $.ajax({
-    type : 'POST',
-    url  : 'datatable_env.php',
-    //type : 'GET',
-    //url : 'http://140.118.122.159/copd/apiv1/env/getall',
+    type : 'GET',
+    url  : '../apiv1/env/getall',
     dataType: 'json',
     cache: false,
     success :  function(result)

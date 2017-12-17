@@ -14,7 +14,10 @@ class Daily{
 			return 'No data avaliable.';
 		}
 		else {
-			$getAll_dataArray = mysqli_fetch_all($getAll_result,MYSQLI_ASSOC);
+			$getAll_dataArray = array();
+			while($row = mysqli_fetch_array($getAll_result)) {
+			    $getAll_dataArray[] = array($row["id"],$row["uid"],$row["step"],$row["date"],$row["distance"]);
+			}
 			return $getAll_dataArray;
 		}
 	}
@@ -45,13 +48,14 @@ class Daily{
 		//query data by method
 		$uid = $input['uid'];
 		$step = $input['step'];
-		$date = $input['date']; 
+		$date = $input['date'];
+		$distance = $input['distance']; 
 
-		if(!isset($uid)||empty($uid)||!isset($step)||empty($step)||!isset($date)||empty($date)){
+		if(!isset($uid)||empty($uid)||!isset($step)||empty($step)||!isset($date)||empty($date)||!isset($distance)||empty($distance)){
 			return 'NULL Data Exist.';
 		}
 		else {
-			$sql_insert = "INSERT INTO daily (uid, step, date) VALUES ('$uid','$step','$date')";
+			$sql_insert = "INSERT INTO daily (uid, step, date, distance) VALUES ('$uid','$step','$date', '$distance')";
 			$add_result = mysqli_query($con,$sql_insert);
 			return 'ok';
 		}

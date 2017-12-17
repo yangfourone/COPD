@@ -32,24 +32,134 @@ else{
 
 <script type="text/JavaScript">
 $(document).ready(function(){
-  //var table = $('#activityTable').DataTable();
-  $("#time_select").change(function(){
-    $.ajax({
+  $("#activityTable").show();
+  $("#personal_datatable_cancel").click(function(){
+      $("#ActivityRecord").hide();
+  });
+
+  $.ajax({
     type : 'GET',
     url : '../apiv1/activity/' + $("#time_select").val(),
     dataType: 'json',
     result :{
     },
-    success :  function(result)
-        {
-            //pass data to datatable
-            console.log(result); // just to see I'm getting the correct data.
-            $('#activityTable').DataTable({
-                "aaData": result, //here we get the array data from the ajax call.
-            });
+    success :  function(result){
+      //pass data to datatable
+      console.log(result); // just to see I'm getting the correct data.
+      $('#activityTable').DataTable({
+        "aaData": result, //here we get the array data from the ajax call.
+      });
+    }
+  });
+
+  $("#time_select").change(function(){
+    $('#activityTable').DataTable().destroy();
+    $.ajax({
+      type : 'GET',
+      url : '../apiv1/activity/' + $("#time_select").val(),
+      dataType: 'json',
+      result :{
+      },
+      success :  function(result){
+        //pass data to datatable
+        if(result=='No data avaliable.'){
+          alert('No data avaliable.');
+          $("#activityTable").hide();
         }
+        else{
+          $("#activityTable").show();
+          console.log(result); // just to see I'm getting the correct data.
+          $('#activityTable').DataTable({
+            "aaData": result, //here we get the array data from the ajax call.
+          });
+          $('#activityTable').DataTable().draw();
+        }
+      },
+      error: function(jqXHR) {
+        alert("發生錯誤: " + jqXHR.status);
+      }
     });
   });
+
+  $(document).on("click", "tr[class='odd'],tr[class='even']", function(){
+        $("#ActivityRecord").show();
+        $getid = $(this).children('td:first-child').text();
+        $.ajax({
+            type: "GET",
+            url: "../apiv1/activity/getbyid/" + $getid,
+            dataType: "json",
+            data: {
+            },
+            success: function(data) {
+              //印出彈出表單之DataTable
+              print_personal_table();
+              //取得個人細部資料
+              Get_personal_data();
+              //將bp的資料做分解
+              var bp_data = JSON.parse(data.bp);
+              //計算運動時間 hour:3,600,000 & minute:60,000 & second:1000
+              var time2 = new Date(data.end_time);
+              var time1 = new Date(data.start_time);
+              var hour = (time2.getTime() - time1.getTime()) / 3600000;
+              var minute = (time2.getTime() - time1.getTime()) / 60000;
+              var second = (time2.getTime() - time1.getTime()) / 1000;
+              var minute_int = Math.floor(minute);
+              var second_int = second-(minute_int*60);
+              //填入各項資訊
+              document.getElementById('personal_name').value = '姓名：' + data.fname + ' ' + data.lname;
+              document.getElementById('age').value = '年齡：';
+              document.getElementById('before_dbp').value = '前測 舒張壓：' + bp_data.before.sbp + 'hmmg';
+              document.getElementById('before_sbp').value = ' 收縮壓：' + bp_data.before.dbp + 'hmmg';
+              document.getElementById('after_dbp').value = '後測 舒張壓：' + bp_data.after.sbp + 'hmmg';
+              document.getElementById('after_sbp').value = ' 收縮壓：' + bp_data.after.dbp + 'hmmg';
+              document.getElementById('exercise_time').value = '運動時間：' + minute_int + '分' + second_int + '秒';
+              document.getElementById('h_i_time').value = '高強度運動時間：' + data.h_i_time + '秒';
+            },
+
+            error: function(jqXHR) {
+                alert("發生錯誤: " + jqXHR.status);
+            }
+        })    
+    });
+
+    function print_personal_table (){
+      $('#personal_Activity').DataTable().destroy();
+      $.ajax({
+        type : 'GET',
+        url  : '../apiv1/activity/getbyiddata/' + $getid,
+        dataType: 'json',
+        cache: false,
+        success :  function(result)
+        {
+          //pass data to datatable
+          $("#personal_Activity").show();
+          console.log(result); // just to see I'm getting the correct data.
+          $('#personal_Activity').DataTable({
+             "aaData": result, //here we get the array data from the ajax call.
+          });
+          $('#personal_Activity').DataTable().draw();
+        },
+        error: function(jqXHR) {
+          alert("發生錯誤: " + jqXHR.status);
+        }
+      });
+    }
+
+    function Get_personal_data(){
+      $.ajax({
+        type : 'GET',
+        url  : '../apiv1/activity/getbyidbp/' + $getid,
+        dataType: 'json',
+        cache: false,
+        success :  function(bp_data)
+        {
+          
+        },
+        error: function(jqXHR) {
+          alert("發生錯誤: " + jqXHR.status);
+        }
+      });
+    }
 });
 
 </script>
@@ -135,40 +245,70 @@ $(document).ready(function(){
   <!-- center   -->
   <div class="content-wrapper" style="padding-left: 5px">
     <!-- click activity record -->
-    <div class="edit_table" id="ActivityRecord" >
+    <div class="edit_table" id="ActivityRecord" style="display: none;">
       <h2>活動紀錄</h2>
       <br>
-
-      <label>姓名：</label><label id="name">132</label><br>
-      <label>年齡：</label><label id="age">321</label><br>
-      <label>前測 舒張壓：</label><label id="before_sbp">321</label><label>hmmg 收縮壓：</label><label id="before_dbp">70</label><label>hmmg</label><br>
-      <label>後測 舒張壓：</label><label id="after_sbp">80</label><label>hmmg 收縮壓：</label><label id="after_dbp">120</label><label>hmmg</label><br>
-      <label>運動時間：</label><label id="exercise_time">27分24秒</label><br>
-      <label>高強度運動時間：</label><label id="h_i_time">2分</label><br>
-      
+      <!-- 個人姓名 -->
+      <input id="personal_name" style="text-align: left; padding-right: 5px; border: 0px; background: #ffffff;" size="number" disabled></input><br>
+      <!-- 個人年齡 -->
+      <input id="age" style="text-align: left; padding-right: 5px; border: 0px; background: #ffffff;" size="number" disabled></input><br>
+      <!-- 前測 DBP SBP -->
+      <input id="before_dbp" style="text-align: left; padding-right: 5px; border: 0px; background: #ffffff;" size="number" disabled></input>
+      <input id="before_sbp" style="text-align: left; padding-right: 5px; border: 0px; background: #ffffff;" size="number" disabled></input><br>
+      <!-- 後測 DBP SBP -->
+      <input id="after_dbp" style="text-align: left; padding-right: 5px; border: 0px; background: #ffffff;" size="number" disabled></input>
+      <input id="after_sbp" style="text-align: left; padding-right: 5px; border: 0px; background: #ffffff;" size="number" disabled></input><br>
+      <!-- 運動時間 -->
+      <input id="exercise_time" style="text-align: left; padding-right: 5px; border: 0px; background: #ffffff;" size="number" disabled></input><br>
+      <!-- 高強度運動時間 -->
+      <input id="h_i_time" style="text-align: left; padding-right: 5px; border: 0px; background: #ffffff;" size="number" disabled></input><br><br>
+      <!-- 個人資訊之DataTable -->
+      <div id="datatable_personal_visible">
+          <table id="personal_Activity" class="display" cellspacing="0" width="100%" style="display: none;">
+              <thead>
+                  <tr>
+                      <th>SPO2</th>
+                      <th>心跳</th>
+                      <th>時間</th>
+                  </tr>
+              </thead>
+              <tfoot>
+                  <tr>
+                      <th>SPO2</th>
+                      <th>心跳</th>
+                      <th>時間</th>
+                  </tr>
+              </tfoot>
+          </table>
+        </div>
+        <br>
+        <div align="right">
+          <button id="personal_datatable_cancel">取消</button>
+        </div>
     </div>
-    <!-- Datatable -->
+    <!-- 全部資料之DataTable -->
     <br>
     <div class="container-fluid">
+        <!-- 時間篩選 -->
         <select id="time_select">
-          <option value="getallweek">本周</option>
+          <option value="getallweek">近一週</option>
           <option value="getallmonth">本月</option>
           <option value="getall">全部</option>
         </select>
+        <!-- 使用者篩選 -->
         <select id="human">
           <option value="1"></option>
           <option value="2"></option>
         </select>
-        <button onclick="window.location.href='Download_Activity_PDF.php'" style="margin-left: 1260px">PDF Download</button>
+        <button onclick="window.location.href='Download_Activity_PDF.php'" style="margin-left: 1250px">PDF Download</button>
         <button onclick="window.location.href='Download_Activity_Excel.php'">EXCEL Download</button>
     </div>
     <br>
+    <!-- container-fluid-->
     <div class="container-fluid">
-	    <!-- /.container-fluid-->
-	    <!-- Download Page -->
-	    <!-- EnvDataTable-->
+	    <!-- Activity DataTable-->
         <div id="datatable_activity_visible">
-          <table id="activityTable" class="display" cellspacing="0" width="100%">
+          <table id="activityTable" class="display" cellspacing="0" width="100%" style="display: none;">
               <thead>
                   <tr>
                       <th>編號</th>
@@ -176,6 +316,8 @@ $(document).ready(function(){
                       <th>步數</th>
                       <th>開始時間</th>
                       <th>結束時間</th>
+                      <th>距離(公尺)</th>
+                      <th>高強度運動(秒)</th>
                   </tr>
               </thead>
               <tfoot>
@@ -185,13 +327,13 @@ $(document).ready(function(){
                       <th>步數</th>
                       <th>開始時間</th>
                       <th>結束時間</th>
+                      <th>距離(公尺)</th>
+                      <th>高強度運動(秒)</th>
                   </tr>
               </tfoot>
               
           </table>
         </div>
-	    <!-- PatientManage-->
-	    <!-- PatientDataTable-->
 	    <!-- /.content-wrapper-->
 	    <footer class="sticky-footer">
 	      <div class="container">

@@ -43,6 +43,18 @@ class ActivityHandler extends SimpleRest{
 					echo $this->encodeJson($activity_id->getById($this->id));
 					break;
 				}
+				else if($this->action == 'getbyiddata'){
+					$activity_id_table = new Activity();
+					$this ->setHttpHeaders('application/json', 200);
+					echo $this->encodeJson($activity_id_table->getByIdData($this->id));
+					break;
+				}
+				else if($this->action == 'getbyidbp'){
+					$activity_id_data = new Activity();
+					$this ->setHttpHeaders('application/json', 200);
+					echo $this->encodeJson($activity_id_data->getByIdBp($this->id));
+					break;
+				}
 				else if($this->action == 'getbyuser'){
 					$activity_uid = new Activity();
 					$this ->setHttpHeaders('application/json', 200);

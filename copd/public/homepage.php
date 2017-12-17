@@ -27,14 +27,6 @@ else{
 
 <script src="jquery-1.11.3.min.js"></script>
 <link rel="stylesheet" href="css\myStyle.css">
-<link rel="stylesheet" href="DataTables\DataTables-1.10.16\css\jquery.dataTables.min.css">
-<script type="text/JavaScript" src="DataTables\DataTables-1.10.16\js\jquery.dataTables.min.js"></script>
-
-<script type="text/JavaScript">
-$(document).ready(function(){
-
-});
-</script>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Navigation-->
@@ -87,7 +79,7 @@ $(document).ready(function(){
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Activity">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseActivityPages" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text" id="test">活動統計</span>
+            <span class="nav-link-text" id="test">活動紀錄</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseActivityPages">
             <li>

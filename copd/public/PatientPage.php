@@ -88,8 +88,8 @@ $(document).ready(function(){
                 } 
                 else {
                     alert(data);
-                }                   
-                window.location = 'PatientPage.php';
+                }              
+                print_datatable(); 
             },
             error: function(jqXHR) {
                 alert("發生錯誤: " + jqXHR.status);
@@ -123,7 +123,7 @@ $(document).ready(function(){
                 else {
                     alert(data);
                 }                   
-                window.location = 'PatientPage.php';    
+                print_datatable();  
             },
             error: function(jqXHR) {
                 alert("發生錯誤: " + jqXHR.status);
@@ -146,7 +146,7 @@ $(document).ready(function(){
                 else {
                     alert(data);
                 }                   
-                window.location = 'PatientPage.php';             
+                print_datatable();         
             },
             error: function(jqXHR) {
                 alert("發生錯誤: " + jqXHR.status);
@@ -154,59 +154,29 @@ $(document).ready(function(){
         })
         
     })
+    
     //---------------------------------------------------datatable by GET
-    $.ajax({
-    type : 'GET',
-    url  : '../apiv1/user/getall',
-    dataType: 'json',
-    cache: false,
-    success :  function(result)
-        {
-            //pass data to datatable
-            console.log(result); // just to see I'm getting the correct data.
-            $('#patientTable').DataTable({
-                "aaData": result, //here we get the array data from the ajax call.
-            });
-        }
-    });
-
-    $(document).on("click", "tr[class='even']", function(){
-        $.ajax({
-            type: "GET",
-            url: "../apiv1/user/getbyid/" + $(this).children('td:first-child').text(),
-            dataType: "json",
-            data: {
-            },
-            success: function(data) {
-              document.getElementById('pid').value = data.id;
-              document.getElementById('pwd').value = data.pwd;
-              document.getElementById('fname').value = data.fname;
-              document.getElementById('lname').value = data.lname;
-              document.getElementById('sex').value = data.sex;
-              document.getElementById('bmi').value = data.bmi;
-              document.getElementById('history').value = data.history;
-              document.getElementById('drug').value = data.drug;
-              document.getElementById('env_id').value = data.env_id;
-              document.getElementById('ble_id').value = data.ble_id;
-              document.getElementById('watch_id').value = data.watch_id;
-            },
-            error: function(jqXHR) {
-                alert("發生錯誤: " + jqXHR.status);
+    print_datatable();
+    function print_datatable(){
+      $('#patientTable').DataTable().destroy();
+      $.ajax({
+        type : 'GET',
+        url  : '../apiv1/user/getall',
+        dataType: 'json',
+        cache: false,
+        success :  function(result)
+            {
+                //pass data to datatable
+                console.log(result); // just to see I'm getting the correct data.
+                $('#patientTable').DataTable({
+                    "aaData": result, //here we get the array data from the ajax call.
+                });
+                $('#activityTable').DataTable().draw();
             }
-        })
-        $("#patient_delete").show();
-        $("#patient_update").show();
-        $("#patient_save").hide();
-        $("#patient_close").show();
-        $("#newid_label").hide();
-        $("#pid_label").show();
-        $("#newid").hide();
-        $("#pid").show();
-        $("#PatientManage").animate({
-          height: 'show'
-        });
-    });
-    $(document).on("click", "tr[class='odd']", function(){
+      });
+    }
+
+    $(document).on("click", "tr[class='odd'],tr[class='even']", function(){
         $.ajax({
             type: "GET",
             url: "../apiv1/user/getbyid/" + $(this).children('td:first-child').text(),

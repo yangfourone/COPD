@@ -32,12 +32,9 @@ else{
 
 <script type="text/JavaScript">
 $(document).ready(function(){
-
     $.ajax({
-    type : 'POST',
-    url  : 'datatable_daily.php',
-    //type : 'GET',
-    //url : 'http://140.118.122.159/copd/apiv1/env/getall',
+    type : 'GET',
+    url  : '../apiv1/daily/getall',
     dataType: 'json',
     cache: false,
     success :  function(result)
@@ -147,6 +144,7 @@ $(document).ready(function(){
                       <th>帳號</th>
                       <th>步數</th>
                       <th>日期</th>
+                      <th>距離(公尺)</th>
                   </tr>
               </thead>
               <tfoot>
@@ -155,6 +153,7 @@ $(document).ready(function(){
                       <th>帳號</th>
                       <th>步數</th>
                       <th>日期</th>
+                      <th>距離(公尺)</th>
                   </tr>
               </tfoot>
               
