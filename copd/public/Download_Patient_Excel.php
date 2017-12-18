@@ -53,11 +53,17 @@ $objPHPExcel = new PHPExcel();
 // 將資料庫的資料全部存在student這個陣列
 while($row = mysqli_fetch_array($result)) {
 	$_cnt++;
+	if($row['sex']==0){
+		$sex_chinese = '女';
+	}
+	else {
+		$sex_chinese = '男';
+	}
 	$objPHPExcel->setActiveSheetIndex()
 		->setCellValue('A'.$_cnt , $row['id'])
 		->setCellValue('B'.$_cnt , $row['fname'])
 		->setCellValue('C'.$_cnt , $row['lname'])
-		->setCellValue('D'.$_cnt , $row['sex'])
+		->setCellValue('D'.$_cnt , $sex_chinese)
 		->setCellValue('E'.$_cnt , $row['bmi'])
 		->setCellValue('F'.$_cnt , $row['history'])
 		->setCellValue('G'.$_cnt , $row['drug'])
@@ -77,16 +83,16 @@ $objPHPExcel->getProperties()->setCreator("Maarten Balliauw")
 
 // Add some data
 $objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A1', 'ID')
-            ->setCellValue('B1', 'FirstName')
-            ->setCellValue('C1', 'LastName')
-            ->setCellValue('D1', 'Sex')
+            ->setCellValue('A1', '帳號')
+            ->setCellValue('B1', '名字')
+            ->setCellValue('C1', '姓氏')
+            ->setCellValue('D1', '性別')
             ->setCellValue('E1', 'BMI')
-            ->setCellValue('F1', 'History')
-            ->setCellValue('G1', 'Drug')
-            ->setCellValue('H1', 'env_id')
-            ->setCellValue('I1', 'ble_id')
-            ->setCellValue('J1', 'watch_id');
+            ->setCellValue('F1', '病例')
+            ->setCellValue('G1', '藥物')
+            ->setCellValue('H1', 'Env_ID')
+            ->setCellValue('I1', 'BLE_ID')
+            ->setCellValue('J1', 'Watch_ID');
 			
 $data_number = 0 ;
 

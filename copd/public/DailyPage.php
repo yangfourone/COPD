@@ -32,29 +32,32 @@ else{
 
 <script type="text/JavaScript">
 $(document).ready(function(){
-    $.ajax({
+  $.ajax({
     type : 'GET',
-    url  : '../apiv1/daily/getalldata',
+    url  : '../apiv1/daily/getall',
     dataType: 'json',
     cache: false,
-    success :  function(result)
-        {
-          if(result=='No data avaliable.'){
-            alert('No data avaliable.');
-            $("#dailyTable").hide();
-          }
-          else{
-            $('#dailyTable').show();
-            console.log(result); // just to see I'm getting the correct data.
-            $('#dailyTable').DataTable({
-              "aaData": result, //here we get the array data from the ajax call.
-            });
-          }
-        }
-    });
-
+    success :  function(result){
+      var data_array = [];
+      console.log(result.length);
+      for (i = 0; i < result.length; i++) {
+        data = [[  result[i].id,result[i].uid,result[i].step,result[i].date,result[i].distance  ]];
+        var data_array = data_array.concat(data);
+      } 
+      if(result=='No data avaliable.'){
+        alert('No data avaliable.');
+        $("#dailyTable").hide();
+      }
+      else{
+        console.log(data_array); // just to see I'm getting the correct data.
+        $('#dailyTable').show();
+        $('#dailyTable').DataTable({
+          "aaData": data_array, //here we get the array data from the ajax call.
+        });
+      }
+    }
+  });
 });
-
 </script>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">

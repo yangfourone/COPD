@@ -74,13 +74,13 @@ $objPHPExcel->getProperties()->setCreator("Maarten Balliauw")
 
 // Add some data
 $objPHPExcel->setActiveSheetIndex(0)
-            ->setCellValue('A1', 'ID')
-            ->setCellValue('B1', 'Device ID')
-            ->setCellValue('C1', 'Temperature')
-            ->setCellValue('D1', 'Humidity')
+            ->setCellValue('A1', '編號')
+            ->setCellValue('B1', '裝置編號')
+            ->setCellValue('C1', '溫度')
+            ->setCellValue('D1', '濕度')
             ->setCellValue('E1', 'PM2.5')
-            ->setCellValue('F1', 'UV')
-            ->setCellValue('G1', 'DateTime');
+            ->setCellValue('F1', '紫外線指數')
+            ->setCellValue('G1', '時間');
 			
 $data_number = 0 ;
 

@@ -19,26 +19,6 @@ class User{
  			return $getAll_dataArray;
 		}
 	}
-	function getAllData(){
-		//connet db
-		require 'connect.php';
-		mysqli_select_db($con,"user");
-
-		//query data by method
-		$getAll_sql = "SELECT * FROM user";
-		$getAll_result = mysqli_query($con,$getAll_sql);
-
-		if(mysqli_num_rows($getAll_result) == 0) {
-			return 'No data avaliable.';
-		}
-		else {
-			$dataArray = array();
-			while($row = mysqli_fetch_array($getAll_result)) {
-			    $dataArray[] = array($row["id"],$row["fname"],$row["lname"],$row["sex"],$row["bmi"],$row["history"],$row["drug"],$row["env_id"],$row["ble_id"],$row["watch_id"]);
-			}
-			return $dataArray;
-		}
-	}
 	function getById($id){
 		//connet db
 		require 'connect.php';

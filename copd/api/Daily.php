@@ -18,26 +18,6 @@ class Daily{
  			return $getAll_dataArray;
 		}
 	}
-	function getAllData(){
-		//connet db
-		require 'connect.php';
-		mysqli_select_db($con,"daily");
-
-		//query data by method
-		$getAll_sql = "SELECT * FROM daily";
-		$getAll_result = mysqli_query($con,$getAll_sql);
-		
-		if(mysqli_num_rows($getAll_result) == 0) {
-			return 'No data avaliable.';
-		}
-		else {
-			$getAll_dataArray = array();
-			while($row = mysqli_fetch_array($getAll_result)) {
-			    $getAll_dataArray[] = array($row["id"],$row["uid"],$row["step"],$row["date"],$row["distance"]);
-			}
-			return $getAll_dataArray;
-		}
-	}
 	
 	function getByUser($id){
 		//connet db

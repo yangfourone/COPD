@@ -34,11 +34,6 @@ class EnvHandler extends SimpleRest{
 					$this ->setHttpHeaders('application/json', 200);
 					echo $this->encodeJson($env_id->getByUser($this->id));
 				}
-				else if($this->action == 'getalldata'){
-					$env_table = new Env();
-					$this ->setHttpHeaders('application/json', 200);
-					echo $this->encodeJson($env_table->getAllData($this->id));
-				}
 				break;
 			case 'post':
 				if($this->action == 'add'){

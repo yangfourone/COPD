@@ -44,17 +44,25 @@ $(document).ready(function(){
     result :{
     },
     success :  function(result){
-      //pass data to datatable
-      if(result=='No data avaliable.'){
-        alert('No data avaliable.');
-        $("#activityTable").hide();
-      }
-      else{
-        console.log(result); // just to see I'm getting the correct data.
-        $('#activityTable').DataTable({
-          "aaData": result, //here we get the array data from the ajax call.
-        });
-      }
+      var data_array = [];
+        console.log(result.length);
+        for (i = 0; i < result.length; i++) {
+          data = [[  result[i].id,result[i].uid,result[i].step,result[i].start_time,result[i].end_time,result[i].distance,result[i].h_i_time  ]];
+          var data_array = data_array.concat(data);
+        } 
+        //pass data to datatable
+        if(result=='No data avaliable.'){
+          alert('No data avaliable.');
+          $("#activityTable").hide();
+        }
+        else{
+          console.log(data_array);
+          $("#activityTable").show();
+          $('#activityTable').DataTable({
+            "aaData": data_array, //here we get the array data from the ajax call.
+          });
+          $('#activityTable').DataTable().draw();
+        }
     },
     error: function(jqXHR) {
       alert("發生錯誤: " + jqXHR.status);
@@ -70,16 +78,22 @@ $(document).ready(function(){
       result :{
       },
       success :  function(result){
+        var data_array = [];
+        console.log(result.length);
+        for (i = 0; i < result.length; i++) {
+          data = [[  result[i].id,result[i].uid,result[i].step,result[i].start_time,result[i].end_time,result[i].distance,result[i].h_i_time  ]];
+          var data_array = data_array.concat(data);
+        } 
         //pass data to datatable
         if(result=='No data avaliable.'){
           alert('No data avaliable.');
           $("#activityTable").hide();
         }
         else{
+          console.log(data_array);
           $("#activityTable").show();
-          console.log(result); // just to see I'm getting the correct data.
           $('#activityTable').DataTable({
-            "aaData": result, //here we get the array data from the ajax call.
+            "aaData": data_array, //here we get the array data from the ajax call.
           });
           $('#activityTable').DataTable().draw();
         }
@@ -145,22 +159,6 @@ $(document).ready(function(){
              "aaData": result, //here we get the array data from the ajax call.
           });
           $('#personal_Activity').DataTable().draw();
-        },
-        error: function(jqXHR) {
-          alert("發生錯誤: " + jqXHR.status);
-        }
-      });
-    }
-
-    function Get_personal_data(){
-      $.ajax({
-        type : 'GET',
-        url  : '../apiv1/activity/getbyidbp/' + $getid,
-        dataType: 'json',
-        cache: false,
-        success :  function(bp_data)
-        {
-          //alert(bp_data);
         },
         error: function(jqXHR) {
           alert("發生錯誤: " + jqXHR.status);
@@ -302,7 +300,7 @@ $(document).ready(function(){
         <select id="time_select">
           <option value="getallweek">近一週</option>
           <option value="getallmonth">本月</option>
-          <option value="getalldata">全部</option>
+          <option value="getall">全部</option>
         </select>
         <!-- 使用者篩選 -->
         <select id="human">

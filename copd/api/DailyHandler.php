@@ -31,12 +31,6 @@ class DailyHandler extends SimpleRest{
 					echo $this->encodeJson($daily_uid->getByUser($this->id));
 					break;
 				}
-				else if($this->action == 'getalldata'){
-					$daily_table = new Daily();
-					$this ->setHttpHeaders('application/json', 200);
-					echo $this->encodeJson($daily_table->getAllData($this->id));
-					break;
-				}
 			case 'post':
 				$daily_add = new Daily();
 				$this ->setHttpHeaders('application/json', 200);

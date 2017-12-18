@@ -32,28 +32,31 @@ else{
 
 <script type="text/JavaScript">
 $(document).ready(function(){
-
-    $.ajax({
+  $.ajax({
     type : 'GET',
-    url  : '../apiv1/env/getalldata',
+    url  : '../apiv1/env/getall',
     dataType: 'json',
     cache: false,
-    success :  function(result)
-        {
-          if(result=='No data avaliable.'){
-            alert('No data avaliable.');
-            $("#evnTable").hide();
-          }
-          else{
-            $('#evnTable').show();
-            console.log(result); // just to see I'm getting the correct data.
-            $('#evnTable').DataTable({
-              "aaData": result, //here we get the array data from the ajax call.
-            });
-          }
-        }
-    });
-
+    success :  function(result){
+      var data_array = [];
+      console.log(result.length);
+      for (i = 0; i < result.length; i++) {
+        data = [[  result[i].id,result[i].deviceid,result[i].temperature,result[i].humidity,result[i].pm25,result[i].uv,result[i].datetime  ]];
+        var data_array = data_array.concat(data);
+      } 
+      if(result=='No data avaliable.'){
+        alert('No data avaliable.');
+        $("#evnTable").hide();
+      }
+      else{
+        console.log(data_array); // just to see I'm getting the correct data.
+        $('#evnTable').show();
+        $('#evnTable').DataTable({
+          "aaData": data_array, //here we get the array data from the ajax call.
+        });
+      }
+    }
+  });
 });
 
 </script>

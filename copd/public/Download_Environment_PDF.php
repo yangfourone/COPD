@@ -84,10 +84,10 @@ $pdf->SetTitle('台灣科技大學電子系'.$semester.'年度專題一覽表');
 ******************************************************************************************************************************************************************/
 
 // set title
-$objPHPEXcel_PDF->SetTitle('Environment Data');
+$objPHPEXcel_PDF->SetTitle('環境資訊');
 //$objPHPEXcel_PDF->SetFont('msungstdlight', '', 15); 可以顯示中文但會偏移
 $objPHPEXcel_PDF->SetFont('cid0jp', '', 16); //可以顯示中韓日文且不會偏移
-$objPHPEXcel_PDF->Write(0, 'Environment', '', 0, 'C', true, 0, false, false, 0);
+$objPHPEXcel_PDF->Write(0, '環境資訊', '', 0, 'C', true, 0, false, false, 0);
 
 // 連結資料庫
 require 'connect.php';
@@ -117,13 +117,13 @@ $table = "
 <table  border=\"1\" align=\"center\" cellpadding=\"3\">
 
 	<tr>
-		<td>ID</td>
-		<td>Device ID</td>
-		<td>Temperature</td>
-		<td>Humidity</td>
+		<td>編號</td>
+		<td>裝置編號</td>
+		<td>溫度</td>
+		<td>濕度</td>
 		<td>PM2.5</td>
-		<td>UV</td>
-		<td>DateTime</td>
+		<td>紫外線指數</td>
+		<td>時間</td>
 	</tr>
 	". $table_data .
 	"

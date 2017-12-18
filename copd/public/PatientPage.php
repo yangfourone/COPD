@@ -157,16 +157,37 @@ $(document).ready(function(){
       $('#patientTable').DataTable().destroy();
       $.ajax({
         type : 'GET',
-        url  : '../apiv1/user/getalldata',
+        url  : '../apiv1/user/getall',
         dataType: 'json',
         cache: false,
         success :  function(result)
         {
-          //pass data to datatable
-          $('#patientTable').DataTable({
-              "aaData": result, //here we get the array data from the ajax call.
-          });
-          $('#patientTable').DataTable().draw();
+          var data_array = [];
+          var sex_chinese;
+          console.log(result.length);
+          for (i = 0; i < result.length; i++) {
+            if(result[i].sex==0){
+              sex_chinese = '女';
+            }
+            else{
+              sex_chinese = '男';
+            }
+            data = [[  result[i].id,result[i].fname,result[i].lname,sex_chinese,result[i].bmi,result[i].drug,result[i].history,result[i].env_id,result[i].ble_id,result[i].watch_id  ]];
+            var data_array = data_array.concat(data);
+          } 
+          console.log(data_array);
+          if(result=='No data avaliable.'){
+            alert('No data avaliable.');
+            $("#patientTable").hide();
+          }
+          else{
+            $("#patientTable").show();
+            //pass data to datatable
+            $('#patientTable').DataTable({
+                "aaData": data_array, //here we get the array data from the ajax call.
+            });
+            $('#patientTable').DataTable().draw();
+          }
         },
         error: function(jqXHR) {
           alert("發生錯誤: " + jqXHR.status);

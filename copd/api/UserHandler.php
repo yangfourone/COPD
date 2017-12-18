@@ -30,12 +30,6 @@ class UserHandler extends SimpleRest{
 					echo $this->encodeJson($user_id->getById($this->id));
 					break;
 				}
-				else if($this->action == 'getalldata'){
-					$user_table = new User();
-					$this ->setHttpHeaders('application/json', 200);
-					echo $this->encodeJson($user_table->getAllData($this->id));
-					break;
-				}
 			case 'post':
 				if($this->action == 'add'){
 					$user_add = new User();

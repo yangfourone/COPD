@@ -38,10 +38,10 @@ $objPHPEXcel_PDF->AddPage();
 // add some datas here 
 
 // set title
-$objPHPEXcel_PDF->SetTitle('Patient Data');
+$objPHPEXcel_PDF->SetTitle('使用者資訊');
 //$objPHPEXcel_PDF->SetFont('msungstdlight', '', 15); 可以顯示中文但會偏移
 $objPHPEXcel_PDF->SetFont('cid0jp', '', 14); //可以顯示中韓日文且不會偏移
-$objPHPEXcel_PDF->Write(0, 'Patient Data', '', 0, 'C', true, 0, false, false, 0);
+$objPHPEXcel_PDF->Write(0, '使用者資訊', '', 0, 'C', true, 0, false, false, 0);
 
 // 連結資料庫
 require 'connect.php';
@@ -56,11 +56,17 @@ $table_data = "";
 // 將資料庫的資料全部存在student這個陣列
 while($row = mysqli_fetch_array($result)) {
 	$_cnt++;
+	if($row['sex']==0){
+		$sex_chinese = '女';
+	}
+	else {
+		$sex_chinese = '男';
+	}
 	$table_data = $table_data . "<tr>
      		<td border=\"1\" align=\"center\" cellpadding=\"3\">{$row['id']}</td>
      		<td border=\"1\" align=\"center\" cellpadding=\"3\">{$row['fname']}</td>
      		<td border=\"1\" align=\"center\" cellpadding=\"3\">{$row['lname']}</td>
-     		<td border=\"1\" align=\"center\" cellpadding=\"3\">{$row['sex']}</td>
+     		<td border=\"1\" align=\"center\" cellpadding=\"3\">{$sex_chinese}</td>
      		<td border=\"1\" align=\"center\" cellpadding=\"3\">{$row['bmi']}</td>
      		<td border=\"1\" align=\"center\" cellpadding=\"3\">{$row['history']}</td>
      		<td border=\"1\" align=\"center\" cellpadding=\"3\">{$row['drug']}</td>
@@ -73,13 +79,13 @@ while($row = mysqli_fetch_array($result)) {
 $table = "
 <table  border=\"1\" align=\"center\" cellpadding=\"3\">
 	<tr>
-		<td>ID</td>
-		<td>FirstName</td>
-		<td>LastName</td>
-		<td>Sex</td>
+		<td>帳號</td>
+		<td>名字</td>
+		<td>姓氏</td>
+		<td>性別</td>
 		<td>BMI</td>
-		<td>History</td>
-		<td>Drug</td>
+		<td>病例</td>
+		<td>藥物</td>
 		<td>Env-ID</td>
 		<td>BLE-ID</td>
 		<td>Watch-ID</td>
