@@ -34,9 +34,7 @@ else{
 $(document).ready(function(){
 
     $("#patient_close").click(function(){
-    	$("#PatientManage").animate({
-          height: 'hide'
-        });
+      $("#PatientManage").hide();
     });
 
     $("#NewPatient").click(function(){
@@ -59,9 +57,7 @@ $(document).ready(function(){
       $("#pid_label").hide();
       $("#newid").show();
       $("#pid").hide();
-      $("#PatientManage").animate({
-          height: 'show'
-        });
+      $("#PatientManage").show();
     })
     //---------------------------------------------------save by POST
     $("#patient_save").click(function() {
@@ -161,18 +157,20 @@ $(document).ready(function(){
       $('#patientTable').DataTable().destroy();
       $.ajax({
         type : 'GET',
-        url  : '../apiv1/user/getall',
+        url  : '../apiv1/user/getalldata',
         dataType: 'json',
         cache: false,
         success :  function(result)
-            {
-                //pass data to datatable
-                console.log(result); // just to see I'm getting the correct data.
-                $('#patientTable').DataTable({
-                    "aaData": result, //here we get the array data from the ajax call.
-                });
-                $('#activityTable').DataTable().draw();
-            }
+        {
+          //pass data to datatable
+          $('#patientTable').DataTable({
+              "aaData": result, //here we get the array data from the ajax call.
+          });
+          $('#patientTable').DataTable().draw();
+        },
+        error: function(jqXHR) {
+          alert("發生錯誤: " + jqXHR.status);
+        }
       });
     }
 
@@ -208,9 +206,7 @@ $(document).ready(function(){
         $("#pid_label").show();
         $("#newid").hide();
         $("#pid").show();
-        $("#PatientManage").animate({
-          height: 'show'
-        });
+        $("#PatientManage").show();
     });
 });
 

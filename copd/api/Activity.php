@@ -15,13 +15,28 @@ class Activity{
 			return 'No data avaliable.';
 		}
 		else {
+			$getAll_dataArray = mysqli_fetch_all($getAll_result,MYSQLI_ASSOC);
+			return $getAll_dataArray;
+		}
+	}
+	function getAllData(){
+		//connet db
+		require 'connect.php';
+		mysqli_select_db($con,"activity");
+
+		//query data by method
+		$getAll_sql = "SELECT * FROM activity";
+		$getAll_result = mysqli_query($con,$getAll_sql);
+		
+		if(mysqli_num_rows($getAll_result) == 0) {
+			return 'No data avaliable.';
+		}
+		else {
 			$dataArray = array();
 			while($row = mysqli_fetch_array($getAll_result)) {
 			    $dataArray[] = array($row["id"],$row["uid"],$row["step"],$row["start_time"],$row["end_time"],$row["distance"],$row["h_i_time"]);
 			}
 			return $dataArray;
-			//$getAll_dataArray = mysqli_fetch_all($getAll_result,MYSQLI_ASSOC);
-			//return $getAll_dataArray;
 		}
 	}
 	function getAll_week(){

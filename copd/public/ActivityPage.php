@@ -102,8 +102,6 @@ $(document).ready(function(){
             success: function(data) {
               //印出彈出表單之DataTable
               print_personal_table();
-              //取得個人細部資料
-              Get_personal_data();
               //將bp的資料做分解
               var bp_data = JSON.parse(data.bp);
               //計算運動時間 hour:3,600,000 & minute:60,000 & second:1000
@@ -162,7 +160,7 @@ $(document).ready(function(){
         cache: false,
         success :  function(bp_data)
         {
-          
+          //alert(bp_data);
         },
         error: function(jqXHR) {
           alert("發生錯誤: " + jqXHR.status);
@@ -304,7 +302,7 @@ $(document).ready(function(){
         <select id="time_select">
           <option value="getallweek">近一週</option>
           <option value="getallmonth">本月</option>
-          <option value="getall">全部</option>
+          <option value="getalldata">全部</option>
         </select>
         <!-- 使用者篩選 -->
         <select id="human">

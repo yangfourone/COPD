@@ -15,14 +15,30 @@ class Env{
 			return 'No data avaliable.';
 		}
 		else {
+			$getAll_dataArray = mysqli_fetch_all($getAll_result,MYSQLI_ASSOC);
+ 			return $getAll_dataArray;
+		}
+	}
+	function getAllData(){
+		//connet db
+		require 'connect.php';
+		mysqli_select_db($con,"env");
+
+		//query data by method
+		$getAll_sql = "SELECT * FROM env";
+		$getAll_result = mysqli_query($con,$getAll_sql);
+		
+		if(mysqli_num_rows($getAll_result) == 0) {
+			return 'No data avaliable.';
+		}
+		else {
 			$getAll_dataArray = array();
 			while($row = mysqli_fetch_array($getAll_result)) {
 			    $getAll_dataArray[] = array($row["id"],$row["deviceid"],$row["temperature"],$row["humidity"],$row["pm25"],$row["uv"],$row["datetime"]);
-			}
+			}	
 			return $getAll_dataArray;
 		}
 	}
-	
 	function getByUser($userid){
 		//connet db
 		require 'connect.php';
@@ -79,5 +95,5 @@ class Env{
 		}
 	}
 }
-
 ?>
+

@@ -35,16 +35,22 @@ $(document).ready(function(){
 
     $.ajax({
     type : 'GET',
-    url  : '../apiv1/env/getall',
+    url  : '../apiv1/env/getalldata',
     dataType: 'json',
     cache: false,
     success :  function(result)
         {
-            //pass data to datatable
+          if(result=='No data avaliable.'){
+            alert('No data avaliable.');
+            $("#evnTable").hide();
+          }
+          else{
+            $('#evnTable').show();
             console.log(result); // just to see I'm getting the correct data.
             $('#evnTable').DataTable({
-                "aaData": result, //here we get the array data from the ajax call.
+              "aaData": result, //here we get the array data from the ajax call.
             });
+          }
         }
     });
 
