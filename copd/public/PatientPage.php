@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 session_start();
 if(empty($_SESSION['account'])){
@@ -7,6 +6,7 @@ if(empty($_SESSION['account'])){
 else{
 }
 ?>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -25,7 +25,7 @@ else{
   <link href="css/sb-admin.css" rel="stylesheet">
 </head>
 
-<script src="jquery-1.11.3.min.js"></script>
+<script src="js/jquery-1.11.3.min.js"></script>
 <link rel="stylesheet" href="css\myStyle.css">
 <link rel="stylesheet" href="..\DataTables\DataTables-1.10.16\css\jquery.dataTables.min.css">
 <script type="text/JavaScript" src="..\DataTables\DataTables-1.10.16\js\jquery.dataTables.min.js"></script>
@@ -308,10 +308,10 @@ $(document).ready(function(){
 	    <!-- /.container-fluid-->
 	    <!-- Download Page -->
 	    <!-- PatientManage-->
-      <div class="edit_table" id="PatientManage" style="display:none; width: 79%">
+      <div class="edit_table" id="PatientManage" style="display:none; width: 100%">
         <h2 align="center">病患資料表</h2><br>
           <div class="row">
-            <div class="column" align="right" style="padding-left: 30px;">
+            <div class="column" align="right" style="padding: 0px 10px 0px 5px; margin: 0 auto 0 auto;">
               <label for="fname">姓氏：</label>
               <input type="text" id="fname"> <br>
 
@@ -331,7 +331,7 @@ $(document).ready(function(){
               <input type="text" id="ble_id"> <br>
             </div>
 
-            <div class="column" align="right" style="padding-left: 30px;">
+            <div class="column" align="right" style="padding: 0px 10px 0px 5px; margin: 0 auto 0 auto;" >
               <label for="lname">名字：</label>
               <input type="text" id="lname"><br>
 
@@ -348,11 +348,11 @@ $(document).ready(function(){
               <input type="text" id="watch_id"><br>
             </div>
 
-            <div class="column" align="right" style="padding-left: 30px;">
+            <div class="column" align="right" style="padding: 0px 10px 0px 5px; margin: 0 auto 0 auto;">
               <label for="history">病例：</label>
-              <textarea type="text" id="history" rows="3" cols="60"></textarea><br>
+              <textarea type="text" id="history" rows="3" cols="40"></textarea><br>
               <label for="drug">藥物：</label>
-              <textarea type="text" id="drug" rows="3" cols="60"></textarea><br>
+              <textarea type="text" id="drug" rows="3" cols="40"></textarea><br>
 
               <button  class="button2" id="patient_save">儲存</button>
               <button  class="button2" id="patient_delete">刪除</button>

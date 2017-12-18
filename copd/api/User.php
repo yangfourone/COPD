@@ -20,8 +20,6 @@ class User{
 			    $dataArray[] = array($row["id"],$row["fname"],$row["lname"],$row["sex"],$row["bmi"],$row["history"],$row["drug"],$row["env_id"],$row["ble_id"],$row["watch_id"]);
 			}
 			return $dataArray;
-			//$getAll_dataArray = mysqli_fetch_all($getAll_result,MYSQLI_ASSOC);
-			//return $getAll_dataArray;
 		}
 	}
 

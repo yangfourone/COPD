@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 session_start();
 if(empty($_SESSION['account'])){
@@ -7,6 +6,7 @@ if(empty($_SESSION['account'])){
 else{
 }
 ?>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -25,7 +25,7 @@ else{
   <link href="css/sb-admin.css" rel="stylesheet">
 </head>
 
-<script src="jquery-1.11.3.min.js"></script>
+<script src="js/jquery-1.11.3.min.js"></script>
 <link rel="stylesheet" href="css\myStyle.css">
 <link rel="stylesheet" href="..\DataTables\DataTables-1.10.16\css\jquery.dataTables.min.css">
 <script type="text/JavaScript" src="..\DataTables\DataTables-1.10.16\js\jquery.dataTables.min.js"></script>
@@ -45,10 +45,19 @@ $(document).ready(function(){
     },
     success :  function(result){
       //pass data to datatable
-      console.log(result); // just to see I'm getting the correct data.
-      $('#activityTable').DataTable({
-        "aaData": result, //here we get the array data from the ajax call.
-      });
+      if(result=='No data avaliable.'){
+        alert('No data avaliable.');
+        $("#activityTable").hide();
+      }
+      else{
+        console.log(result); // just to see I'm getting the correct data.
+        $('#activityTable').DataTable({
+          "aaData": result, //here we get the array data from the ajax call.
+        });
+      }
+    },
+    error: function(jqXHR) {
+      alert("發生錯誤: " + jqXHR.status);
     }
   });
 
@@ -289,6 +298,8 @@ $(document).ready(function(){
     <!-- 全部資料之DataTable -->
     <br>
     <div class="container-fluid">
+      <div class="row">
+        <div class="column" align="left" style="width: 30%; padding-left: 15px">
         <!-- 時間篩選 -->
         <select id="time_select">
           <option value="getallweek">近一週</option>
@@ -300,8 +311,12 @@ $(document).ready(function(){
           <option value="1"></option>
           <option value="2"></option>
         </select>
-        <button onclick="window.location.href='Download_Activity_PDF.php'" style="margin-left: 1250px">PDF Download</button>
-        <button onclick="window.location.href='Download_Activity_Excel.php'">EXCEL Download</button>
+        </div>
+        <div class="column" align="right" style="width: 70%; ">
+          <button onclick="window.location.href='Download_Activity_PDF.php'" >PDF Download</button>
+          <button onclick="window.location.href='Download_Activity_Excel.php'">EXCEL Download</button>
+        </div>
+      </div>
     </div>
     <br>
     <!-- container-fluid-->

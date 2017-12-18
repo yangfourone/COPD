@@ -60,6 +60,7 @@ class Daily{
 			return 'ok';
 		}
 	}
+	
 	function deletebyid($id){
 		//connet db
 		require 'connect.php';

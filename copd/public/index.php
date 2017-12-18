@@ -19,31 +19,9 @@ session_destroy();
   <link href="css/sb-admin.css" rel="stylesheet">
 </head>
 
-<script type="text/JavaScript" src="jquery-1.11.3.min.js"></script>
+<script type="text/JavaScript" src="js/jquery-1.11.3.min.js"></script>
 <script type="text/JavaScript">
 $(document).ready(function(){
-    /*$("#login").click(function() {
-        $.ajax({
-            type: "POST",
-            url: "login_db.php",
-            dataType: "json",
-            data: {
-                Account: $("#account").val(),
-                Password: $("#password").val()           
-            },
-            success: function(data) {
-                if(data.msg=='1'){
-                  window.location = 'homepage.php';
-                }
-                else{
-                  $("#login_msg").html('error account or password!');
-                }
-            },
-            error: function(jqXHR) {
-                alert("發生錯誤: " + jqXHR.status);
-            }
-        })
-    })*/
     $("#login").click(function() {
         $.ajax({
             type: "POST",

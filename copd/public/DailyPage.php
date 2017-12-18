@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <?php
 session_start();
 if(empty($_SESSION['account'])){
@@ -7,6 +6,7 @@ if(empty($_SESSION['account'])){
 else{
 }
 ?>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -25,7 +25,7 @@ else{
   <link href="css/sb-admin.css" rel="stylesheet">
 </head>
 
-<script src="jquery-1.11.3.min.js"></script>
+<script src="js/jquery-1.11.3.min.js"></script>
 <link rel="stylesheet" href="css\myStyle.css">
 <link rel="stylesheet" href="..\DataTables\DataTables-1.10.16\css\jquery.dataTables.min.css">
 <script type="text/JavaScript" src="..\DataTables\DataTables-1.10.16\js\jquery.dataTables.min.js"></script>

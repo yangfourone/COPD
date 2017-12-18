@@ -22,6 +22,7 @@ class Env{
 			return $getAll_dataArray;
 		}
 	}
+	
 	function getByUser($userid){
 		//connet db
 		require 'connect.php';

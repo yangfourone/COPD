@@ -72,8 +72,6 @@ class Activity{
 			    $getAll_month_dataArray[] = array($row["id"],$row["uid"],$row["step"],$row["start_time"],$row["end_time"],$row["distance"],$row["h_i_time"]);
 			}
 			return $getAll_month_dataArray;
-			//$getAll_week_dataArray = mysqli_fetch_array($getAll_week_result,MYSQLI_ASSOC);
-			//return $getAll_week_dataArray;
 		}
 	}
 	function getById($id){
