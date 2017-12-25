@@ -43,7 +43,8 @@ class EnvHandler extends SimpleRest{
 				}
 				break;
 			default:
-				
+				$this ->setHttpHeaders('application/json', 404);
+				echo 'METHOD Error!';
 		}
 	}
 	public function encodeJson($responseData) {

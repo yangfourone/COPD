@@ -25,16 +25,10 @@ class ActivityHandler extends SimpleRest{
 					echo $this->encodeJson($activity_all->getAll());
 					break;
 				}
-				else if($this->action == 'getallweek'){
-					$activity_all_week = new Activity();
+				else if($this->action == 'getbytime'){
+					$activity_time = new Activity();
 					$this ->setHttpHeaders('application/json', 200);
-					echo $this->encodeJson($activity_all_week->getAll_week());
-					break;
-				}
-				else if($this->action == 'getallmonth'){
-					$activity_all_month = new Activity();
-					$this ->setHttpHeaders('application/json', 200);
-					echo $this->encodeJson($activity_all_month->getAll_month());
+					echo $this->encodeJson($activity_time->getByTime($this->id));
 					break;
 				}
 				else if($this->action == 'getbyid'){
@@ -43,39 +37,29 @@ class ActivityHandler extends SimpleRest{
 					echo $this->encodeJson($activity_id->getById($this->id));
 					break;
 				}
-				else if($this->action == 'getbyiddata'){
-					$activity_id_table = new Activity();
-					$this ->setHttpHeaders('application/json', 200);
-					echo $this->encodeJson($activity_id_table->getByIdData($this->id));
-					break;
-				}
-				else if($this->action == 'getbyidbp'){
-					$activity_id_data = new Activity();
-					$this ->setHttpHeaders('application/json', 200);
-					echo $this->encodeJson($activity_id_data->getByIdBp($this->id));
-					break;
-				}
-				else if($this->action == 'getbyuser'){
-					$activity_uid = new Activity();
-					$this ->setHttpHeaders('application/json', 200);
-					echo $this->encodeJson($activity_uid->getByUser($this->id));
-					break;
-				}
 			case 'post':
-				$activity_add = new Activity();
-				$this ->setHttpHeaders('application/json', 200);
-				echo $this->encodeJson($activity_add->add($this->input));
-				break;
+				if($this->action == 'add'){
+					$activity_add = new Activity();
+					$this ->setHttpHeaders('application/json', 200);
+					echo $this->encodeJson($activity_add->add($this->input));
+					break;
+				}
+				else if($this->action == 'update'){
+					$activity_update = new Activity();
+					$this ->setHttpHeaders('application/json', 200);
+					echo $this->encodeJson($activity_update->updatebyid($this->input));
+					break;
+				}
 			case 'delete':
-				$activity_delete = new Activity();
-				$this ->setHttpHeaders('application/json', 200);
-				echo $this->encodeJson($activity_delete->delete($this->id));
-				break;
-			case 'put':
-				$activity_update = new Activity();
-				$this ->setHttpHeaders('application/json', 200);
-				echo $this->encodeJson($activity_update->updatebyid($this->input));
-				break;
+				if($this->action == 'delete'){
+					$activity_delete = new Activity();
+					$this ->setHttpHeaders('application/json', 200);
+					echo $this->encodeJson($activity_delete->delete($this->id));
+					break;
+				}
+			default:
+				$this ->setHttpHeaders('application/json', 404);
+				echo 'METHOD Error!';
 		}
 	}
 	public function encodeJson($responseData) {

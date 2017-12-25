@@ -6,13 +6,25 @@ class User{
 		//connet db
 		require 'connect.php';
 		mysqli_select_db($con,"user");
-
+		$NULL_JSON = array(
+			'id' => null,
+		    'pwd' => null,
+		    'fname' => null,
+		    'lname' => null,
+		    'sex' => null,
+		    'bmi' => null,
+		    'history' => null,
+		    'drug' => null,
+		    'env_id' => null,
+		    'ble_id' => null,
+		    'watch_id' => null
+		);
 		//query data by method
 		$getAll_sql = "SELECT * FROM user";
 		$getAll_result = mysqli_query($con,$getAll_sql);
 
 		if(mysqli_num_rows($getAll_result) == 0) {
-			return 'No data avaliable.';
+			return array($NULL_JSON);
 		}
 		else {
 			$getAll_dataArray = mysqli_fetch_all($getAll_result,MYSQLI_ASSOC);
@@ -105,16 +117,22 @@ class User{
 		$ble_id = $_POST['BLE_ID'];
 		$watch_id = $_POST['Watch_ID'];
 
-		$sql_check = "SELECT * FROM user WHERE id = '$id'";
-		$check_result = mysqli_query($con,$sql_check);
 
-		if(mysqli_num_rows($check_result) == 0) {
-			return 'No data avaliable.';
+		if(!isset($id)||empty($id)||!isset($pwd)||empty($pwd)||!isset($fname)||empty($fname)||!isset($lname)||empty($lname)||!isset($sex)||!isset($bmi)||empty($bmi)||!isset($history)||empty($history)||!isset($drug)||empty($drug)||!isset($env_id)||empty($env_id)||!isset($ble_id)||empty($ble_id)||!isset($watch_id)||empty($watch_id)){
+			return 'NULL Data Exist.';
 		}
-		else {
-			$sql_update ="UPDATE user SET pwd='$pwd', fname='$fname', lname='$lname', sex='$sex', bmi='$bmi', history='$history', drug='$drug', env_id='$env_id', ble_id='$ble_id', watch_id='$watch_id' WHERE id='$id'";
-			$update_result = mysqli_query($con,$sql_update);	
-			return 'ok';
+		else{
+			$sql_check = "SELECT * FROM user WHERE id = '$id'";
+			$check_result = mysqli_query($con,$sql_check);
+
+			if(mysqli_num_rows($check_result) == 0) {
+				return 'No data avaliable.';
+			}
+			else {
+				$sql_update ="UPDATE user SET pwd='$pwd', fname='$fname', lname='$lname', sex='$sex', bmi='$bmi', history='$history', drug='$drug', env_id='$env_id', ble_id='$ble_id', watch_id='$watch_id' WHERE id='$id'";
+				$update_result = mysqli_query($con,$sql_update);	
+				return 'ok';
+			}
 		}
 	}
 }

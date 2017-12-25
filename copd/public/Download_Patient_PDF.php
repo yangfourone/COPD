@@ -44,7 +44,7 @@ $objPHPEXcel_PDF->SetFont('cid0jp', '', 14); //可以顯示中韓日文且不會
 $objPHPEXcel_PDF->Write(0, '使用者資訊', '', 0, 'C', true, 0, false, false, 0);
 
 // 連結資料庫
-require 'connect.php';
+require '../api/connect.php';
 mysqli_select_db($con,"user");
  
 // query資料庫的資料 

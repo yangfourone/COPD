@@ -31,141 +31,110 @@ else{
 <script type="text/JavaScript" src="..\DataTables\DataTables-1.10.16\js\jquery.dataTables.min.js"></script>
 
 <script type="text/JavaScript">
-$(document).ready(function(){
-  $("#activityTable").show();
-  $("#personal_datatable_cancel").click(function(){
-      $("#ActivityRecord").hide();
+
+  $(document).ready(function(){
+    var activityDataTable = $('#activityTable').DataTable();
+    var personalDataTable = $('#personal_Activity').DataTable();
+    getActivityData();
+
+    $("#personal_datatable_cancel").click(function(){
+        $("#ActivityRecord").hide();
+    });
+    $("#time_select").change(function(){
+      getActivityData();
+    })
+    $(document).on("click", "tr[class='odd'],tr[class='even']", function(){
+      $("#ActivityRecord").show();
+      var row = $(this).children('td:first-child').text();
+      click_row(row);
+    });
   });
 
-  $.ajax({
-    type : 'GET',
-    url : '../apiv1/activity/' + $("#time_select").val(),
-    dataType: 'json',
-    result :{
-    },
-    success :  function(result){
-      var data_array = [];
-        console.log(result.length);
-        for (i = 0; i < result.length; i++) {
-          data = [[  result[i].id,result[i].uid,result[i].step,result[i].start_time,result[i].end_time,result[i].distance,result[i].h_i_time  ]];
-          var data_array = data_array.concat(data);
-        } 
-        //pass data to datatable
-        if(result=='No data avaliable.'){
-          alert('No data avaliable.');
-          $("#activityTable").hide();
-        }
-        else{
-          console.log(data_array);
-          $("#activityTable").show();
-          $('#activityTable').DataTable({
-            "aaData": data_array, //here we get the array data from the ajax call.
-          });
-          $('#activityTable').DataTable().draw();
-        }
-    },
-    error: function(jqXHR) {
-      alert("發生錯誤: " + jqXHR.status);
-    }
-  });
-
-  $("#time_select").change(function(){
-    $('#activityTable').DataTable().destroy();
+  function click_row(row){
     $.ajax({
-      type : 'GET',
-      url : '../apiv1/activity/' + $("#time_select").val(),
-      dataType: 'json',
-      result :{
+      type: "GET",
+      url: "../apiv1/activity/getbyid/" + row,
+      dataType: "json",
+      data: {
       },
-      success :  function(result){
-        var data_array = [];
-        console.log(result.length);
-        for (i = 0; i < result.length; i++) {
-          data = [[  result[i].id,result[i].uid,result[i].step,result[i].start_time,result[i].end_time,result[i].distance,result[i].h_i_time  ]];
-          var data_array = data_array.concat(data);
-        } 
-        //pass data to datatable
-        if(result=='No data avaliable.'){
-          alert('No data avaliable.');
-          $("#activityTable").hide();
-        }
-        else{
-          console.log(data_array);
-          $("#activityTable").show();
-          $('#activityTable').DataTable({
-            "aaData": data_array, //here we get the array data from the ajax call.
-          });
-          $('#activityTable').DataTable().draw();
-        }
+      success: function(data) {
+        //印出彈出表單之DataTable
+        LoadPersonalDataToTable(row,data);
+        //將bp的資料做分解
+        var bp_data = JSON.parse(data.bp);
+        //計算運動時間 hour:3,600,000 & minute:60,000 & second:1000
+        var time2 = new Date(data.end_time);
+        var time1 = new Date(data.start_time);
+        var hour = (time2.getTime() - time1.getTime()) / 3600000;
+        var minute = (time2.getTime() - time1.getTime()) / 60000;
+        var second = (time2.getTime() - time1.getTime()) / 1000;
+        var minute_int = Math.floor(minute);
+        var second_int = second-(minute_int*60);
+        //填入各項資訊
+        document.getElementById('personal_name').value = '姓名：' + data.fname + ' ' + data.lname;
+        document.getElementById('age').value = '年齡：';
+        document.getElementById('before_dbp').value = '前測 舒張壓：' + bp_data.before.sbp + 'hmmg';
+        document.getElementById('before_sbp').value = ' 收縮壓：' + bp_data.before.dbp + 'hmmg';
+        document.getElementById('after_dbp').value = '後測 舒張壓：' + bp_data.after.sbp + 'hmmg';
+        document.getElementById('after_sbp').value = ' 收縮壓：' + bp_data.after.dbp + 'hmmg';
+        document.getElementById('exercise_time').value = '運動時間：' + minute_int + '分' + second_int + '秒';
+        document.getElementById('h_i_time').value = '高強度運動時間：' + Math.floor(data.h_i_time/60) + '分';
       },
       error: function(jqXHR) {
-        alert("發生錯誤: " + jqXHR.status);
+          alert("發生錯誤: " + jqXHR.status);
+      }
+    })
+  }
+
+  function getActivityData() {
+    $.ajax({
+      type : 'GET',
+      url  : '../apiv1/activity/' + $("#time_select").val(),
+      dataType: 'json',
+      cache: false,
+      success :  function(result){
+        if(result=='No data avaliable.'){
+           alert('No data avaliable.');
+           $("#activityTable").hide();
+        }
+        else{
+          $("#activityTable").show();
+          LoadActivityDataToTable(result);
+        }
       }
     });
-  });
+  }
 
-  $(document).on("click", "tr[class='odd'],tr[class='even']", function(){
-        $("#ActivityRecord").show();
-        $getid = $(this).children('td:first-child').text();
-        $.ajax({
-            type: "GET",
-            url: "../apiv1/activity/getbyid/" + $getid,
-            dataType: "json",
-            data: {
-            },
-            success: function(data) {
-              //印出彈出表單之DataTable
-              print_personal_table();
-              //將bp的資料做分解
-              var bp_data = JSON.parse(data.bp);
-              //計算運動時間 hour:3,600,000 & minute:60,000 & second:1000
-              var time2 = new Date(data.end_time);
-              var time1 = new Date(data.start_time);
-              var hour = (time2.getTime() - time1.getTime()) / 3600000;
-              var minute = (time2.getTime() - time1.getTime()) / 60000;
-              var second = (time2.getTime() - time1.getTime()) / 1000;
-              var minute_int = Math.floor(minute);
-              var second_int = second-(minute_int*60);
-              //填入各項資訊
-              document.getElementById('personal_name').value = '姓名：' + data.fname + ' ' + data.lname;
-              document.getElementById('age').value = '年齡：';
-              document.getElementById('before_dbp').value = '前測 舒張壓：' + bp_data.before.sbp + 'hmmg';
-              document.getElementById('before_sbp').value = ' 收縮壓：' + bp_data.before.dbp + 'hmmg';
-              document.getElementById('after_dbp').value = '後測 舒張壓：' + bp_data.after.sbp + 'hmmg';
-              document.getElementById('after_sbp').value = ' 收縮壓：' + bp_data.after.dbp + 'hmmg';
-              document.getElementById('exercise_time').value = '運動時間：' + minute_int + '分' + second_int + '秒';
-              document.getElementById('h_i_time').value = '高強度運動時間：' + data.h_i_time + '秒';
-            },
-
-            error: function(jqXHR) {
-                alert("發生錯誤: " + jqXHR.status);
-            }
-        })    
-    });
-
-    function print_personal_table (){
-      $('#personal_Activity').DataTable().destroy();
-      $.ajax({
-        type : 'GET',
-        url  : '../apiv1/activity/getbyiddata/' + $getid,
-        dataType: 'json',
-        cache: false,
-        success :  function(result)
-        {
-          //pass data to datatable
-          $("#personal_Activity").show();
-          console.log(result); // just to see I'm getting the correct data.
-          $('#personal_Activity').DataTable({
-             "aaData": result, //here we get the array data from the ajax call.
-          });
-          $('#personal_Activity').DataTable().draw();
-        },
-        error: function(jqXHR) {
-          alert("發生錯誤: " + jqXHR.status);
-        }
-      });
+  function LoadActivityDataToTable(activityData) {
+    var activityDataTable = $('#activityTable').DataTable();
+    activityDataTable.clear().draw(false);
+    for (var i in activityData) {
+      activityDataTable.row.add([
+        activityData[i].id,
+        activityData[i].uid,
+        activityData[i].step,
+        activityData[i].start_time,
+        activityData[i].end_time,
+        activityData[i].distance,
+        activityData[i].h_i_time
+      ]).draw(false);
     }
-});
+    activityDataTable.columns.adjust().draw();
+  }
+
+  function LoadPersonalDataToTable(row,data){
+    var personalDataTable = $('#personal_Activity').DataTable();
+    personalDataTable.clear().draw(false);
+    var Parse_data = JSON.parse(data.data);
+    for (var i in Parse_data) {
+      personalDataTable.row.add([
+        Parse_data[i].spo2,
+        Parse_data[i].hr,
+        Parse_data[i].datetime
+      ]).draw(false);
+    }
+    personalDataTable.columns.adjust().draw();
+  }
 
 </script>
 
@@ -269,7 +238,7 @@ $(document).ready(function(){
       <input id="h_i_time" style="text-align: left; padding-right: 5px; border: 0px; background: #ffffff;" size="number" disabled></input><br><br>
       <!-- 個人資訊之DataTable -->
       <div id="datatable_personal_visible">
-          <table id="personal_Activity" class="display" cellspacing="0" width="100%" style="display: none;">
+          <table id="personal_Activity" class="display" cellspacing="0" width="100%">
               <thead>
                   <tr>
                       <th>SPO2</th>
@@ -277,13 +246,6 @@ $(document).ready(function(){
                       <th>時間</th>
                   </tr>
               </thead>
-              <tfoot>
-                  <tr>
-                      <th>SPO2</th>
-                      <th>心跳</th>
-                      <th>時間</th>
-                  </tr>
-              </tfoot>
           </table>
         </div>
         <br>
@@ -298,14 +260,9 @@ $(document).ready(function(){
         <div class="column" align="left" style="width: 30%; padding-left: 15px">
         <!-- 時間篩選 -->
         <select id="time_select">
-          <option value="getallweek">近一週</option>
-          <option value="getallmonth">本月</option>
+          <option value="getbytime/week">近一週</option>
+          <option value="getbytime/month">本月</option>
           <option value="getall">全部</option>
-        </select>
-        <!-- 使用者篩選 -->
-        <select id="human">
-          <option value="1"></option>
-          <option value="2"></option>
         </select>
         </div>
         <div class="column" align="right" style="width: 70%; ">
@@ -319,7 +276,7 @@ $(document).ready(function(){
     <div class="container-fluid">
 	    <!-- Activity DataTable-->
         <div id="datatable_activity_visible">
-          <table id="activityTable" class="display" cellspacing="0" width="100%" style="display: none;">
+          <table id="activityTable" class="display" cellspacing="0" width="100%">
               <thead>
                   <tr>
                       <th>編號</th>
@@ -328,21 +285,9 @@ $(document).ready(function(){
                       <th>開始時間</th>
                       <th>結束時間</th>
                       <th>距離(公尺)</th>
-                      <th>高強度運動(秒)</th>
+                      <th>高強度運動(分)</th>
                   </tr>
               </thead>
-              <tfoot>
-                  <tr>
-                      <th>編號</th>
-                      <th>帳號</th>
-                      <th>步數</th>
-                      <th>開始時間</th>
-                      <th>結束時間</th>
-                      <th>距離(公尺)</th>
-                      <th>高強度運動(秒)</th>
-                  </tr>
-              </tfoot>
-              
           </table>
         </div>
 	    <!-- /.content-wrapper-->

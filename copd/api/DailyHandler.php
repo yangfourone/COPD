@@ -43,8 +43,9 @@ class DailyHandler extends SimpleRest{
 				echo $this->encodeJson($daily_delete->deletebyid($this->id));
 				//echo 'delete success';
 				break;
-			
-			
+			default:
+				$this ->setHttpHeaders('application/json', 404);
+				echo 'METHOD Error!';
 		}
 		
 	}

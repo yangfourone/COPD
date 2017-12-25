@@ -31,33 +31,45 @@ else{
 <script type="text/JavaScript" src="..\DataTables\DataTables-1.10.16\js\jquery.dataTables.min.js"></script>
 
 <script type="text/JavaScript">
-$(document).ready(function(){
-  $.ajax({
-    type : 'GET',
-    url  : '../apiv1/env/getall',
-    dataType: 'json',
-    cache: false,
-    success :  function(result){
-      var data_array = [];
-      console.log(result.length);
-      for (i = 0; i < result.length; i++) {
-        data = [[  result[i].id,result[i].deviceid,result[i].temperature,result[i].humidity,result[i].pm25,result[i].uv,result[i].datetime  ]];
-        var data_array = data_array.concat(data);
-      } 
-      if(result=='No data avaliable.'){
-        alert('No data avaliable.');
-        $("#evnTable").hide();
-      }
-      else{
-        console.log(data_array); // just to see I'm getting the correct data.
-        $('#evnTable').show();
-        $('#evnTable').DataTable({
-          "aaData": data_array, //here we get the array data from the ajax call.
-        });
-      }
+	$(document).ready(function(){
+	  var envDataTable = $('#evnTable').DataTable();
+	  getEnvData();
+	});
+	
+	function LoadEnvDataToTable(envData){
+	  var envDataTable = $('#evnTable').DataTable();
+		envDataTable.clear().draw(false);
+		for (var i in envData) {
+      envDataTable.row.add([
+        envData[i].id,
+        envData[i].deviceid,
+        envData[i].temperature,
+        envData[i].humidity,
+        envData[i].pm25,
+        envData[i].uv,
+        envData[i].datetime
+      ]).draw(false);
     }
-  });
-});
+		envDataTable.columns.adjust().draw();
+	}
+	function getEnvData(){
+		$.ajax({
+  		type : 'GET',
+  		url  : '../apiv1/env/getall',
+  		dataType: 'json',
+  		cache: false,
+  		success :  function(result){
+  		  if(result=='No data avaliable.'){
+  			 alert('No data avaliable.');
+  			 $("#evnTable").hide();
+  		  }
+  		  else{
+  			 LoadEnvDataToTable(result);
+  		  }
+  		}
+	  });
+	}
+	
 
 </script>
 
@@ -152,7 +164,7 @@ $(document).ready(function(){
 	    <!-- Download Page -->
 	    <!-- EnvDataTable-->
         <div id="datatable_env_visible">
-          <table id="evnTable" class="display" cellspacing="0" width="100%">
+          <table id="evnTable" class="display " cellspacing="0" width="100%">
               <thead>
                   <tr>
                       <th>編號</th>
@@ -164,18 +176,6 @@ $(document).ready(function(){
                       <th>時間</th>
                   </tr>
               </thead>
-              <tfoot>
-                  <tr>
-                      <th>編號</th>
-                      <th>裝置編號</th>
-                      <th>溫度</th>
-                      <th>濕度</th>
-                      <th>PM2.5</th>
-                      <th>紫外線指數</th>
-                      <th>時間</th>
-                  </tr>
-              </tfoot>
-              
           </table>
         </div>
 	    <!-- PatientManage-->

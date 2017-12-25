@@ -48,7 +48,7 @@ class Daily{
 		$date = $input['date'];
 		$distance = $input['distance']; 
 
-		if(!isset($uid)||empty($uid)||!isset($step)||empty($step)||!isset($date)||empty($date)||!isset($distance)||empty($distance)){
+		if(!isset($uid)||empty($uid)||!isset($step)||!isset($date)||empty($date)||!isset($distance)){
 			return 'NULL Data Exist.';
 		}
 		else {

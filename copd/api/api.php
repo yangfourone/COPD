@@ -9,8 +9,10 @@ require_once('AdminHandler.php');
 $method = $_SERVER['REQUEST_METHOD'];
 $params = explode('/', trim($_SERVER['PATH_INFO'],'/'));
 $controller = $params[0];
-$input = json_decode(file_get_contents('php://input'),true);
-//$_PUT = json_decode(file_get_contents('php://input'),true);
+$input=$_REQUEST;
+if(empty($input)){
+	$input = json_decode(file_get_contents('php://input'),true);
+}
 $queryStr = $_SERVER['QUERY_STRING'];
 
  switch ($controller){
@@ -40,6 +42,8 @@ $queryStr = $_SERVER['QUERY_STRING'];
 		$adminHandler = new AdminHandler($method,$params,$input);
 		echo $adminHandler->response();
 		break;
+	default:
+		echo 'CONTROL Error!';
  }
 
 ?>

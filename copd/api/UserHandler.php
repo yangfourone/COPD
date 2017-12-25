@@ -52,14 +52,9 @@ class UserHandler extends SimpleRest{
 				echo $this->encodeJson($user_delete->delete($this->id));
 				//echo 'delete success';
 				break;
-			/*
-			case 'put':
-				$user_update = new User();
-				$this ->setHttpHeaders('application/json', 200);
-				echo $this->encodeJson($user_update->update($this->input));
-				//echo 'update success';
-				break;
-			*/
+			default:
+				$this ->setHttpHeaders('application/json', 404);
+				echo 'METHOD Error!';
 		}
 		
 	}
