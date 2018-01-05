@@ -12,7 +12,7 @@ class Activity{
 		$getAll_result = mysqli_query($con,$getAll_sql);
 		
 		if(mysqli_num_rows($getAll_result) == 0) {
-			return 'No data avaliable.';
+			return 'NULL';
 		}
 		else {
 			$getAll_dataArray = mysqli_fetch_all($getAll_result,MYSQLI_ASSOC);
@@ -34,7 +34,7 @@ class Activity{
 			$getbyweek_result = mysqli_query($con,$getbyweek_sql);
 
 			if(mysqli_num_rows($getbyweek_result) == 0) {
-				return 'No data avaliable.';
+				return 'NULL';
 			}
 			else {
 				$getbyweek_data = mysqli_fetch_all($getbyweek_result,MYSQLI_ASSOC);
@@ -51,7 +51,7 @@ class Activity{
 			$getbymonth_result = mysqli_query($con,$getbymonth_sql);
 
 			if(mysqli_num_rows($getbymonth_result) == 0) {
-				return 'No data avaliable.';
+				return 'NULL';
 			}
 			else {
 				$getbymonth_data = mysqli_fetch_all($getbymonth_result,MYSQLI_ASSOC);
@@ -69,7 +69,7 @@ class Activity{
 		$getById_result = mysqli_query($con,$getById_sql);
 		
 		if(mysqli_num_rows($getById_result) == 0) {
-			return 'No data avaliable.';
+			return 'NULL';
 		}
 		else {
 			$getById_dataArray = mysqli_fetch_array($getById_result,MYSQLI_ASSOC);
@@ -91,7 +91,7 @@ class Activity{
 		$h_i_time = $input['h_i_time'];
 		
 		if(!isset($uid)||empty($uid)||!isset($step)||!isset($bp)||empty($bp)||!isset($data)||empty($data)||!isset($start_time)||empty($start_time)||!isset($end_time)||empty($end_time)||!isset($distance)||!isset($h_i_time)){
-			return 'NULL Data Exist.';
+			return 'EMPTY';
 		}
 		else {
 			$sql_insert = "INSERT INTO activity (uid,step,bp,data,start_time,end_time,distance,h_i_time) VALUES ('$uid','$step','$bp','$data','$start_time','$end_time','$distance','$h_i_time')";
@@ -109,7 +109,7 @@ class Activity{
 		$sql_check = "SELECT * FROM activity WHERE id = '$id'";
 		$check_result = mysqli_query($con,$sql_check);
 		if(mysqli_num_rows($check_result) == 0) {
-			return 'No data avaliable.';
+			return 'NULL';
 		}
 		else {
 			$sql_delete = "DELETE FROM activity WHERE id = '$id'";
@@ -134,14 +134,14 @@ class Activity{
 
 
 		if(!isset($uid)||empty($uid)||!isset($step)||!isset($bp)||empty($bp)||!isset($data)||empty($data)||!isset($start_time)||empty($start_time)||!isset($end_time)||empty($end_time)||!isset($distance)||!isset($h_i_time)){
-			return 'NULL Data Exist.';
+			return 'EMPTY';
 		}
 		else{
 			$sql_check = "SELECT * FROM activity WHERE id = '$id'";
 			$check_result = mysqli_query($con,$sql_check);
 
 			if(mysqli_num_rows($check_result) == 0) {
-				return 'No data avaliable.';
+				return 'NULL';
 			}
 			else {
 				$sql_update ="UPDATE activity SET step='$step', bp='$bp', data='$data', start_time='$start_time', end_time='$end_time', distance='$distance', h_i_time='$h_i_time' WHERE id='$id'";

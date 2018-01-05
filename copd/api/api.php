@@ -43,7 +43,8 @@ $queryStr = $_SERVER['QUERY_STRING'];
 		echo $adminHandler->response();
 		break;
 	default:
-		echo 'CONTROL Error!';
+		header("http/ 404");
+		echo 'URL Error!';
  }
 
 ?>
