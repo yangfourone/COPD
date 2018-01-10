@@ -65,7 +65,7 @@ class Activity{
 		mysqli_select_db($con,"activity");
 		
 		//query data by method
-		$getById_sql = "SELECT activity.uid, activity.id, activity.step, activity.bp, activity.data, activity.start_time, activity.end_time, activity.distance, activity.h_i_time, user.id, user.lname, user.fname FROM activity, user WHERE activity.id = '$id' AND activity.uid = user.id";
+		$getById_sql = "SELECT activity.uid, activity.id, activity.step, activity.bp, activity.data, activity.start_time, activity.end_time, activity.distance, activity.h_i_time, user.id, user.lname, user.fname, user.age FROM activity, user WHERE activity.id = '$id' AND activity.uid = user.id";
 		$getById_result = mysqli_query($con,$getById_sql);
 		
 		if(mysqli_num_rows($getById_result) == 0) {

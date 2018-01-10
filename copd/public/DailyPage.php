@@ -43,15 +43,8 @@ else{
       url  : '../apiv1/daily/getall',
       dataType: 'json',
       cache: false,
-      success :  function(result)
-      {
-        if(result=='No data avaliable.'){
-          alert('No data avaliable.');
-          $("#dailyTable").hide();
-        }
-        else{
-          LoadDailyDataToTable(result);
-        }
+      success :  function(result) {
+        LoadDailyDataToTable(result);
       }
     });
   }
@@ -216,7 +209,6 @@ else{
 	    <script src="js/sb-admin.min.js"></script>
 	    <!-- Custom scripts for this page-->
 	    <script src="js/sb-admin-datatables.min.js"></script>
-	    <script src="js/sb-admin-charts.min.js"></script>
     </div>
 </body>
 

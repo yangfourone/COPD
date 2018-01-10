@@ -59,13 +59,7 @@ else{
   		dataType: 'json',
   		cache: false,
   		success :  function(result){
-  		  if(result=='No data avaliable.'){
-  			 alert('No data avaliable.');
-  			 $("#evnTable").hide();
-  		  }
-  		  else{
-  			 LoadEnvDataToTable(result);
-  		  }
+  			LoadEnvDataToTable(result);
   		}
 	  });
 	}
@@ -224,7 +218,6 @@ else{
 	    <script src="js/sb-admin.min.js"></script>
 	    <!-- Custom scripts for this page-->
 	    <script src="js/sb-admin-datatables.min.js"></script>
-	    <script src="js/sb-admin-charts.min.js"></script>
     </div>
 </body>
 

@@ -63,16 +63,8 @@ else{
       url  : '../apiv1/user/getall',
       dataType: 'json',
       cache: false,
-      success :  function(result)
-      {
-        if(result=='No data avaliable.'){
-          alert('No data avaliable.');
-          $("#patientTable").hide();
-        }
-        else{
-          LoadPatientDataToTable(result);
-        }
-        $("#PatientManage").hide();
+      success :  function(result) {
+        LoadPatientDataToTable(result);
       }
     });
   }
@@ -85,10 +77,11 @@ else{
         patientData[i].id,
         patientData[i].fname,
         patientData[i].lname,
+        patientData[i].age,
         patientData[i].sex==1?'男':(patientData[i].sex==0?'女':null),
         patientData[i].bmi,
-        patientData[i].drug,
-        patientData[i].history,
+        //patientData[i].drug,
+        //patientData[i].history,
         patientData[i].env_id,
         patientData[i].ble_id,
         patientData[i].watch_id
@@ -104,17 +97,12 @@ else{
       dataType: "json",
       data: {                
       },
-      success: function(data) {
-        if (data=='ok') {
-            alert('delete successfully');
-        } 
-        else {
-            alert(data);
-        }                   
+      success: function(data) {      
         getPatientData();         
+        $("#PatientManage").hide(); 
       },
       error: function(jqXHR) {
-        alert("發生錯誤: " + jqXHR.status);
+        alert("發生錯誤: " + jqXHR.status + ' ' + jqXHR.statusText);
       }
     })
   }
@@ -131,6 +119,7 @@ else{
         Password: $("#pwd").val(),
         FirstName: $("#fname").val(),
         LastName: $("#lname").val(),
+        Age: $("#age").val(),
         Sex: $("#sex").val(),
         BMI: $("#bmi").val(),
         History: $("#history").val(),
@@ -139,17 +128,12 @@ else{
         BLE_ID: $("#ble_id").val(),
         Watch_ID: $("#watch_id").val()
       },
-      success: function(data) {
-        if (data=='ok') {
-            alert($action + 'successfully');
-        } 
-        else {
-            alert(data);
-        }              
-        getPatientData(); 
+      success: function(data) {  
+        getPatientData();
+        $("#PatientManage").hide(); 
       },
       error: function(jqXHR) {
-        alert("發生錯誤: " + jqXHR.status);
+        alert("發生錯誤: " + jqXHR.status + ' ' + jqXHR.statusText);
       }
     })
   }
@@ -190,56 +174,52 @@ else{
   }
 
   function click_row(row){
-    if(row==''){
+    $.ajax({
+      type: "GET",
+      url: "../apiv1/user/getbyid/" + row,
+      dataType: "json",
+      data: {
+      },
+      success: function(data) {
+        document.getElementById('updateid').value = data.id;
+        document.getElementById('pwd').value = data.pwd;
+        document.getElementById('fname').value = data.fname;
+        document.getElementById('lname').value = data.lname;
+        document.getElementById('age').value = data.age;
+        document.getElementById('sex').value = data.sex;
+        document.getElementById('bmi').value = data.bmi;
+        document.getElementById('env_id').value = data.env_id;
+        document.getElementById('ble_id').value = data.ble_id;
+        document.getElementById('watch_id').value = data.watch_id;
+        data.history = JSON.parse(data.history);
+        data.drug = JSON.parse(data.drug);
 
-    }
-    else{
-      $.ajax({
-        type: "GET",
-        url: "../apiv1/user/getbyid/" + row,
-        dataType: "json",
-        data: {
-        },
-        success: function(data) {
-          document.getElementById('updateid').value = data.id;
-          document.getElementById('pwd').value = data.pwd;
-          document.getElementById('fname').value = data.fname;
-          document.getElementById('lname').value = data.lname;
-          document.getElementById('sex').value = data.sex;
-          document.getElementById('bmi').value = data.bmi;
-          document.getElementById('env_id').value = data.env_id;
-          document.getElementById('ble_id').value = data.ble_id;
-          document.getElementById('watch_id').value = data.watch_id;
-          data.history = JSON.parse(data.history);
-          data.drug = JSON.parse(data.drug);
-
-          //var history_arr = data.history.split(',');
-          //var drug_arr = data.drug.split(',');
-          
-          $("input[name='medicine']").prop("checked", false);
-          $("input[name='case']").prop("checked", false);
-          for(var i in data.history){
-            $("input[value='" + data.history[i] + "']").prop("checked", true);
-          }
-          for(var i in data.drug){
-            $("input[value='" + data.drug[i] + "']").prop("checked", true);
-          }
-          
-        },
-        error: function(jqXHR) {
-            alert("發生錯誤: " + jqXHR.status);
+        //var history_arr = data.history.split(',');
+        //var drug_arr = data.drug.split(',');
+        
+        $("input[name='medicine']").prop("checked", false);
+        $("input[name='case']").prop("checked", false);
+        for(var i in data.history){
+          $("input[value='" + data.history[i] + "']").prop("checked", true);
         }
-      })
-      $("#patient_delete").show();
-      $("#patient_update").show();
-      $("#patient_save").hide();
-      $("#patient_close").show();
-      $("#newid_label").hide();
-      $("#pid_label").show();
-      $("#addid").hide();
-      $("#updateid").show();
-      $("#PatientManage").show();
-    }
+        for(var i in data.drug){
+          $("input[value='" + data.drug[i] + "']").prop("checked", true);
+        }
+        
+      },
+      error: function(jqXHR) {
+          alert("發生錯誤: " + jqXHR.status + ' ' + jqXHR.statusText);
+      }
+    })
+    $("#patient_delete").show();
+    $("#patient_update").show();
+    $("#patient_save").hide();
+    $("#patient_close").show();
+    $("#newid_label").hide();
+    $("#pid_label").show();
+    $("#addid").hide();
+    $("#updateid").show();
+    $("#PatientManage").show();
   }
   
 
@@ -249,6 +229,7 @@ else{
     document.getElementById('pwd').value = '';
     document.getElementById('fname').value = '';
     document.getElementById('lname').value = '';
+    document.getElementById('age').value = '';
     document.getElementById('sex').value = '';
     document.getElementById('bmi').value = '';
     document.getElementById('env_id').value = '';
@@ -369,6 +350,9 @@ else{
               <label for="lname">名字：</label>
               <input type="text" id="lname"><br>
 
+              <label for="age">年齡：</label>
+              <input type="text" id="age"><br>
+
               <label for="sex">性別：</label>
               <select id="sex" style="width: 77%;">
                 <option value="1">男</option>
@@ -452,6 +436,7 @@ else{
             </div>
             <div class="column" align="left" style="margin: 0 auto 0 auto;">
               <h5>口服刑類固醇(oral steroids)</h5>
+              <input name="medicine" type="checkbox" value="OralSteroids"> Oral Steroids(口服類固醇)<br>
             </div>
           </div>
           <div class="row">
@@ -459,7 +444,7 @@ else{
               <br><h4 style="font-weight: bold;">疾病史</h4>
             </div>
           </div>
-          <div class="row">
+          <div class="row"> <!-- HeartDisease Hypertension Diabetes Arrhythmia HeartFailure Stroke -->
             <div class="column" align="left" style="margin: 0 20px 0 80px;">
               <input name="case" type="checkbox" value="HeartDisease"> 心臟病<br>
             </div>
@@ -506,10 +491,9 @@ else{
 	                  <th>帳號</th>
 	                  <th>名字</th>
 	                  <th>姓氏</th>
+                    <th>年齡</th>
 	                  <th>性別</th>
 	                  <th>BMI</th>
-                    <th>藥物</th>
-	                  <th>病例</th>
                     <th>Env_ID</th>
                     <th>BLE_ID</th>
                     <th>Watch_ID</th>
@@ -561,7 +545,6 @@ else{
 	    <script src="js/sb-admin.min.js"></script>
 	    <!-- Custom scripts for this page-->
 	    <script src="js/sb-admin-datatables.min.js"></script>
-	    <script src="js/sb-admin-charts.min.js"></script>
     </div>
 </body>
 

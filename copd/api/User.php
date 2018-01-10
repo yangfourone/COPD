@@ -45,6 +45,7 @@ class User{
 		$pwd = $input['Password'];
 		$fname = $input['FirstName'];
 		$lname = $input['LastName'];
+		$age = $input['Age'];
 		$sex = $input['Sex'];
 		$bmi = $input['BMI'];
 		$history = $input['History'];
@@ -53,14 +54,14 @@ class User{
 		$ble_id = $input['BLE_ID'];
 		$watch_id = $input['Watch_ID'];
 
-		if(!isset($id)||empty($id)||!isset($pwd)||empty($pwd)||!isset($fname)||empty($fname)||!isset($lname)||empty($lname)||!isset($sex)||!isset($bmi)||empty($bmi)||!isset($history)||empty($history)||!isset($drug)||empty($drug)||!isset($env_id)||empty($env_id)||!isset($ble_id)||empty($ble_id)||!isset($watch_id)||empty($watch_id)){
+		if(!isset($id)||empty($id)||!isset($pwd)||empty($pwd)||!isset($fname)||empty($fname)||!isset($lname)||empty($lname)||!isset($age)||empty($age)||!isset($sex)||!isset($bmi)||empty($bmi)||!isset($history)||empty($history)||!isset($drug)||empty($drug)||!isset($env_id)||empty($env_id)||!isset($ble_id)||empty($ble_id)||!isset($watch_id)||empty($watch_id)){
 			return 'EMPTY';
 		}
 		else {
 			$sql_check = "SELECT * FROM user WHERE id = '$id'";
 			$check_result = mysqli_query($con,$sql_check);
 			if(mysqli_num_rows($check_result) == 0) {
-				$sql_insert = "INSERT INTO user (id,pwd,fname,lname,sex,bmi,history,drug,env_id,ble_id,watch_id) VALUES ('$id','$pwd','$fname','$lname','$sex','$bmi','$history','$drug','$env_id','$ble_id','$watch_id')";
+				$sql_insert = "INSERT INTO user (id,pwd,fname,lname,age,sex,bmi,history,drug,env_id,ble_id,watch_id) VALUES ('$id','$pwd','$fname','$lname','$age','$sex','$bmi','$history','$drug','$env_id','$ble_id','$watch_id')";
 				$add_result = mysqli_query($con,$sql_insert);
 				return 'ok';
 			}
@@ -96,6 +97,7 @@ class User{
 		$pwd = $input['Password'];
 		$fname = $input['FirstName'];
 		$lname = $input['LastName'];
+		$age = $input['Age'];
 		$sex = $input['Sex'];
 		$bmi = $input['BMI'];
 		$history = $input['History'];
@@ -105,7 +107,7 @@ class User{
 		$watch_id = $input['Watch_ID'];
 
 
-		if(!isset($id)||empty($id)||!isset($pwd)||empty($pwd)||!isset($fname)||empty($fname)||!isset($lname)||empty($lname)||!isset($sex)||!isset($bmi)||empty($bmi)||!isset($history)||empty($history)||!isset($drug)||empty($drug)||!isset($env_id)||empty($env_id)||!isset($ble_id)||empty($ble_id)||!isset($watch_id)||empty($watch_id)){
+		if(!isset($id)||empty($id)||!isset($pwd)||empty($pwd)||!isset($fname)||empty($fname)||!isset($lname)||empty($lname)||!isset($age)||empty($age)||!isset($sex)||!isset($bmi)||empty($bmi)||!isset($history)||empty($history)||!isset($drug)||empty($drug)||!isset($env_id)||empty($env_id)||!isset($ble_id)||empty($ble_id)||!isset($watch_id)||empty($watch_id)){
 			return 'EMPTY';
 		}
 		else{
@@ -116,7 +118,7 @@ class User{
 				return 'NULL';
 			}
 			else {
-				$sql_update ="UPDATE user SET pwd='$pwd', fname='$fname', lname='$lname', sex='$sex', bmi='$bmi', history='$history', drug='$drug', env_id='$env_id', ble_id='$ble_id', watch_id='$watch_id' WHERE id='$id'";
+				$sql_update ="UPDATE user SET pwd='$pwd', fname='$fname', lname='$lname', age='$age', sex='$sex', bmi='$bmi', history='$history', drug='$drug', env_id='$env_id', ble_id='$ble_id', watch_id='$watch_id' WHERE id='$id'";
 				$update_result = mysqli_query($con,$sql_update);	
 				return 'ok';
 			}
