@@ -2,6 +2,7 @@
 //-----------------------------------------------------------------------------User
 //response by method
 class User{
+	
 	function getAll(){
 		//connet db
 		require 'connect.php';
@@ -41,18 +42,18 @@ class User{
 		require 'connect.php';
 		mysqli_select_db($con,"user");
 
-		$id = $input['ID'];
-		$pwd = $input['Password'];
-		$fname = $input['FirstName'];
-		$lname = $input['LastName'];
-		$age = $input['Age'];
-		$sex = $input['Sex'];
-		$bmi = $input['BMI'];
-		$history = $input['History'];
-		$drug = $input['Drug'];
-		$env_id = $input['ENV_ID'];
-		$ble_id = $input['BLE_ID'];
-		$watch_id = $input['Watch_ID'];
+		$id = $input['id'];
+		$pwd = $input['pwd'];
+		$fname = $input['fname'];
+		$lname = $input['lname'];
+		$age = $input['age'];
+		$sex = $input['sex'];
+		$bmi = $input['bmi'];
+		$history = $input['history'];
+		$drug = $input['drug'];
+		$env_id = $input['env_id'];
+		$ble_id = $input['ble_id'];
+		$watch_id = $input['watch_id'];
 
 		if(!isset($id)||empty($id)||!isset($pwd)||empty($pwd)||!isset($fname)||empty($fname)||!isset($lname)||empty($lname)||!isset($age)||empty($age)||!isset($sex)||!isset($bmi)||empty($bmi)||!isset($history)||empty($history)||!isset($drug)||empty($drug)||!isset($env_id)||empty($env_id)||!isset($ble_id)||empty($ble_id)||!isset($watch_id)||empty($watch_id)){
 			return 'EMPTY';
@@ -93,18 +94,18 @@ class User{
 		require 'connect.php';
 		mysqli_select_db($con,"user");
 		
-		$id = $input['ID'];
-		$pwd = $input['Password'];
-		$fname = $input['FirstName'];
-		$lname = $input['LastName'];
-		$age = $input['Age'];
-		$sex = $input['Sex'];
-		$bmi = $input['BMI'];
-		$history = $input['History'];
-		$drug = $input['Drug'];
-		$env_id = $input['ENV_ID'];
-		$ble_id = $input['BLE_ID'];
-		$watch_id = $input['Watch_ID'];
+		$id = $input['id'];
+		$pwd = $input['pwd'];
+		$fname = $input['fname'];
+		$lname = $input['lname'];
+		$age = $input['age'];
+		$sex = $input['sex'];
+		$bmi = $input['bmi'];
+		$history = $input['history'];
+		$drug = $input['drug'];
+		$env_id = $input['env_id'];
+		$ble_id = $input['ble_id'];
+		$watch_id = $input['watch_id'];
 
 
 		if(!isset($id)||empty($id)||!isset($pwd)||empty($pwd)||!isset($fname)||empty($fname)||!isset($lname)||empty($lname)||!isset($age)||empty($age)||!isset($sex)||!isset($bmi)||empty($bmi)||!isset($history)||empty($history)||!isset($drug)||empty($drug)||!isset($env_id)||empty($env_id)||!isset($ble_id)||empty($ble_id)||!isset($watch_id)||empty($watch_id)){
@@ -124,6 +125,22 @@ class User{
 			}
 		}
 	}
-}
+	function login($input){
+		//connet db
+		require 'connect.php';
+		mysqli_select_db($con,"user");
 
+		$id = $input['id'];
+		$pwd = $input['pwd'];
+		//query data by method
+		$getUser_sql = "SELECT * FROM user where id = '$id' and pwd ='$pwd'";
+		$getAll_result = mysqli_query($con,$getUser_sql);
+		$row = mysqli_fetch_array($getAll_result,MYSQLI_ASSOC);
+		if(!empty($row)){
+			return $row;
+		}
+		return 'LoginFailed';
+	}
+
+}
 ?>

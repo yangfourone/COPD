@@ -22,6 +22,20 @@ else{
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
 
+  <!-- Bootstrap core JavaScript-->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/popper/popper.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+  <!-- Core plugin JavaScript-->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  <!-- Page level plugin JavaScript-->
+  <script src="vendor/datatables/jquery.dataTables.js"></script>
+  <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
+  <!-- Custom scripts for all pages-->
+  <script src="js/sb-admin.min.js"></script>
+  <!-- Custom scripts for this page-->
+  <script src="js/sb-admin-datatables.min.js"></script>
+
   <!-- FLOT CHART -->
   <script src="js/jquery-1.11.3.min.js" type='text/javascript'></script>
   <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/excanvas.min.js"></script><![endif]-->
@@ -44,6 +58,7 @@ else{
       $("#personal_datatable_cancel").click(function(){
           $("#ActivityRecord").hide();
           $("#flot-placeholder").hide();
+          $("#PersonalDataAndFlot").hide();
       });
       $("#time_select").change(function(){
         getActivityData();
@@ -62,11 +77,12 @@ else{
         data: {
         },
         success: function(data) {
-          //繪製圖表
-          LoadActivityFlotChart(row,data);
           //顯示個人資料表
           $("#ActivityRecord").show();
           $("#flot-placeholder").show();
+          $("#PersonalDataAndFlot").show();
+          //繪製圖表
+          LoadActivityFlotChart(row,data);
           //將bp的資料做分解
           var bp_data = JSON.parse(data.bp);
           //計算運動時間 hour:3,600,000 & minute:60,000 & second:1000
@@ -103,6 +119,8 @@ else{
         error: function(jqXHR) {
           $("#ActivityRecord").hide();
           $("#flot-placeholder").hide();
+          $("#PersonalDataAndFlot").hide();
+
           $("#activityTable").hide();
           alert("發生錯誤: " + jqXHR.status + ' ' + jqXHR.statusText);
         }
@@ -131,8 +149,9 @@ else{
       var chart_x = [];
       var data_hr = [];
       var data_spo2 = [];
+      var ex_time = 0;
       for (var i in Parse_data) {
-        //console.log(Parse_data[i].datetime);
+        //-----------------------------------------------------------製作x軸
         //轉millisecond成分鐘和秒
         getmin = Parse_data[i].datetime / 3600000;
         getsec = Parse_data[i].datetime / 60000;
@@ -141,7 +160,9 @@ else{
         //若小於0，+60做校正
         chart_sec<0? chart_sec=chart_sec+60:chart_sec;
         chart_min<0? chart_min=chart_min+60:chart_min;
-        chart_x[i] = chart_min + chart_sec/60 ;
+        //chart_x[i] = chart_min + chart_sec/60 ;
+        ex_time = 0.08333 + ex_time;
+
         //若有用到，將datetime輸出成此格式->Mon Dec 25 2017 14:47:24 GMT+0800 (台北標準時間)
         var millisecond_to_date = new Date(parseInt(Parse_data[i].datetime));
         Parse_data[i].datetime = millisecond_to_date;
@@ -149,8 +170,10 @@ else{
         //console.log(chart_x[i]);
         
         //將所有資料串成array，準備放入圖表中
-        data1 = [[ chart_x[i],Parse_data[i].hr ]];
-        data2 = [[ chart_x[i],Parse_data[i].spo2 ]];
+        //data1 = [[ chart_x[i],Parse_data[i].hr ]];
+        //data2 = [[ chart_x[i],Parse_data[i].spo2 ]];
+        data1 = [[ ex_time,Parse_data[i].hr ]];
+        data2 = [[ ex_time,Parse_data[i].spo2 ]];
         var data_hr = data_hr.concat(data1);
         var data_spo2 = data_spo2.concat(data2);
       }
@@ -225,7 +248,7 @@ else{
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Patient">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="PatientPage.php" data-parent="#exampleAccordion">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-table"></i>
             <span class="nav-link-text" id="test">病患資料</span>
           </a>
@@ -236,7 +259,7 @@ else{
           </ul>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Environment">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="EnvironmentPage.php" data-parent="#exampleAccordion">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-table"></i>
             <span class="nav-link-text" id="test">環境資料</span>
           </a>
@@ -247,7 +270,7 @@ else{
           </ul>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Daily">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="DailyPage.php" data-parent="#exampleAccordion">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseDailyPages" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-table"></i>
             <span class="nav-link-text" id="test">每日統計</span>
           </a>
@@ -258,7 +281,7 @@ else{
           </ul>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Activity">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="ActivityPage.php" data-parent="#exampleAccordion">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseActivityPages" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-table"></i>
             <span class="nav-link-text" id="test">活動紀錄</span>
           </a>
@@ -289,13 +312,13 @@ else{
 
   <!-- center   -->
   <div class="content-wrapper" style="padding-left: 5px">
-    <div class="row" id="PersonalDataAndFlot">
+    <div class="row" id="PersonalDataAndFlot" style="display: none;">
       <div class="column" style="width: 65%; padding-right: 5px;">
-        <div id="flot-placeholder" style="margin-left: 20px; width:90%; height:300px;"></div><br>
+        <div id="flot-placeholder" style="margin-left: 20px; width:90%; height:300px;" style="display: none;"></div><br>
       </div>
       <div class="column" style="width: 35%;">
         <!-- click activity record -->
-        <div class="edit_table" id="ActivityRecord">
+        <div class="edit_table" id="ActivityRecord" style="display: none;">
           <h2>活動紀錄</h2>
           <br>
           <!-- 個人姓名 -->
@@ -328,9 +351,9 @@ else{
         <div class="column" align="left" style="width: 30%; padding-left: 15px">
         <!-- 時間篩選 -->
         <select id="time_select">
+          <option value="getall">全部</option>
           <option value="getbytime/week">近一週</option>
           <option value="getbytime/month">本月</option>
-          <option value="getall">全部</option>
         </select>
         </div>
         <div class="column" align="right" style="width: 70%; ">
@@ -388,19 +411,6 @@ else{
 	        </div>
 	      </div>
 	    </div>
-      <!-- Bootstrap core JavaScript-->
-      <!--<script src="vendor/jquery/jquery.min.js"></script>
-      <script src="vendor/popper/popper.min.js"></script>
-      <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-      <!-- Core plugin JavaScript-->
-      <!--<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-      <!-- Page level plugin JavaScript-->
-      <!--<script src="vendor/datatables/jquery.dataTables.js"></script>
-      <!-- <script src="vendor/datatables/dataTables.bootstrap4.js"></script> -->
-      <!-- Custom scripts for all pages-->
-      <!--<script src="js/sb-admin.min.js"></script>
-      <!-- Custom scripts for this page-->
-      <!--<script src="js/sb-admin-datatables.min.js"></script>-->
     </div>
 </body>
 
