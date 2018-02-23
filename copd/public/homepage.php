@@ -39,13 +39,13 @@ else{
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="HomePage">
           <a class="nav-link" href="homepage.php">
-            <i class="fa fa-fw fa-dashboard"></i>
+            <i class="fa fa-fw fa-windows"></i>
             <span class="nav-link-text">COPD首頁</span>
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Patient">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
-            <i class="fa fa-fw fa-table"></i>
+            <i class="fa fa-fw fa-child"></i>
             <span class="nav-link-text" id="test">病患資料</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseComponents">
@@ -56,7 +56,7 @@ else{
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Environment">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
-            <i class="fa fa-fw fa-table"></i>
+            <i class="fa fa-fw fa-bank"></i>
             <span class="nav-link-text" id="test">環境資料</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseExamplePages">
@@ -78,7 +78,7 @@ else{
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Activity">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseActivityPages" data-parent="#exampleAccordion">
-            <i class="fa fa-fw fa-table"></i>
+            <i class="fa fa-fw fa-bar-chart-o"></i>
             <span class="nav-link-text" id="test">活動紀錄</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseActivityPages">

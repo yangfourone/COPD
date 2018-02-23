@@ -35,10 +35,7 @@ else{
   <script src="js/sb-admin.min.js"></script>
   <!-- Custom scripts for this page-->
   <script src="js/sb-admin-datatables.min.js"></script>
-
-  <!-- FLOT CHART -->
   <script src="js/jquery-1.11.3.min.js" type='text/javascript'></script>
-  <!--[if lte IE 8]><script language="javascript" type="text/javascript" src="js/excanvas.min.js"></script><![endif]-->
 
   <script src="js/highcharts.js"></script>
   <script src="js/boost.js"></script>
@@ -60,13 +57,13 @@ else{
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="HomePage">
           <a class="nav-link" href="homepage.php">
-            <i class="fa fa-fw fa-dashboard"></i>
+            <i class="fa fa-fw fa-windows"></i>
             <span class="nav-link-text">COPD首頁</span>
           </a>
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Patient">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
-            <i class="fa fa-fw fa-table"></i>
+            <i class="fa fa-fw fa-child"></i>
             <span class="nav-link-text" id="test">病患資料</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseComponents">
@@ -77,7 +74,7 @@ else{
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Environment">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
-            <i class="fa fa-fw fa-table"></i>
+            <i class="fa fa-fw fa-bank"></i>
             <span class="nav-link-text" id="test">環境資料</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseExamplePages">
@@ -99,7 +96,7 @@ else{
         </li>
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Activity">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseActivityPages" data-parent="#exampleAccordion">
-            <i class="fa fa-fw fa-table"></i>
+            <i class="fa fa-fw fa-bar-chart-o"></i>
             <span class="nav-link-text" id="test">活動紀錄</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseActivityPages">
@@ -165,17 +162,15 @@ else{
     <br>
     <div class="container-fluid">
       <div class="row">
-        <div class="column" align="left" style="width: 30%; padding-left: 15px">
+        <div class="column" align="right" style="width: 100%; padding-left: 15px">
         <!-- 時間篩選 -->
-        <select id="time_select">
-          <option value="getall">全部</option>
-          <option value="getbytime/week">近一週</option>
-          <option value="getbytime/month">本月</option>
-        </select>
-        </div>
-        <div class="column" align="right" style="width: 70%; ">
-          <button onclick="window.location.href='Download_Activity_PDF.php'" style="display: none;">PDF Download</button>
-          <button onclick="window.location.href='Download_Activity_Excel.php'">EXCEL Download</button>
+          <select id="time_select">
+            <option value="getall">全部</option>
+            <option value="getbytime/week">近一週</option>
+            <option value="getbytime/month">本月</option>
+          </select>&nbsp;&nbsp;
+          <button onclick="window.location.href='Download_Activity_PDF.php'" style="display: none;">PDF 下載</button>
+          <button onclick="window.location.href='Download_Activity_Excel.php'">EXCEL 下載</button>
         </div>
       </div>
     </div>
@@ -277,10 +272,10 @@ function click_row(row){
       //填入各項資訊
       document.getElementById('personal_name').value = '姓名：' + data.fname + ' ' + data.lname;
       document.getElementById('age').value = '年齡：' + data.age + '歲';
-      document.getElementById('before_dbp').value = '前測 舒張壓：' + bp_data.before.sbp + 'hmmg';
-      document.getElementById('before_sbp').value = ' 收縮壓：' + bp_data.before.dbp + 'hmmg';
-      document.getElementById('after_dbp').value = '後測 舒張壓：' + bp_data.after.sbp + 'hmmg';
-      document.getElementById('after_sbp').value = ' 收縮壓：' + bp_data.after.dbp + 'hmmg';
+      document.getElementById('before_dbp').value = '前測 舒張壓：' + bp_data.before.dbp + 'hmmg';
+      document.getElementById('before_sbp').value = ' 收縮壓：' + bp_data.before.sbp + 'hmmg';
+      document.getElementById('after_dbp').value = '後測 舒張壓：' + bp_data.after.dbp + 'hmmg';
+      document.getElementById('after_sbp').value = ' 收縮壓：' + bp_data.after.sbp + 'hmmg';
       document.getElementById('exercise_time').value = '運動時間：' + minute_int + '分' + second_int + '秒';
       document.getElementById('h_i_time').value = '高強度運動時間：' + data.h_i_time + '分';
     }
@@ -366,11 +361,11 @@ function getData(hr_data,spo2_data) {
 	    },
 
 	    title: {
-	        text: 'COPD Manage System Activity Record'
+	        text: 'COPD 管理系統活動紀錄'
 	    },
 
 	    subtitle: {
-	        text: 'User\'s Heart Rate and SPO2'
+	        text: '心率和SPO2'
 	    },
 
 	    xAxis: {
@@ -382,7 +377,7 @@ function getData(hr_data,spo2_data) {
 	    },
 
 	    series: [{
-	    	name: 'Heart Rate',
+	    	name: '心率',
 	        data: hr_data,
 	        lineWidth: 0.5
 	    },

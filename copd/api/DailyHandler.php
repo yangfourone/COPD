@@ -29,6 +29,11 @@ class DailyHandler extends SimpleRest{
 					$this->set_status_code($this->encodeJson($daily_uid->getByUser($this->id)));
 					break;
 				}
+				else if($this->action == 'getbytime'){
+					$daily_time = new Daily();
+					$this->set_status_code($this->encodeJson($daily_time->getByTime($this->id)));
+					break;
+				}
 			case 'post':
 				if($this->action == 'add'){
 					$daily_add = new Daily();

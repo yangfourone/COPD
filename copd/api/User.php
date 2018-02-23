@@ -1,6 +1,7 @@
 <?php
 //-----------------------------------------------------------------------------User
 //response by method
+
 class User{
 	
 	function getAll(){
@@ -50,19 +51,22 @@ class User{
 		$sex = $input['sex'];
 		$bmi = $input['bmi'];
 		$history = $input['history'];
+		$drug_other = $input['drug_other'];
+		$history_other = $input['history_other'];
 		$drug = $input['drug'];
 		$env_id = $input['env_id'];
 		$ble_id = $input['ble_id'];
 		$watch_id = $input['watch_id'];
 
-		if(!isset($id)||empty($id)||!isset($pwd)||empty($pwd)||!isset($fname)||empty($fname)||!isset($lname)||empty($lname)||!isset($age)||empty($age)||!isset($sex)||!isset($bmi)||empty($bmi)||!isset($history)||empty($history)||!isset($drug)||empty($drug)||!isset($env_id)||empty($env_id)||!isset($ble_id)||empty($ble_id)||!isset($watch_id)||empty($watch_id)){
+		//if(!isset($id)||empty($id)||!isset($pwd)||empty($pwd)||!isset($fname)||empty($fname)||!isset($lname)||empty($lname)||!isset($age)||empty($age)||!isset($sex)||!isset($bmi)||empty($bmi)||!isset($history)||empty($history)||!isset($drug)||empty($drug)||!isset($env_id)||empty($env_id)||!isset($ble_id)||empty($ble_id)||!isset($watch_id)||empty($watch_id)){
+		if(!isset($id)||empty($id)||!isset($pwd)||empty($pwd)||!isset($fname)||empty($fname)||!isset($lname)||empty($lname)||!isset($age)||empty($age)||!isset($sex)||!isset($bmi)||empty($bmi)||!isset($history)||empty($history)||!isset($drug)||empty($drug)){
 			return 'EMPTY';
 		}
 		else {
 			$sql_check = "SELECT * FROM user WHERE id = '$id'";
 			$check_result = mysqli_query($con,$sql_check);
 			if(mysqli_num_rows($check_result) == 0) {
-				$sql_insert = "INSERT INTO user (id,pwd,fname,lname,age,sex,bmi,history,drug,env_id,ble_id,watch_id) VALUES ('$id','$pwd','$fname','$lname','$age','$sex','$bmi','$history','$drug','$env_id','$ble_id','$watch_id')";
+				$sql_insert = "INSERT INTO user (id,pwd,fname,lname,age,sex,bmi,history,drug,history_other,drug_other,env_id,ble_id,watch_id) VALUES ('$id','$pwd','$fname','$lname','$age','$sex','$bmi','$history','$drug','$history_other','$drug_other','$env_id','$ble_id','$watch_id')";
 				$add_result = mysqli_query($con,$sql_insert);
 				return 'ok';
 			}
@@ -103,12 +107,14 @@ class User{
 		$bmi = $input['bmi'];
 		$history = $input['history'];
 		$drug = $input['drug'];
+		$drug_other = $input['drug_other'];
+		$history_other = $input['history_other'];		
 		$env_id = $input['env_id'];
 		$ble_id = $input['ble_id'];
 		$watch_id = $input['watch_id'];
 
-
-		if(!isset($id)||empty($id)||!isset($pwd)||empty($pwd)||!isset($fname)||empty($fname)||!isset($lname)||empty($lname)||!isset($age)||empty($age)||!isset($sex)||!isset($bmi)||empty($bmi)||!isset($history)||empty($history)||!isset($drug)||empty($drug)||!isset($env_id)||empty($env_id)||!isset($ble_id)||empty($ble_id)||!isset($watch_id)||empty($watch_id)){
+		// if(!isset($id)||empty($id)||!isset($pwd)||empty($pwd)||!isset($fname)||empty($fname)||!isset($lname)||empty($lname)||!isset($age)||empty($age)||!isset($sex)||!isset($bmi)||empty($bmi)||!isset($history)||empty($history)||!isset($drug)||empty($drug)||!isset($env_id)||empty($env_id)||!isset($ble_id)||empty($ble_id)||!isset($watch_id)||empty($watch_id)){
+		if(!isset($id)||empty($id)||!isset($pwd)||empty($pwd)||!isset($fname)||empty($fname)||!isset($lname)||empty($lname)||!isset($age)||empty($age)||!isset($sex)||!isset($bmi)||empty($bmi)||!isset($history)||empty($history)||!isset($drug)||empty($drug)){
 			return 'EMPTY';
 		}
 		else{
@@ -119,7 +125,7 @@ class User{
 				return 'NULL';
 			}
 			else {
-				$sql_update ="UPDATE user SET pwd='$pwd', fname='$fname', lname='$lname', age='$age', sex='$sex', bmi='$bmi', history='$history', drug='$drug', env_id='$env_id', ble_id='$ble_id', watch_id='$watch_id' WHERE id='$id'";
+				$sql_update ="UPDATE user SET pwd='$pwd', fname='$fname', lname='$lname', age='$age', sex='$sex', bmi='$bmi', history='$history', drug='$drug', env_id='$env_id', ble_id='$ble_id', watch_id='$watch_id', drug_other='$drug_other', history_other='$history_other' WHERE id='$id'";
 				$update_result = mysqli_query($con,$sql_update);	
 				return 'ok';
 			}
@@ -140,6 +146,20 @@ class User{
 			return $row;
 		}
 		return 'LoginFailed';
+	}
+	function checkId($id){
+		//connet db
+		require 'connect.php';
+		mysqli_select_db($con,"user");
+		
+		//query data by method
+		$getById_sql = "SELECT * FROM user WHERE id = '$id'";
+		$getById_result = mysqli_query($con,$getById_sql);
+		$row = mysqli_fetch_array($getById_result,MYSQLI_ASSOC);
+		if(empty($row)){
+			return 'Ok';
+		}
+		return 'EXIST';
 	}
 
 }

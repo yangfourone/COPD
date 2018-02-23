@@ -32,6 +32,10 @@ class ActivityHandler extends SimpleRest{
 					$activity_id = new Activity();
 					$this->set_status_code($this->encodeJson($activity_id->getById($this->id)));
 					break;
+				}else if($this->action == 'getbyuser'){
+					$activity_id = new Activity();
+					$this->set_status_code($this->encodeJson($activity_id->getByUser($this->id)));
+					break;
 				}
 			case 'post':
 				if($this->action == 'add'){

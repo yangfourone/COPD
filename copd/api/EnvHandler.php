@@ -34,6 +34,11 @@ class EnvHandler extends SimpleRest{
 					$this->set_status_code($this->encodeJson($env_id->getByUser($this->id)));
 					break;
 				}
+				else if($this->action == 'getbytime'){
+					$env_time = new Env();
+					$this->set_status_code($this->encodeJson($env_time->getByTime($this->id)));
+					break;
+				}
 			case 'post':
 				if($this->action == 'add'){
 					$env_add = new Env();
