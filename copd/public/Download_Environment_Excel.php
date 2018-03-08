@@ -85,7 +85,7 @@ $objPHPExcel->setActiveSheetIndex(0)
 $data_number = 0 ;
 
 // Rename worksheet
-$objPHPExcel->getActiveSheet()->setTitle('Environmet');
+$objPHPExcel->getActiveSheet()->setTitle('Environment');
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $objPHPExcel->setActiveSheetIndex(0);
@@ -94,7 +94,7 @@ $objPHPExcel->setActiveSheetIndex(0);
 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 
 //***************************file name***************************************
-header('Content-Disposition: attachment;filename="Environmet.xlsx"');
+header('Content-Disposition: attachment;filename="Environment.xlsx"');
 header('Cache-Control: max-age=0');
 // If you're serving to IE 9, then the following may be needed
 header('Cache-Control: max-age=1');

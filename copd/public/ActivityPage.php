@@ -145,11 +145,11 @@ else{
           <!-- 個人年齡 -->
           <input id="age" style="text-align: left; padding-right: 5px; border: 0px; background: #ffffff;" size="number" disabled></input><br>
           <!-- 前測 DBP SBP -->
-          <input id="before_dbp" style="text-align: left; padding-right: 5px; border: 0px; background: #ffffff;" size="number" disabled></input>
-          <input id="before_sbp" style="text-align: left; padding-right: 5px; border: 0px; background: #ffffff;" size="number" disabled></input><br>
+          <input id="before_dbp" style="width:200px; text-align: left; padding-right: 5px; border: 0px; background: #ffffff;" size="number" disabled></input>
+          <input id="before_sbp" style="width:200px; text-align: left; padding-right: 5px; border: 0px; background: #ffffff;" size="number" disabled></input><br>
           <!-- 後測 DBP SBP -->
-          <input id="after_dbp" style="text-align: left; padding-right: 5px; border: 0px; background: #ffffff;" size="number" disabled></input>
-          <input id="after_sbp" style="text-align: left; padding-right: 5px; border: 0px; background: #ffffff;" size="number" disabled></input><br>
+          <input id="after_dbp" style="width:200px; text-align: left; padding-right: 5px; border: 0px; background: #ffffff;" size="number" disabled></input>
+          <input id="after_sbp" style="width:200px; text-align: left; padding-right: 5px; border: 0px; background: #ffffff;" size="number" disabled></input><br>
           <!-- 運動時間 -->
           <input id="exercise_time" style="text-align: left; padding-right: 5px; border: 0px; background: #ffffff;" size="number" disabled></input><br>
           <!-- 高強度運動時間 -->
@@ -279,10 +279,10 @@ function click_row(row){
       //填入各項資訊
       document.getElementById('personal_name').value = '姓名：' + data.fname + ' ' + data.lname;
       document.getElementById('age').value = '年齡：' + data.age + '歲';
-      document.getElementById('before_dbp').value = '前測 舒張壓：' + bp_data.before.dbp + 'hmmg';
-      document.getElementById('before_sbp').value = ' 收縮壓：' + bp_data.before.sbp + 'hmmg';
-      document.getElementById('after_dbp').value = '後測 舒張壓：' + bp_data.after.dbp + 'hmmg';
-      document.getElementById('after_sbp').value = ' 收縮壓：' + bp_data.after.sbp + 'hmmg';
+      document.getElementById('before_dbp').value = '前測 舒張壓：' + bp_data.before.dbp.toFixed(2) + 'mmhg';
+      document.getElementById('before_sbp').value = '收縮壓：' + bp_data.before.sbp.toFixed(2) + 'mmhg';
+      document.getElementById('after_dbp').value = '後測 舒張壓：' + bp_data.after.dbp.toFixed(2) + 'mmhg';
+      document.getElementById('after_sbp').value = '收縮壓：' + bp_data.after.sbp.toFixed(2) + 'mmhg';
       document.getElementById('exercise_time').value = '運動時間：' + minute_int + '分' + second_int + '秒';
       document.getElementById('h_i_time').value = '高強度運動時間：' + data.h_i_time + '分';
     }

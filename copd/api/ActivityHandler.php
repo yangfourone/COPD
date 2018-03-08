@@ -55,7 +55,7 @@ class ActivityHandler extends SimpleRest{
 					break;
 				}
 			default:
-				$this ->setHttpHeaders('application/json', 404);
+				$this ->setHttpHeaders('text/html', 404);
 				echo 'URL Error!';
 		}
 	}
