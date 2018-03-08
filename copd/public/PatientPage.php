@@ -133,8 +133,8 @@ else{
         env_id: $("#env_id").val(),
         ble_id: $("#ble_id").val(),
         watch_id: $("#watch_id").val(),
-        drug_other: $("#drug_other_post").val(),
-        history_other: $("#history_other_post").val()
+        drug_other: $("#drug_other").val(),
+        history_other: $("#history_other").val()
       },
       success: function(data) { 
         getPatientData();
@@ -148,25 +148,25 @@ else{
   }
 
   function get_medicine(){
-    var medicine_other = [];
+    //var medicine_other = [];
     var medicine_selected=[];
 
-    var medicine_reg= $("#drug_other").val().replace(/,/g,"\",\"") + '';
+    /*var medicine_reg= $("#drug_other").val().replace(/,/g,"\",\"") + '';
     if(medicine_reg==''){
-      document.getElementById('drug_other_post').value = '["None"]';
+      document.getElementById('drug_other_post').value = '[""]';
     }
     else{
       medicine_other = ['["' + medicine_reg + '"]'];
       console.log(medicine_other);
       document.getElementById('drug_other_post').value = medicine_other;
-    }
+    }*/
 
     $("[name=medicine]:checkbox:checked").each(function(){
       medicine_selected.push($(this).val());
     });
     medicine_selected = medicine_selected + '';
     if(medicine_selected==''){
-    	document.getElementById('drug').value = '["None"]';
+    	document.getElementById('drug').value = '[]';
     }
     else{
       //console.log(medicine_selected);
@@ -178,10 +178,10 @@ else{
     }
   }
   function get_case(){
-    var case_other = [];
+    //var case_other = [];
     var case_selected=[];
 
-    var case_reg= $("#history_other").val().replace(/,/g,"\",\"") + '';
+    /*var case_reg= $("#history_other").val().replace(/,/g,"\",\"") + '';
     if(case_reg==''){
       document.getElementById('history_other_post').value = '["None"]';
     }
@@ -189,14 +189,14 @@ else{
       case_other = ['["' + case_reg + '"]'];
       console.log(case_other);
       document.getElementById('history_other_post').value = case_other;
-    }
+    }*/
 
     $("[name=case]:checkbox:checked").each(function(){
       case_selected.push($(this).val());
     });
     case_selected = case_selected + '';
     if(case_selected==''){
-     	document.getElementById('history').value = '["None"]';
+     	document.getElementById('history').value = '[]';
     }
     else{
         var history_arr = case_selected.split(',');
@@ -225,12 +225,10 @@ else{
         document.getElementById('watch_id').value = data.watch_id;
         data.history = JSON.parse(data.history);
         data.drug = JSON.parse(data.drug);
-        data.drug_other = JSON.parse(data.drug_other);
-        data.history_other = JSON.parse(data.history_other);
+        //data.drug_other = JSON.parse(data.drug_other);
+        //data.history_other = JSON.parse(data.history_other);
         document.getElementById('drug_other').value = data.drug_other;
         document.getElementById('history_other').value = data.history_other;
-        //var history_arr = data.history.split(',');
-        //var drug_arr = data.drug.split(',');
         
         $("input[name='medicine']").prop("checked", false);
         $("input[name='case']").prop("checked", false);
@@ -441,7 +439,7 @@ else{
               <input name="medicine" type="checkbox" value="Hydrocortisone"> 氫化可體松 (Hydrocortisone)<br>
               <input name="medicine" type="checkbox" value="Dexamethasone"> 地塞米松 (Dexamethasone)<br>
               <br>
-              <h6>其它藥物：（不同藥物請用,分開）</h6>
+              <h6>其它藥物：</h6>
               <textarea type="text" id="drug_other" rows="3" cols="40"></textarea>
               <br>
             </div>
@@ -457,7 +455,7 @@ else{
               <input name="case" type="checkbox" value="Arrhythmia"> 心律不整<br>
               <input name="case" type="checkbox" value="HeartFailure"> 心衰竭<br>
               <input name="case" type="checkbox" value="Stroke"> 中風<br><br>
-              <h6>其他疾病：（不同疾病請用,分開）</h6>
+              <h6>其他疾病：</h6>
               <textarea type="text" id="history_other" rows="7" cols="25"></textarea>
             </div>
             <br><br>
@@ -472,8 +470,8 @@ else{
         <div class="row" align="right">
           <textarea type="text" id="history" rows="3" cols="40" style="display: none;"></textarea>
           <textarea type="text" id="drug" rows="3" cols="40" style="display: none;"></textarea>
-          <textarea type="text" id="history_other_post" rows="3" cols="40" style="display: none;"></textarea>
-          <textarea type="text" id="drug_other_post" rows="3" cols="40" style="display: none;"></textarea>
+          <!-- <textarea type="text" id="history_other_post" rows="3" cols="40" style="display: none;"></textarea>
+          <textarea type="text" id="drug_other_post" rows="3" cols="40" style="display: none;"></textarea> -->
         </div>
         <p>
         <h5 id="patient_Result" align="right" style="color:red"></h5>
@@ -486,8 +484,8 @@ else{
 	          <thead>
 	              <tr>
 	                  <th>帳號</th>
+                    <th>姓氏</th>
 	                  <th>名字</th>
-	                  <th>姓氏</th>
                     <th>年齡</th>
 	                  <th>性別</th>
 	                  <th>BMI</th>

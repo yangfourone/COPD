@@ -37,6 +37,8 @@ else{
 
 <script type="text/JavaScript">
 	$(document).ready(function(){
+    initial_date();
+
 	  var envDataTable = $('#evnTable').DataTable({
       "order": [[ 6, "desc" ]]
     });
@@ -45,8 +47,13 @@ else{
     $("#time_select").change(function(){
       getEnvData();
     })
+    $("#env_date").change(function(){
+      document.getElementById('start_time').value = $("#env_date").val() + " 00:00:00";
+      document.getElementById('end_time').value = $("#env_date").val() + " 23:59:59";
+      getEnvData();
+    })
 	});
-	
+
 	function LoadEnvDataToTable(envData){
 	  var envDataTable = $('#evnTable').DataTable();
 		envDataTable.clear().draw(false);
@@ -63,23 +70,50 @@ else{
     }
 		envDataTable.columns.adjust().draw();
 	}
+
   function getEnvData() {
     $.ajax({
       type : 'GET',
-      url  : '../apiv1/env/' + $("#time_select").val(),
+      url  : '../apiv1/env/getbytime',
       dataType: 'json',
+      data: {
+        start_time: $("#start_time").val(),
+        end_time: $("#end_time").val(),
+      },
       cache: false,
       success :  function(result){
-        $("#envTable").show();
+        console.log(result);
+        $("#datatable_env_visible").show();
         LoadEnvDataToTable(result);
       },
       error: function(jqXHR) {
-        $("#envTable").hide();
-        alert("發生錯誤: " + jqXHR.status + ' ' + jqXHR.statusText);
+        alert("選取的日期（" + $("#env_date").val() + "）沒有資料");
+        $("#datatable_env_visible").hide();
       }
     });
   }
-	
+	 
+  function initial_date(){
+    var today = new Date();
+    if ((today.getMonth()+1)<10){
+      if(today.getDate()<10){
+        document.getElementById('env_date').value = today.getFullYear() + "-0" + (today.getMonth()+1) + "-0" + today.getDate();
+      }
+      else{
+        document.getElementById('env_date').value = today.getFullYear() + "-0" + (today.getMonth()+1) + "-" + today.getDate();
+      }
+    }
+    else{
+      if(today.getDate()<10){
+        document.getElementById('env_date').value = today.getFullYear() + "-" + (today.getMonth()+1) + "-0" + today.getDate();
+      }
+      else{
+        document.getElementById('env_date').value = today.getFullYear() + "-" + (today.getMonth()+1) + "-" + today.getDate();
+      }
+    }
+    document.getElementById('start_time').value = $("#env_date").val() + " 00:00:00";
+    document.getElementById('end_time').value = $("#env_date").val() + " 23:59:59";
+  }
 
 </script>
 
@@ -166,7 +200,10 @@ else{
   <div class="content-wrapper" style="padding-left: 5px">
     <div class="container-fluid">
         <div class="download_table" align="right">
-          <select id="time_select">
+          <input type="date" id="env_date">&nbsp;&nbsp;
+          <input type="text" id="start_time" style="display: none;">
+          <input type="text" id="end_time" style="display: none;">
+          <select id="time_select" style="display: none;">
             <option value="getbytime/week">近一週</option>
             <option value="getall">全部</option>
             <option value="getbytime/month">本月</option>

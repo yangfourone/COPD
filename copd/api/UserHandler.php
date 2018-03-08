@@ -29,6 +29,11 @@ class UserHandler extends SimpleRest{
 					echo $this->set_status_code($user_id->getById($this->id));
 					break;
 				}
+				else if($this->action == 'checkid'){
+					$user_id = new User();
+					echo $this->set_status_code($user_id->checkId($this->id));
+					break;
+				}
 			case 'post':
 				if($this->action == 'add'){
 					$user_add = new User();
@@ -40,6 +45,11 @@ class UserHandler extends SimpleRest{
 					echo $this->set_status_code($user_update->update($this->input));
 					break;
 				}
+				else if($this->action == 'login'){
+					$user_login = new User();
+					echo $this->set_status_code($user_login->login($this->input));
+					break;
+				}
 			case 'delete':
 				if($this->action == 'delete'){
 					$user_delete = new User();
@@ -47,7 +57,7 @@ class UserHandler extends SimpleRest{
 					break;
 				}
 			default:
-				$this ->setHttpHeaders('application/json', 404);
+				$this ->setHttpHeaders('text/html', 404);
 				echo 'URL Error!';
 		}
 		
