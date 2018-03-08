@@ -1,4 +1,9 @@
 <?php
+if($_SERVER["HTTPS"] != "on")
+{
+    header("Location: https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
+    exit();
+}
 session_start();
 if(empty($_SESSION['account'])){
   header("Location: index.php"); 
@@ -68,7 +73,7 @@ else{
           </a>
           <ul class="sidenav-second-level collapse" id="collapseComponents">
             <li>
-              <a href="PatientPage.php">Table</a>
+              <a href="PatientPage.php">Patient</a>
             </li>
           </ul>
         </li>
@@ -79,7 +84,7 @@ else{
           </a>
           <ul class="sidenav-second-level collapse" id="collapseExamplePages">
             <li>
-              <a href="EnvironmentPage.php">Table</a>
+              <a href="EnvironmentPage.php">Environment</a>
             </li>
           </ul>
         </li>
@@ -90,7 +95,7 @@ else{
           </a>
           <ul class="sidenav-second-level collapse" id="collapseDailyPages">
             <li>
-              <a href="DailyPage.php">Table</a>
+              <a href="DailyPage.php">Daily</a>
             </li>
           </ul>
         </li>
@@ -101,7 +106,7 @@ else{
           </a>
           <ul class="sidenav-second-level collapse" id="collapseActivityPages">
             <li>
-              <a href="ActivityPage.php">Table</a>
+              <a href="ActivityPage.php">Activity</a>
             </li>
           </ul>
         </li>
@@ -197,7 +202,7 @@ else{
 	    <footer class="sticky-footer">
 	      <div class="container">
 	        <div class="text-center">
-	          <small>Copyright © Your Website 2017</small>
+	          <small>COPD Walk © 2018</small>
 	        </div>
 	      </div>
 	    </footer>
@@ -228,7 +233,9 @@ else{
 
 <script type="text/JavaScript">
 $(document).ready(function(){
-  var activityDataTable = $('#activityTable').DataTable();
+  var activityDataTable = $('#activityTable').DataTable({
+    "order": [[ 3, "desc" ]]
+  });
   getActivityData();
 
   $("#personal_datatable_cancel").click(function(){

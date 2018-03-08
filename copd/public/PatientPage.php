@@ -1,4 +1,9 @@
 <?php
+if($_SERVER["HTTPS"] != "on")
+{
+    header("Location: https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"]);
+    exit();
+}
 session_start();
 if(empty($_SESSION['account'])){
   header("Location: index.php"); 
@@ -146,10 +151,15 @@ else{
     var medicine_other = [];
     var medicine_selected=[];
 
-    var medicine_reg= $("#drug_other").val().replace(/,/g,"\",\"");
-    medicine_other = ['["' + medicine_reg + '"]'];
-    console.log(medicine_other);
-    document.getElementById('drug_other_post').value = medicine_other;
+    var medicine_reg= $("#drug_other").val().replace(/,/g,"\",\"") + '';
+    if(medicine_reg==''){
+      document.getElementById('drug_other_post').value = '["None"]';
+    }
+    else{
+      medicine_other = ['["' + medicine_reg + '"]'];
+      console.log(medicine_other);
+      document.getElementById('drug_other_post').value = medicine_other;
+    }
 
     $("[name=medicine]:checkbox:checked").each(function(){
       medicine_selected.push($(this).val());
@@ -159,8 +169,11 @@ else{
     	document.getElementById('drug').value = '["None"]';
     }
     else{
+      //console.log(medicine_selected);
 	    var drug_arr = medicine_selected.split(',');
-        drug_arr = JSON.stringify(drug_arr);
+      //console.log(drug_arr);
+      drug_arr = JSON.stringify(drug_arr);
+      //console.log(drug_arr);
 	    document.getElementById('drug').value = drug_arr ;
     }
   }
@@ -168,10 +181,15 @@ else{
     var case_other = [];
     var case_selected=[];
 
-    var case_reg= $("#history_other").val().replace(/,/g,"\",\"");
-    case_other = ['["' + case_reg + '"]'];
-    console.log(case_other);
-    document.getElementById('history_other_post').value = case_other;
+    var case_reg= $("#history_other").val().replace(/,/g,"\",\"") + '';
+    if(case_reg==''){
+      document.getElementById('history_other_post').value = '["None"]';
+    }
+    else{
+      case_other = ['["' + case_reg + '"]'];
+      console.log(case_other);
+      document.getElementById('history_other_post').value = case_other;
+    }
 
     $("[name=case]:checkbox:checked").each(function(){
       case_selected.push($(this).val());
@@ -291,7 +309,7 @@ else{
           </a>
           <ul class="sidenav-second-level collapse" id="collapseComponents">
             <li>
-              <a href="PatientPage.php">Table</a>
+              <a href="PatientPage.php">Patient</a>
             </li>
           </ul>
         </li>
@@ -302,7 +320,7 @@ else{
           </a>
           <ul class="sidenav-second-level collapse" id="collapseExamplePages">
             <li>
-              <a href="EnvironmentPage.php">Table</a>
+              <a href="EnvironmentPage.php">Environment</a>
             </li>
           </ul>
         </li>
@@ -313,7 +331,7 @@ else{
           </a>
           <ul class="sidenav-second-level collapse" id="collapseDailyPages">
             <li>
-              <a href="DailyPage.php">Table</a>
+              <a href="DailyPage.php">Daily</a>
             </li>
           </ul>
         </li>
@@ -324,7 +342,7 @@ else{
           </a>
           <ul class="sidenav-second-level collapse" id="collapseActivityPages">
             <li>
-              <a href="ActivityPage.php">Table</a>
+              <a href="ActivityPage.php">Activity</a>
             </li>
           </ul>
         </li>
@@ -397,8 +415,11 @@ else{
               <input type="text" id="ble_id"> <br>
 
               <label for="watch_id">手錶ID：</label>
-              <input type="text" id="watch_id"> <br>
-
+              <input type="text" id="watch_id"> <br><br>
+	      
+	      <h6 style="color: red;">[備註] 帳號若包含英文字母需小寫</h6>
+	      <h6 style="color: red;">     (輸入大寫會自動轉為小寫)</h6>
+	      
           </div>
           <div class="column" align="left" style="padding: 0px 10px 0px 5px; width: 50%">
           <br>
@@ -406,19 +427,19 @@ else{
               <h5 style="font-weight: bold;">藥物勾選清單</h5>
 
               <h6>吸入型藥物：</h6>
-              <input name="medicine" type="checkbox" value="備勞喘噴霧劑"> 備勞喘噴霧劑：(Berotec, Fenoterol)<br>
-              <input name="medicine" type="checkbox" value="備喘全噴霧劑"> 備喘全噴霧劑：(Berodual N, Fenoterol + Ipratropium)<br>
-              <input name="medicine" type="checkbox" value="冠喘衛噴霧劑"> 冠喘衛噴霧劑：(Combivent, Salbutamol + Ipratropium)<br>
-              <input name="medicine" type="checkbox" value="使肺泰乾粉吸入劑"> 使肺泰乾粉吸入劑：(Seretide, Fluticasone propionate + Salmeterol)<br>
-              <input name="medicine" type="checkbox" value="適喘樂吸入劑"> 適喘樂吸入劑：(Spiriva, Tiotropium)<br>
-              <input name="medicine" type="checkbox" value="定喘樂吸入劑"> 定喘樂吸入劑：(Atrovent Nebuliser Soln, Ipratropium)<br>
+              <input name="medicine" type="checkbox" value="Berotec"> 備勞喘噴霧劑：(Berotec, Fenoterol)<br>
+              <input name="medicine" type="checkbox" value="BerodualN"> 備喘全噴霧劑：(Berodual N, Fenoterol + Ipratropium)<br>
+              <input name="medicine" type="checkbox" value="Combivent"> 冠喘衛噴霧劑：(Combivent, Salbutamol + Ipratropium)<br>
+              <input name="medicine" type="checkbox" value="Seretide"> 使肺泰乾粉吸入劑：(Seretide, Fluticasone propionate + Salmeterol)<br>
+              <input name="medicine" type="checkbox" value="Spiriva"> 適喘樂吸入劑：(Spiriva, Tiotropium)<br>
+              <input name="medicine" type="checkbox" value="Atrovent"> 定喘樂吸入劑：(Atrovent Nebuliser Soln, Ipratropium)<br>
               <br>
               <h6>口服型類固醇：</h6>
-              <input name="medicine" type="checkbox" value="強的松/去氫可的松"> 強的松/去氫可的松 (Prednisone)<br>
-              <input name="medicine" type="checkbox" value="康速龍"> 康速龍 (Donison, Prednisone)<br>
-              <input name="medicine" type="checkbox" value="甲基培尼皮質醇"> 甲基培尼皮質醇 (Methylprednisolone)<br>
-              <input name="medicine" type="checkbox" value="氫化可體松"> 氫化可體松 (Hydrocortisone)<br>
-              <input name="medicine" type="checkbox" value="地塞米松"> 地塞米松 (Dexamethasone)<br>
+              <input name="medicine" type="checkbox" value="Prednisone"> 強的松/去氫可的松 (Prednisone)<br>
+              <input name="medicine" type="checkbox" value="Donison"> 康速龍 (Donison, Prednisone)<br>
+              <input name="medicine" type="checkbox" value="Methylprednisolone"> 甲基培尼皮質醇 (Methylprednisolone)<br>
+              <input name="medicine" type="checkbox" value="Hydrocortisone"> 氫化可體松 (Hydrocortisone)<br>
+              <input name="medicine" type="checkbox" value="Dexamethasone"> 地塞米松 (Dexamethasone)<br>
               <br>
               <h6>其它藥物：（不同藥物請用,分開）</h6>
               <textarea type="text" id="drug_other" rows="3" cols="40"></textarea>
@@ -430,12 +451,12 @@ else{
             <div style="padding: 0px 10px 0px 40px;" align="left">
               <h5 style="font-weight: bold;">疾病史</h5>
             
-              <input name="case" type="checkbox" value="心臟病"> 心臟病<br>
-              <input name="case" type="checkbox" value="高血壓"> 高血壓<br>
-              <input name="case" type="checkbox" value="糖尿病"> 糖尿病<br>
-              <input name="case" type="checkbox" value="心律不整"> 心律不整<br>
-              <input name="case" type="checkbox" value="心衰竭"> 心衰竭<br>
-              <input name="case" type="checkbox" value="中風"> 中風<br><br>
+              <input name="case" type="checkbox" value="HeartDisease"> 心臟病<br>
+              <input name="case" type="checkbox" value="Hypertension"> 高血壓<br>
+              <input name="case" type="checkbox" value="Diabetes"> 糖尿病<br>
+              <input name="case" type="checkbox" value="Arrhythmia"> 心律不整<br>
+              <input name="case" type="checkbox" value="HeartFailure"> 心衰竭<br>
+              <input name="case" type="checkbox" value="Stroke"> 中風<br><br>
               <h6>其他疾病：（不同疾病請用,分開）</h6>
               <textarea type="text" id="history_other" rows="7" cols="25"></textarea>
             </div>
@@ -481,7 +502,7 @@ else{
 	    <footer class="sticky-footer">
 	      <div class="container">
 	        <div class="text-center">
-	          <small>Copyright © Your Website 2017</small>
+	          <small>COPD Walk © 2018</small>
 	        </div>
 	      </div>
 	    </footer>
