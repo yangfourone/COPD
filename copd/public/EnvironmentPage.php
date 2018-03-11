@@ -28,12 +28,12 @@ else{
   <!--   <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">   -->
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
-</head>
 
-<script src="js/jquery-1.11.3.min.js"></script>
-<link rel="stylesheet" href="css\myStyle.css">
-<link rel="stylesheet" href="..\DataTables\DataTables-1.10.16\css\jquery.dataTables.min.css">
-<script type="text/JavaScript" src="..\DataTables\DataTables-1.10.16\js\jquery.dataTables.min.js"></script>
+  <script src="js/jquery-1.11.3.min.js"></script>
+  <link rel="stylesheet" href="css\myStyle.css">
+  <link rel="stylesheet" href="..\DataTables\DataTables-1.10.16\css\jquery.dataTables.min.css">
+  <script type="text/JavaScript" src="..\DataTables\DataTables-1.10.16\js\jquery.dataTables.min.js"></script>
+</head>
 
 <script type="text/JavaScript">
 	$(document).ready(function(){
@@ -51,6 +51,31 @@ else{
       document.getElementById('start_time').value = $("#env_date").val() + " 00:00:00";
       document.getElementById('end_time').value = $("#env_date").val() + " 23:59:59";
       getEnvData();
+    })
+    $("#Download").click(function(){
+      $("#Download_Table").toggle();
+    })
+    $("#Env_PDF_Download").click(function(){
+      if ($("#download_start_time").val()==''||$("#download_end_time").val()==''){
+        alert("日期不能為空!");
+      }
+      else if($("#download_start_time").val() > $("#download_end_time").val()){
+        alert("開始時間不能大於結束時間!");
+      }
+      else{
+        document.location.href="Download_Env_zip.php?start_time=" + $("#download_start_time").val() + "&end_time=" + $("#download_end_time").val() + "&type=PDF";
+      }
+    })
+    $("#Env_Excel_Download").click(function(){
+      if ($("#download_start_time").val()==''||$("#download_end_time").val()==''){
+        alert("日期不能為空!");
+      }
+      else if($("#download_start_time").val() > $("#download_end_time").val()){
+        alert("開始時間不能大於結束時間!");
+      }
+      else{
+        document.location.href="Download_Env_zip.php?start_time=" + $("#download_start_time").val() + "&end_time=" + $("#download_end_time").val() + "&type=Excel";
+      }
     })
 	});
 
@@ -199,19 +224,28 @@ else{
 
   <div class="content-wrapper" style="padding-left: 5px">
     <div class="container-fluid">
-        <div class="download_table" align="right">
-          <input type="date" id="env_date">&nbsp;&nbsp;
-          <input type="text" id="start_time" style="display: none;">
-          <input type="text" id="end_time" style="display: none;">
-          <select id="time_select" style="display: none;">
+      <div align="right">
+        顯示資料日期：<input type="date" id="env_date">&nbsp;&nbsp;
+        <button id="Download">下載</button>
+        <input type="text" id="start_time" style="display: none;">
+        <input type="text" id="end_time" style="display: none;">
+      </div>
+      <div id="Download_Table" class="modal" align="center" style="display: none;">
+        <div class="edit_table" align="center" style="width: 90%; padding-bottom: 20px; border: none;">
+          <h4 align="center">檔案下載</h4><br>
+          開始時間：<input type="date" id="download_start_time"><br></br>
+          結束時間：<input type="date" id="download_end_time"><br>
+          <!--<select id="time_select">
             <option value="getbytime/week">近一週</option>
             <option value="getall">全部</option>
             <option value="getbytime/month">本月</option>
-          </select>&nbsp;&nbsp;
-          <button onclick="window.location.href='Download_Environment_PDF.php'">PDF 下載</button>
-          <button onclick="window.location.href='Download_Environment_Excel.php'">EXCEL 下載</button>
-          <br></br>
+          </select>-->
+          <br>
+          <button id="Env_PDF_Download" style="width: 40%">PDF 下載</button>&nbsp;&nbsp;
+          <button id="Env_Excel_Download" style="width: 40%">EXCEL 下載</button>
         </div>
+      </div>
+    </div><br>
 	    <!-- /.container-fluid-->
 	    <!-- Download Page -->
 	    <!-- EnvDataTable-->
@@ -276,7 +310,7 @@ else{
 	    <script src="js/sb-admin.min.js"></script>
 	    <!-- Custom scripts for this page-->
 	    <script src="js/sb-admin-datatables.min.js"></script>
-    </div>
+  </div>
 </body>
 
 </html>

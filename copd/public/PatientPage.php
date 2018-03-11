@@ -389,7 +389,7 @@ else{
               <input type="text" id="age"> <br>
 
               <label for="sex">性別：</label>
-              <select id="sex" style="width: 173px;">
+              <select id="sex" style="width: 178px;">
                 <option value="1">男</option>
                 <option value="0">女</option>
               </select> <br>

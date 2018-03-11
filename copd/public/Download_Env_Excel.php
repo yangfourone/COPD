@@ -1,36 +1,15 @@
 <?php
-/**
- * PHPExcel
- *
- * Copyright (c) 2006 - 2015 PHPExcel
- *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
- *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
- *
- * @category   PHPExcel
- * @package    PHPExcel
- * @copyright  Copyright (c) 2006 - 2015 PHPExcel (http://www.codeplex.com/PHPExcel)
- * @license    http://www.gnu.org/licenses/old-licenses/lgpl-2.1.txt	LGPL
- * @version    ##VERSION##, ##DATE##
- */
-
 // 連結資料庫
 require '../api/connect.php';
 mysqli_select_db($con,"env");
- 
+
+$download_date = $_GET['download_date'];
+$start_time = $download_date.' 00:00:00';
+$end_time = $download_date.' 23:59:59';
+$name = $download_date;
+
 // query資料庫的資料 
-$sql_env="SELECT * FROM env";
+$sql_env="SELECT * FROM env WHERE datetime >='$start_time' AND datetime <='$end_time'";
 $result = mysqli_query($con,$sql_env);
 
 $_cnt = 1;
@@ -82,8 +61,6 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('F1', '紫外線指數')
             ->setCellValue('G1', '時間');
 			
-$data_number = 0 ;
-
 // Rename worksheet
 $objPHPExcel->getActiveSheet()->setTitle('Environment');
 
@@ -91,20 +68,27 @@ $objPHPExcel->getActiveSheet()->setTitle('Environment');
 $objPHPExcel->setActiveSheetIndex(0);
 
 // Redirect output to a client’s web browser (Excel2007)
-header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+//header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+
+header('Content-Type:text/html');
+$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+$objWriter->save(dirname(__FILE__).'/download/Env '.$name.'.xlsx');
+echo "success";
+exit;
 
 //***************************file name***************************************
-header('Content-Disposition: attachment;filename="Environment.xlsx"');
-header('Cache-Control: max-age=0');
+//header('Content-Disposition: attachment;filename="Environment '.$name.'.xlsx"');
+//header('Cache-Control: max-age=0');
+
 // If you're serving to IE 9, then the following may be needed
-header('Cache-Control: max-age=1');
+//header('Cache-Control: max-age=1');
 
 // If you're serving to IE over SSL, then the following may be needed
+/*
 header ('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
 header ('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT'); // always modified
 header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
 header ('Pragma: public'); // HTTP/1.0
+*/
 
-$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-$objWriter->save('php://output');
-exit;
+//$objWriter->save('php://output');

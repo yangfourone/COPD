@@ -28,12 +28,12 @@ else{
   <!--   <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">   -->
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
-</head>
 
-<script src="js/jquery-1.11.3.min.js"></script>
-<link rel="stylesheet" href="css\myStyle.css">
-<link rel="stylesheet" href="..\DataTables\DataTables-1.10.16\css\jquery.dataTables.min.css">
-<script type="text/JavaScript" src="..\DataTables\DataTables-1.10.16\js\jquery.dataTables.min.js"></script>
+  <script src="js/jquery-1.11.3.min.js"></script>
+  <link rel="stylesheet" href="css\myStyle.css">
+  <link rel="stylesheet" href="..\DataTables\DataTables-1.10.16\css\jquery.dataTables.min.css">
+  <script type="text/JavaScript" src="..\DataTables\DataTables-1.10.16\js\jquery.dataTables.min.js"></script>
+</head>
 
 <script type="text/JavaScript">
   
@@ -45,6 +45,37 @@ else{
 
     $("#time_select").change(function(){
       getDailyData();
+    })
+
+    $("#env_date").change(function(){
+      document.getElementById('start_time').value = $("#env_date").val() + " 00:00:00";
+      document.getElementById('end_time').value = $("#env_date").val() + " 23:59:59";
+      getEnvData();
+    })
+    $("#Download").click(function(){
+      $("#Download_Table").toggle();
+    })
+    $("#Daily_PDF_Download").click(function(){
+      if ($("#download_start_time").val()==''||$("#download_end_time").val()==''){
+        alert("日期不能為空!");
+      }
+      else if($("#download_start_time").val() > $("#download_end_time").val()){
+        alert("開始時間不能大於結束時間!");
+      }
+      else{
+        document.location.href="Download_Daily_zip.php?start_time=" + $("#download_start_time").val() + "&end_time=" + $("#download_end_time").val() + "&type=PDF";
+      }
+    })
+    $("#Daily_Excel_Download").click(function(){
+      if ($("#download_start_time").val()==''||$("#download_end_time").val()==''){
+        alert("日期不能為空!");
+      }
+      else if($("#download_start_time").val() > $("#download_end_time").val()){
+        alert("開始時間不能大於結束時間!");
+      }
+      else{
+        document.location.href="Download_Daily_zip.php?start_time=" + $("#download_start_time").val() + "&end_time=" + $("#download_end_time").val() + "&type=Excel";
+      }
     })
   });
 
@@ -80,6 +111,7 @@ else{
     }
     dailyDataTable.columns.adjust().draw();
   }
+
 </script>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -167,11 +199,24 @@ else{
       <div class="row">
         <div class="column" align="right" style="width: 100%; padding-left: 15px">
         <!-- 時間篩選 -->
-        <select id="time_select">
+        資料顯示：<select id="time_select">
           <option value="getbytime/week">近一週</option>
           <option value="getall">全部</option>
           <option value="getbytime/month">本月</option>
-        </select>
+          </select>&nbsp;&nbsp;
+          <button id="Download">下載</button>
+          <input type="text" id="start_time" style="display: none;">
+          <input type="text" id="end_time" style="display: none;">
+        </div>
+        <div id="Download_Table" class="modal" align="center" style="display: none;">
+          <div class="edit_table" align="center" style="width: 90%; padding-bottom: 20px; border: none;">
+            <h4 align="center">檔案下載</h4><br>
+            開始時間：<input type="date" id="download_start_time"><br></br>
+            結束時間：<input type="date" id="download_end_time"><br>
+            <br>
+            <button id="Daily_PDF_Download" style="width: 40%">PDF 下載</button>&nbsp;&nbsp;
+            <button id="Daily_Excel_Download" style="width: 40%">EXCEL 下載</button>
+          </div>
         </div>
       </div><br>
 	    <!-- /.container-fluid-->

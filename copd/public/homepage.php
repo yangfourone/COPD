@@ -116,7 +116,9 @@ else{
   <div class="content-wrapper" style="padding-left: 5px">
     <div class="container-fluid">
 	    <!-- /.container-fluid-->
-	    <br>
+      <div align="center" style="margin-top: 50px;">
+        <img src="pic/homepage.png" >
+      </div>
 	    <!-- /.content-wrapper-->
 	    <footer class="sticky-footer">
 	      <div class="container">
