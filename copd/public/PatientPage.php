@@ -86,8 +86,6 @@ else{
         patientData[i].age,
         patientData[i].sex==1?'男':(patientData[i].sex==0?'女':null),
         patientData[i].bmi,
-        //patientData[i].drug,
-        //patientData[i].history,
         patientData[i].env_id,
         patientData[i].ble_id,
         patientData[i].watch_id
@@ -287,136 +285,60 @@ else{
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Navigation-->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-    <a class="navbar-brand" href="homepage.php">Welcome COPD Manage System</a>
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="HomePage">
-          <a class="nav-link" href="homepage.php">
-            <i class="fa fa-fw fa-windows"></i>
-            <span class="nav-link-text">COPD首頁</span>
-          </a>
-        </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Patient">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
-            <i class="fa fa-fw fa-child"></i>
-            <span class="nav-link-text" id="test">病患資料</span>
-          </a>
-          <ul class="sidenav-second-level collapse" id="collapseComponents">
-            <li>
-              <a href="PatientPage.php">Patient</a>
-            </li>
-          </ul>
-        </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Environment">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
-            <i class="fa fa-fw fa-bank"></i>
-            <span class="nav-link-text" id="test">環境資料</span>
-          </a>
-          <ul class="sidenav-second-level collapse" id="collapseExamplePages">
-            <li>
-              <a href="EnvironmentPage.php">Environment</a>
-            </li>
-          </ul>
-        </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Daily">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseDailyPages" data-parent="#exampleAccordion">
-            <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text" id="test">每日統計</span>
-          </a>
-          <ul class="sidenav-second-level collapse" id="collapseDailyPages">
-            <li>
-              <a href="DailyPage.php">Daily</a>
-            </li>
-          </ul>
-        </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Activity">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseActivityPages" data-parent="#exampleAccordion">
-            <i class="fa fa-fw fa-bar-chart-o"></i>
-            <span class="nav-link-text" id="test">活動紀錄</span>
-          </a>
-          <ul class="sidenav-second-level collapse" id="collapseActivityPages">
-            <li>
-              <a href="ActivityPage.php">Activity</a>
-            </li>
-          </ul>
-        </li>
-      </ul>
-      <ul class="navbar-nav sidenav-toggler">
-        <li class="nav-item">
-          <a class="nav-link text-center" id="sidenavToggler">
-            <i class="fa fa-fw fa-angle-left"></i>
-          </a>
-        </li>
-      </ul>
-      <ul class="navbar-nav ml-auto">
-       <text align="text-center" style="margin: auto; color:yellow; padding-right: 10px" id="login_msg">Hello! <?php echo $_SESSION['account'] ?></text>
-        <li class="nav-item">
-          <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
-            <i class="fa fa-fw fa-sign-out"></i>Logout</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
+  <?php require('module.php'); ?>
 
-
-<!-- center   -->
-
+  <!-- center -->
   <div class="content-wrapper" style="padding-left: 5px">
     <div class="container-fluid">
-        <div class="download_table" align="right">
-              <button onclick="window.location.href='Download_Patient_PDF.php'">PDF 下載</button>
-              <button onclick="window.location.href='Download_Patient_Excel.php'">EXCEL 下載</button>&nbsp;
-              &nbsp;<button id="NewPatient">新增資料</button>
-        </div>
+      <div class="download_table" align="right">
+            <button onclick="window.location.href='Download_Patient_PDF.php'">PDF 下載</button>
+            <button onclick="window.location.href='Download_Patient_Excel.php'">EXCEL 下載</button>&nbsp;
+            &nbsp;<button id="NewPatient">新增資料</button>
+      </div>
 	    <!-- /.container-fluid-->
-	    <!-- Download Page -->
 	    <!-- PatientManage-->
       <div class="edit_table" id="PatientManage" style="display:none; width: 100%">
         <div class="row">
           <div class="column" align="right" style="padding: 0px 10px 0px 5px; width: 25%;"><br>
-              <h5 align="left" style="font-weight: bold; padding-left: 20px;">病患資料表</h5>
-              <label for="fname">姓氏：</label>
-              <input type="text" id="fname"> <br>
+            <h5 align="left" style="font-weight: bold; padding-left: 20px;">病患資料表</h5>
+            <label for="fname">姓氏：</label>
+            <input type="text" id="fname"> <br>
 
-              <label for="lname">名字：</label>
-              <input type="text" id="lname"> <br>
+            <label for="lname">名字：</label>
+            <input type="text" id="lname"> <br>
 
-              <label for="age">年齡：</label>
-              <input type="text" id="age"> <br>
+            <label for="age">年齡：</label>
+            <input type="text" id="age"> <br>
 
-              <label for="sex">性別：</label>
-              <select id="sex" style="width: 178px;">
-                <option value="1">男</option>
-                <option value="0">女</option>
-              </select> <br>
+            <label for="sex">性別：</label>
+            <select id="sex" style="width: 178px;">
+              <option value="1">男</option>
+              <option value="0">女</option>
+            </select> <br>
 
-              <label for="updateid" id="pid_label">帳號：</label>
-              <input type="text" id="updateid" disabled>
+            <label for="updateid" id="pid_label">帳號：</label>
+            <input type="text" id="updateid" disabled>
 
-              <label for="addid" id="newid_label">帳號：</label>
-              <input type="text" id="addid"> <br>
+            <label for="addid" id="newid_label">帳號：</label>
+            <input type="text" id="addid"> <br>
 
-              <label for="pwd">密碼：</label>
-              <input type="password" id="pwd"> <br>
+            <label for="pwd">密碼：</label>
+            <input type="password" id="pwd"> <br>
 
-              <label for="bmi">BMI：</label>
-              <input type="text" id="bmi"> <br>
+            <label for="bmi">BMI：</label>
+            <input type="text" id="bmi"> <br>
 
-              <label for="env_id">環境ID：</label>
-              <input type="text" id="env_id"> <br>
-              
-              <label for="ble_id">藍芽ID：</label>
-              <input type="text" id="ble_id"> <br>
+            <label for="env_id">環境ID：</label>
+            <input type="text" id="env_id"> <br>
+            
+            <label for="ble_id">藍芽ID：</label>
+            <input type="text" id="ble_id"> <br>
 
-              <label for="watch_id">手錶ID：</label>
-              <input type="text" id="watch_id"> <br><br>
+            <label for="watch_id">手錶ID：</label>
+            <input type="text" id="watch_id"> <br><br>
 	      
-	      <h6 style="color: red;">[備註] 帳號若包含英文字母需小寫</h6>
-	      <h6 style="color: red;">     (輸入大寫會自動轉為小寫)</h6>
+    	      <h6 style="color: red;">[備註] 帳號若包含英文字母需小寫</h6>
+    	      <h6 style="color: red;">     (輸入大寫會自動轉為小寫)</h6>
 	      
           </div>
           <div class="column" align="left" style="padding: 0px 10px 0px 5px; width: 50%">
@@ -477,70 +399,44 @@ else{
         <h5 id="patient_Result" align="right" style="color:red"></h5>
       </div>
       <br>
-	    <!-- PatientDataTable-->
-	    <div id="datatable_patient_visible">
-	      <table id="patientTable" class="display" cellspacing="0" width="100%" >
-            
-	          <thead>
-	              <tr>
-	                  <th>帳號</th>
-                    <th>姓氏</th>
-	                  <th>名字</th>
-                    <th>年齡</th>
-	                  <th>性別</th>
-	                  <th>BMI</th>
-                    <th>環境ID</th>
-                    <th>藍芽ID</th>
-                    <th>手錶ID</th>
-	              </tr>
-	          </thead>
-	      </table>
-	    </div>
-	    <!-- /.content-wrapper-->
-	    <footer class="sticky-footer">
-	      <div class="container">
-	        <div class="text-center">
-	          <small>COPD Walk © 2018</small>
-	        </div>
-	      </div>
-	    </footer>
-	    <!-- Scroll to Top Button-->
-	    <a class="scroll-to-top rounded" href="#page-top">
-	      <i class="fa fa-angle-up"></i>
-	    </a>
-	    <!-- Logout Modal-->
-	    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	      <div class="modal-dialog" role="document">
-	        <div class="modal-content">
-	          <div class="modal-header">
-	            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-	            <button class="close" type="button" data-dismiss="modal" aria-label="Close" >
-	              <span aria-hidden="true">×</span>
-	            </button>
-	          </div>
-	          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-	          <div class="modal-footer">
-	            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-	            <a class="btn btn-primary" href="index.php">Logout</a>
-	          </div>
-	        </div>
-	      </div>
-	    </div>
-	    <!-- Bootstrap core JavaScript-->
-	    <script src="vendor/jquery/jquery.min.js"></script>
-	    <script src="vendor/popper/popper.min.js"></script>
-	    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-	    <!-- Core plugin JavaScript-->
-	    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-	    <!-- Page level plugin JavaScript-->
-	    <script src="vendor/chart.js/Chart.min.js"></script>
-	    <script src="vendor/datatables/jquery.dataTables.js"></script>
-	    <!-- <script src="vendor/datatables/dataTables.bootstrap4.js"></script> -->
-	    <!-- Custom scripts for all pages-->
-	    <script src="js/sb-admin.min.js"></script>
-	    <!-- Custom scripts for this page-->
-	    <script src="js/sb-admin-datatables.min.js"></script>
     </div>
+    <!-- PatientDataTable-->
+    <div id="datatable_patient_visible" style="width: 98%; margin: auto;">
+      <table id="patientTable" class="display" cellspacing="0" width="100%" >
+        <thead>
+          <tr>
+            <th>帳號</th>
+            <th>姓氏</th>
+            <th>名字</th>
+            <th>年齡</th>
+            <th>性別</th>
+            <th>BMI</th>
+            <th>環境ID</th>
+            <th>藍芽ID</th>
+            <th>手錶ID</th>
+          </tr>
+        </thead>
+      </table>
+    </div>
+    <!-- /.content-wrapper-->
+    <!-- Logout Button + Footer -->
+    <?php require('footer_and_logout.php'); ?>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/popper/popper.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Page level plugin JavaScript-->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="vendor/datatables/jquery.dataTables.js"></script>
+    <!-- <script src="vendor/datatables/dataTables.bootstrap4.js"></script> -->
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin.min.js"></script>
+    <!-- Custom scripts for this page-->
+    <script src="js/sb-admin-datatables.min.js"></script>
+  </div>
 </body>
 
 </html>

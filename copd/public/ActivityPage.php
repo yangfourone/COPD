@@ -53,87 +53,13 @@ else{
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
   <!-- Navigation-->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
-    <a class="navbar-brand" href="homepage.php">Welcome COPD Manage System</a>
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="HomePage">
-          <a class="nav-link" href="homepage.php">
-            <i class="fa fa-fw fa-windows"></i>
-            <span class="nav-link-text">COPD首頁</span>
-          </a>
-        </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Patient">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
-            <i class="fa fa-fw fa-child"></i>
-            <span class="nav-link-text" id="test">病患資料</span>
-          </a>
-          <ul class="sidenav-second-level collapse" id="collapseComponents">
-            <li>
-              <a href="PatientPage.php">Patient</a>
-            </li>
-          </ul>
-        </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Environment">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
-            <i class="fa fa-fw fa-bank"></i>
-            <span class="nav-link-text" id="test">環境資料</span>
-          </a>
-          <ul class="sidenav-second-level collapse" id="collapseExamplePages">
-            <li>
-              <a href="EnvironmentPage.php">Environment</a>
-            </li>
-          </ul>
-        </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Daily">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseDailyPages" data-parent="#exampleAccordion">
-            <i class="fa fa-fw fa-table"></i>
-            <span class="nav-link-text" id="test">每日統計</span>
-          </a>
-          <ul class="sidenav-second-level collapse" id="collapseDailyPages">
-            <li>
-              <a href="DailyPage.php">Daily</a>
-            </li>
-          </ul>
-        </li>
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Activity">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseActivityPages" data-parent="#exampleAccordion">
-            <i class="fa fa-fw fa-bar-chart-o"></i>
-            <span class="nav-link-text" id="test">活動紀錄</span>
-          </a>
-          <ul class="sidenav-second-level collapse" id="collapseActivityPages">
-            <li>
-              <a href="ActivityPage.php">Activity</a>
-            </li>
-          </ul>
-        </li>
-      </ul>
-      <ul class="navbar-nav sidenav-toggler">
-        <li class="nav-item">
-          <a class="nav-link text-center" id="sidenavToggler">
-            <i class="fa fa-fw fa-angle-left"></i>
-          </a>
-        </li>
-      </ul>
-      <ul class="navbar-nav ml-auto">
-       <text align="text-center" style="margin: auto; color:yellow; padding-right: 10px" id="login_msg">Hello! <?php echo $_SESSION['account'] ?></text>
-        <li class="nav-item">
-          <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
-            <i class="fa fa-fw fa-sign-out"></i>Logout</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
+  <?php require('module.php'); ?>
 
-
-  <!-- center   -->
+  <!-- center -->
   <div class="content-wrapper" style="padding-left: 5px">
     <div class="row" id="PersonalDataAndFlot" style="display: none;">
       <div class="column" style="width: 65%; padding-right: 5px;">  	
-  		<div id="flot" style="height: 400px; max-width: 800px; margin: 0 auto;"></div>
+  		  <div id="flot" style="height: 400px; max-width: 800px; margin: 0 auto;"></div>
       </div>
       <div class="column" style="width: 35%;">
         <!-- click activity record -->
@@ -162,7 +88,6 @@ else{
         </div>
       </div>
     </div>
-    
     <!-- 全部資料之DataTable -->
     <br>
     <div class="container-fluid">
@@ -181,54 +106,26 @@ else{
     </div>
     <br>
     <!-- container-fluid-->
-    <div class="container-fluid">
-	    <!-- Activity DataTable-->
-        <div id="datatable_activity_visible">
-          <table id="activityTable" class="display" cellspacing="0" width="100%">
-              <thead>
-                  <tr>
-                      <th>編號</th>
-                      <th>帳號</th>
-                      <th>步數</th>
-                      <th>開始時間</th>
-                      <th>結束時間</th>
-                      <th>距離(公尺)</th>
-                      <th>高強度運動(分)</th>
-                  </tr>
-              </thead>
-          </table>
-        </div>
-	    <!-- /.content-wrapper-->
-	    <footer class="sticky-footer">
-	      <div class="container">
-	        <div class="text-center">
-	          <small>COPD Walk © 2018</small>
-	        </div>
-	      </div>
-	    </footer>
-	    <!-- Scroll to Top Button-->
-	    <a class="scroll-to-top rounded" href="#page-top">
-	      <i class="fa fa-angle-up"></i>
-	    </a>
-	    <!-- Logout Modal-->
-	    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	      <div class="modal-dialog" role="document">
-	        <div class="modal-content">
-	          <div class="modal-header">
-	            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-	            <button class="close" type="button" data-dismiss="modal" aria-label="Close" >
-	              <span aria-hidden="true">×</span>
-	            </button>
-	          </div>
-	          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-	          <div class="modal-footer">
-	            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-	            <a class="btn btn-primary" href="index.php">Logout</a>
-	          </div>
-	        </div>
-	      </div>
-	    </div>
+    <!-- Activity DataTable-->
+    <div id="datatable_activity_visible" style="width: 98%; margin: auto;">
+      <table id="activityTable" class="display" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+            <th>編號</th>
+            <th>帳號</th>
+            <th>步數</th>
+            <th>開始時間</th>
+            <th>結束時間</th>
+            <th>距離(公尺)</th>
+            <th>高強度運動(分)</th>
+          </tr>
+        </thead>
+      </table>
     </div>
+    <!-- /.content-wrapper-->
+    <!-- Logout Button + Footer -->
+    <?php require('footer_and_logout.php'); ?>
+  </div>
 </body>
 
 <script type="text/JavaScript">

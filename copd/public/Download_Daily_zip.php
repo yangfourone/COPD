@@ -1,12 +1,8 @@
 <?php
-if(isset($_GET['start_time'])&&isset($_GET['end_time'])&&isset($_GET['type'])){
-	$start_time = $_GET['start_time'];
-	$end_time = $_GET['end_time'];
-	$type = $_GET['type'];
-}
-else {
-	echo "<script> alert(\"日期輸入錯誤\") </script>";
-}
+
+$start_time = $_GET['start_time'];
+$end_time = $_GET['end_time'];
+$type = $_GET['type'];
 
 require '../api/connect.php';
 mysqli_select_db($con,"daily");
@@ -40,7 +36,7 @@ foreach($download_date as $value){
 	//echo mysqli_num_rows($check_result)."<br>";
 	if(mysqli_num_rows($check_result) == 0) {
 		$empty_check = $empty_check + 1;
-		if($empty_check=$day){
+		if($empty_check==$day){
 			header("Location: Download_Empty.php");
 		} 
 	}
