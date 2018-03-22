@@ -28,17 +28,41 @@ else{
   <!--   <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">   -->
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/popper/popper.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+  <!-- Core plugin JavaScript-->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  <!-- Page level plugin JavaScript-->
+  <script src="vendor/chart.js/Chart.min.js"></script>
+  <!-- <script src="vendor/datatables/jquery.dataTables.js"></script>-->
+  <script src="vendor/datatables/dataTables.bootstrap4.js"></script> 
+  <!-- Custom scripts for all pages-->
+  <script src="js/sb-admin.min.js"></script>
+  <!-- Custom scripts for this page-->
+  <script src="js/sb-admin-datatables.min.js"></script>
 </head>
 
 <script src="js/jquery-1.11.3.min.js"></script>
 <link rel="stylesheet" href="css\myStyle.css">
 <link rel="stylesheet" href="..\DataTables\DataTables-1.10.16\css\jquery.dataTables.min.css">
 <script type="text/JavaScript" src="..\DataTables\DataTables-1.10.16\js\jquery.dataTables.min.js"></script>
+<script src="js/rowReorder.min.js"></script>
+<script src="js/responsive.min.js"></script>
+<link rel="stylesheet" href="css\responsive.dataTables.min.css">
+<link rel="stylesheet" href="css\rowReorder.dataTables.min.css">
 
 <script type="text/JavaScript">
 
   $(document).ready(function(){
-    var patientDataTable = $('#patientTable').DataTable();
+    var patientDataTable = $('#patientTable').DataTable({
+      rowReorder: {
+        selector: 'td:nth-child(2)'
+      },
+      responsive: true
+    });
     getPatientData();
     
     $("#NewPatient").click(function(){
@@ -56,10 +80,14 @@ else{
     $("#patient_delete").click(function() {
       delete_data();
     })
-    $(document).on("click", "tr[class='odd'],tr[class='even']", function(){
+    $('#patientTable').on('click', 'tr', function(){
+      var row = $(this).children('td:first-child').text();
+      row==''? '':click_row(row);
+    });
+    /*$(document).on("click", "tr[class='odd'],tr[class='even']", function(){
       var row = $(this).children('td:first-child').text();
       click_row(row);
-    })
+    })*/
   });
 
   function topFunction() {
@@ -209,7 +237,7 @@ else{
   }
 
   function click_row(row){
-    topFunction();
+    //topFunction();
     $.ajax({
       type: "GET",
       url: "../apiv1/user/getbyid/" + row,
@@ -321,7 +349,7 @@ else{
               <input type="text" id="age"> <br>
 
               <label for="sex">性別：</label>
-              <select id="sex" style="width: 178px;">
+              <select id="sex" style="width: 72%;">
                 <option value="1">男</option>
                 <option value="0">女</option>
               </select> <br>
@@ -430,21 +458,6 @@ else{
       <!-- /.content-wrapper-->
       <!-- Logout Button + Footer -->
       <?php require('footer_and_logout.php'); ?>
-
-      <!-- Bootstrap core JavaScript-->
-      <script src="vendor/jquery/jquery.min.js"></script>
-      <script src="vendor/popper/popper.min.js"></script>
-      <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-      <!-- Core plugin JavaScript-->
-      <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-      <!-- Page level plugin JavaScript-->
-      <script src="vendor/chart.js/Chart.min.js"></script>
-      <script src="vendor/datatables/jquery.dataTables.js"></script>
-      <!-- <script src="vendor/datatables/dataTables.bootstrap4.js"></script> -->
-      <!-- Custom scripts for all pages-->
-      <script src="js/sb-admin.min.js"></script>
-      <!-- Custom scripts for this page-->
-      <script src="js/sb-admin-datatables.min.js"></script>
     </div>
   </div>
 </body>

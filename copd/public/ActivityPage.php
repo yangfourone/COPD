@@ -31,8 +31,8 @@ else{
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/popper/popper.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-  <!-- Core plugin JavaScript-->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  <!-- Core plugin JavaScript
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>-->
   <!-- Page level plugin JavaScript-->
   <script src="vendor/datatables/jquery.dataTables.js"></script>
   <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
@@ -49,6 +49,11 @@ else{
   <link rel="stylesheet" href="css\myStyle.css">
   <link rel="stylesheet" href="..\DataTables\DataTables-1.10.16\css\jquery.dataTables.min.css">
   <script type="text/JavaScript" src="..\DataTables\DataTables-1.10.16\js\jquery.dataTables.min.js"></script>
+
+  <script src="js/rowReorder.min.js"></script>
+  <script src="js/responsive.min.js"></script>
+  <link rel="stylesheet" href="css\responsive.dataTables.min.css">
+  <link rel="stylesheet" href="css\rowReorder.dataTables.min.css">
 </head>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -112,8 +117,8 @@ else{
         <option value="getbytime/week">近一週</option>
         <option value="getbytime/month">本月</option>
       </select>&nbsp;&nbsp;
-      <button onclick="window.location.href='Download_Activity_PDF.php'" style="display: none;">PDF 下載</button>
-      <button onclick="window.location.href='Download_Activity_Excel.php'">EXCEL 下載</button>
+      <button onclick="window.location.href='Download_Activity_PDF.php'" style="display: none;">PDF</button>
+      <button onclick="window.location.href='Download_Activity_Excel.php'">EXCEL</button>
     </div>
     <br>
     <!-- container-fluid-->
@@ -125,10 +130,10 @@ else{
             <th>編號</th>
             <th>帳號</th>
             <th>步數</th>
-            <th>開始時間</th>
-            <th>結束時間</th>
             <th>距離(公尺)</th>
             <th>中高強度運動(分)</th>
+            <th>開始時間</th>
+            <th>結束時間</th>
           </tr>
         </thead>
       </table>
@@ -142,7 +147,11 @@ else{
 <script type="text/JavaScript">
 $(document).ready(function(){
   var activityDataTable = $('#activityTable').DataTable({
-    "order": [[ 3, "desc" ]]
+    "order": [[ 5, "desc" ]],
+    rowReorder: {
+      selector: 'td:nth-child(2)'
+    },
+    responsive: true
   });
   getActivityData();
 
@@ -164,7 +173,7 @@ function topFunction() {
 }
 
 function click_row(row){
-  topFunction();
+  //topFunction();
   $.ajax({
     type: "GET",
     url: "../apiv1/activity/getbyid/" + row,
@@ -231,10 +240,10 @@ function LoadActivityDataToTable(activityData) {
       activityData[i].id,
       activityData[i].uid,
       activityData[i].step,
-      activityData[i].start_time,
-      activityData[i].end_time,
       activityData[i].distance,
-      activityData[i].h_i_time
+      activityData[i].h_i_time,
+      activityData[i].start_time,
+      activityData[i].end_time
     ]).draw(false);
   }
   activityDataTable.columns.adjust().draw();
@@ -254,7 +263,7 @@ function LoadActivityFlotChart(row,data) {
     var h = millisecond_to_date.getHours();
     var m = millisecond_to_date.getMinutes();
     var s = millisecond_to_date.getSeconds();
-    console.log(year,mon,day,h,m,s);
+    //console.log(year,mon,day,h,m,s);
 
     arr_hr.push([
     	Date.UTC(year, mon, day, h, m, s),

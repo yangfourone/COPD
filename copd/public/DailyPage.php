@@ -28,18 +28,42 @@ else{
   <!--   <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">   -->
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
+    
+  <!-- Bootstrap core JavaScript-->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/popper/popper.min.js"></script>
+  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+  <!-- Core plugin JavaScript-->
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  <!-- Page level plugin JavaScript-->
+  <script src="vendor/chart.js/Chart.min.js"></script>
+  <!--<script src="vendor/datatables/jquery.dataTables.js"></script> -->
+  <!-- <script src="vendor/datatables/dataTables.bootstrap4.js"></script> -->
+  <!-- Custom scripts for all pages-->
+  <script src="js/sb-admin.min.js"></script>
+  <!-- Custom scripts for this page-->
+  <script src="js/sb-admin-datatables.min.js"></script>
 
   <script src="js/jquery-1.11.3.min.js"></script>
   <link rel="stylesheet" href="css\myStyle.css">
   <link rel="stylesheet" href="..\DataTables\DataTables-1.10.16\css\jquery.dataTables.min.css">
   <script type="text/JavaScript" src="..\DataTables\DataTables-1.10.16\js\jquery.dataTables.min.js"></script>
+
+  <script src="js/rowReorder.min.js"></script>
+  <script src="js/responsive.min.js"></script>
+  <link rel="stylesheet" href="css\responsive.dataTables.min.css">
+  <link rel="stylesheet" href="css\rowReorder.dataTables.min.css">
 </head>
 
 <script type="text/JavaScript">
   
   $(document).ready(function(){
     var dailyDataTable = $('#dailyTable').DataTable({
-      "order": [[ 3, "desc" ]]
+      "order": [[ 5, "desc" ]],
+      rowReorder: {
+        selector: 'td:nth-child(2)'
+      },
+      responsive: true
     });
     getDailyData();
 
@@ -104,9 +128,9 @@ else{
         dailyData[i].id,
         dailyData[i].uid,
         dailyData[i].step,
-        dailyData[i].date,
         dailyData[i].distance,
-        dailyData[i].h_i_time
+        dailyData[i].h_i_time,
+        dailyData[i].date
       ]).draw(false);
     }
     dailyDataTable.columns.adjust().draw();
@@ -119,7 +143,7 @@ else{
   <?php require('module.php') ?>
 
   <!-- center -->
-  <div class="content-wrapper" style="padding-left: 5px">
+  <div class="content-wrapper">
     <div class="container-fluid">
       <div align="right">
         <!-- 時間篩選 -->
@@ -163,9 +187,9 @@ else{
             <th>編號</th>
             <th>帳號</th>
             <th>步數</th>
-            <th>日期</th>
             <th>距離(公尺)</th>
             <th>高強度運動時間(分)</th>
+            <th>日期</th>
           </tr>
         </thead>
       </table>
@@ -173,21 +197,6 @@ else{
     <!-- /.content-wrapper-->
     <!-- Logout Button + Footer -->
     <?php require('footer_and_logout.php'); ?>
-    
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/popper/popper.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-    <!-- Page level plugin JavaScript-->
-    <script src="vendor/chart.js/Chart.min.js"></script>
-    <script src="vendor/datatables/jquery.dataTables.js"></script>
-    <!-- <script src="vendor/datatables/dataTables.bootstrap4.js"></script> -->
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin.min.js"></script>
-    <!-- Custom scripts for this page-->
-    <script src="js/sb-admin-datatables.min.js"></script>
   </div>
 </body>
 
