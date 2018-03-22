@@ -49,6 +49,7 @@ else{
   <link rel="stylesheet" href="..\DataTables\DataTables-1.10.16\css\jquery.dataTables.min.css">
   <script type="text/JavaScript" src="..\DataTables\DataTables-1.10.16\js\jquery.dataTables.min.js"></script>
 
+  <!-- DataTable for Mobile -->
   <script src="js/rowReorder.min.js"></script>
   <script src="js/responsive.min.js"></script>
   <link rel="stylesheet" href="css\responsive.dataTables.min.css">
@@ -58,6 +59,8 @@ else{
 <script type="text/JavaScript">
   
   $(document).ready(function(){
+    initial_date();
+
     var dailyDataTable = $('#dailyTable').DataTable({
       "order": [[ 5, "desc" ]],
       rowReorder: {
@@ -75,9 +78,6 @@ else{
       document.getElementById('start_time').value = $("#env_date").val() + " 00:00:00";
       document.getElementById('end_time').value = $("#env_date").val() + " 23:59:59";
       getEnvData();
-    })
-    $("#Download").click(function(){
-      $("#Download_Table").toggle();
     })
     $("#Daily_PDF_Download").click(function(){
       if ($("#download_start_time").val()==''||$("#download_end_time").val()==''){
@@ -110,12 +110,14 @@ else{
       dataType: 'json',
       cache: false,
       success :  function(result){
+        $("#error_msg").hide();
         $("#dailyTable").show();
         LoadDailyDataToTable(result);
       },
       error: function(jqXHR) {
         $("#dailyTable").hide();
-        alert("發生錯誤: " + jqXHR.status + ' ' + jqXHR.statusText);
+        $("#error_msg").show();
+        $("#error_msg").html("查無資料");
       }
     });
   }
@@ -136,6 +138,34 @@ else{
     dailyDataTable.columns.adjust().draw();
   }
 
+  function initial_date(){
+    var today = new Date();
+    var today_date;
+    if ((today.getMonth()+1)<10){
+      if(today.getDate()<10){
+        today_date = today.getFullYear() + "-0" + (today.getMonth()+1) + "-0" + today.getDate();
+        document.getElementById('download_start_time').value = today_date;
+        document.getElementById('download_end_time').value = today_date;
+      }
+      else{
+        today_date = today.getFullYear() + "-0" + (today.getMonth()+1) + "-" + today.getDate();
+        document.getElementById('download_start_time').value = today_date;
+        document.getElementById('download_end_time').value = today_date;
+      }
+    }
+    else{
+      if(today.getDate()<10){
+        today_date = today.getFullYear() + "-" + (today.getMonth()+1) + "-0" + today.getDate();
+        document.getElementById('download_start_time').value = today_date;
+        document.getElementById('download_end_time').value = today_date;
+      }
+      else{
+        today_date = today.getFullYear() + "-" + (today.getMonth()+1) + "-" + today.getDate();
+        document.getElementById('download_start_time').value = today_date;
+        document.getElementById('download_end_time').value = today_date;
+      }
+    }
+  }
 </script>
 
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -146,6 +176,7 @@ else{
   <div class="content-wrapper">
     <div class="container-fluid">
       <div align="right">
+        <label id="error_msg" style="color: red; display: none;"></label>&nbsp;&nbsp;&nbsp;
         <!-- 時間篩選 -->
         資料顯示：<select id="time_select">
         <option value="getbytime/week">近一週</option>
