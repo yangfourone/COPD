@@ -56,53 +56,64 @@ else{
   <?php require('module.php'); ?>
 
   <!-- center -->
-  <div class="content-wrapper" style="padding-left: 5px">
-    <div class="row" id="PersonalDataAndFlot" style="display: none;">
-      <div class="column" style="width: 65%; padding-right: 5px;">  	
-  		  <div id="flot" style="height: 400px; max-width: 800px; margin: 0 auto;"></div>
+  <div class="content-wrapper">
+    <div class="row" id="PersonalDataAndFlot" style="display: none; padding: 0px 20px 0px 20px">
+      <div class="col-xs-12 col-md-12 col-lg-8">
+        <div class="card">
+          <div class="card-header">
+            <i class="fa fa-heart"></i>&nbsp;&nbsp;心率及血氧濃度
+          </div>
+          <div class="card-body">
+            <div id="flot" style="height: 390px; max-width: 800px; margin: 0 auto;"></div>
+          </div>
+          <div class="card-footer"></div>
+        </div>
       </div>
-      <div class="column" style="width: 35%;">
-        <!-- click activity record -->
-        <div class="edit_table" id="ActivityRecord" style="display: none; border: 1px solid;">
-          <h2>活動紀錄</h2>
-          <br>
-          <!-- 個人姓名 -->
-          <input id="personal_name" style="text-align: left; padding-right: 5px; border: 0px; background: #ffffff;" size="number" disabled></input><br>
-          <!-- 個人年齡 -->
-          <input id="age" style="text-align: left; padding-right: 5px; border: 0px; background: #ffffff;" size="number" disabled></input><br>
-          <!-- 前測 DBP SBP -->
-          <input id="before_dbp" style="width:200px; text-align: left; padding-right: 5px; border: 0px; background: #ffffff;" size="number" disabled></input>
-          <input id="before_sbp" style="width:200px; text-align: left; padding-right: 5px; border: 0px; background: #ffffff;" size="number" disabled></input><br>
-          <!-- 後測 DBP SBP -->
-          <input id="after_dbp" style="width:200px; text-align: left; padding-right: 5px; border: 0px; background: #ffffff;" size="number" disabled></input>
-          <input id="after_sbp" style="width:200px; text-align: left; padding-right: 5px; border: 0px; background: #ffffff;" size="number" disabled></input><br>
-          <!-- 運動時間 -->
-          <input id="exercise_time" style="text-align: left; padding-right: 5px; border: 0px; background: #ffffff;" size="number" disabled></input><br>
-          <!-- 高強度運動時間 -->
-          <input id="h_i_time" style="text-align: left; padding-right: 5px; border: 0px; background: #ffffff;" size="number" disabled></input><br>
-          <!-- 個人資訊之DataTable -->
-
-          <div align="right">
-            <button id="personal_datatable_cancel">關閉</button>
+      <div class="col-xs-12 col-md-12 col-lg-4">
+        <div class="card">
+          <div class="card-header">
+            <i class="fa fa-pencil"></i>&nbsp;&nbsp;活動紀錄
+          </div>
+          <div class="card-body">
+            <input id="personal_name" style="text-align: left; padding-right: 5px; border: 0px; background: #ffffff;" size="number" disabled></input><br>
+            <!-- 個人年齡 -->
+            <input id="age" style="text-align: left; padding-right: 5px; border: 0px; background: #ffffff;" size="number" disabled></input><br>
+            <!-- 前測 DBP SBP SPO2 HR -->
+            前測：
+            <input id="before_sbp" style="text-align: left; padding-right: 5px; border: 0px; background: #ffffff; width: 100%;" disabled></input><br>
+            <input id="before_dbp" style="text-align: left; padding-right: 5px; border: 0px; background: #ffffff; width: 100%;" disabled></input><br>
+            <input id="before_spo2" style="text-align: left; padding-right: 5px; border: 0px; background: #ffffff; width: 100%;" disabled></input><br>
+            <input id="before_hr" style="text-align: left; padding-right: 5px; border: 0px; background: #ffffff; width: 100%;" disabled></input><br>
+            <!-- 後測 DBP SBP SPO2 HR -->
+            後測：
+            <input id="after_sbp" style="text-align: left; padding-right: 5px; border: 0px; background: #ffffff; width: 100%;" disabled></input><br>
+            <input id="after_dbp" style="text-align: left; padding-right: 5px; border: 0px; background: #ffffff; width: 100%;" disabled></input><br>
+            <input id="after_spo2" style="text-align: left; padding-right: 5px; border: 0px; background: #ffffff; width: 100%;" disabled></input><br>
+            <input id="after_hr" style="text-align: left; padding-right: 5px; border: 0px; background: #ffffff; width: 100%;" disabled></input><br>
+            <!-- 運動時間 -->
+            <input id="exercise_time" style="text-align: left; padding-right: 5px; border: 0px; background: #ffffff; width: 100%;" disabled></input><br>
+            <!-- 高強度運動時間 -->
+            <input id="h_i_time" style="text-align: left; padding-right: 5px; border: 0px; background: #ffffff; width: 100%;" disabled></input><br>
+            <div align="right">
+              <button id="personal_datatable_cancel">關閉</button>
+            </div>
+          </div>
+          <div class="card-footer">
           </div>
         </div>
       </div>
     </div>
     <!-- 全部資料之DataTable -->
     <br>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="column" align="right" style="width: 100%; padding-left: 15px">
-        <!-- 時間篩選 -->
-          <select id="time_select">
-            <option value="getall">全部</option>
-            <option value="getbytime/week">近一週</option>
-            <option value="getbytime/month">本月</option>
-          </select>&nbsp;&nbsp;
-          <button onclick="window.location.href='Download_Activity_PDF.php'" style="display: none;">PDF 下載</button>
-          <button onclick="window.location.href='Download_Activity_Excel.php'">EXCEL 下載</button>
-        </div>
-      </div>
+    <div class="col-xs-12 col-md-12 col-lg-12" align="right">
+      <!-- 時間篩選 -->
+      <select id="time_select">
+        <option value="getall">全部</option>
+        <option value="getbytime/week">近一週</option>
+        <option value="getbytime/month">本月</option>
+      </select>&nbsp;&nbsp;
+      <button onclick="window.location.href='Download_Activity_PDF.php'" style="display: none;">PDF 下載</button>
+      <button onclick="window.location.href='Download_Activity_Excel.php'">EXCEL 下載</button>
     </div>
     <br>
     <!-- container-fluid-->
@@ -117,7 +128,7 @@ else{
             <th>開始時間</th>
             <th>結束時間</th>
             <th>距離(公尺)</th>
-            <th>高強度運動(分)</th>
+            <th>中高強度運動(分)</th>
           </tr>
         </thead>
       </table>
@@ -136,8 +147,6 @@ $(document).ready(function(){
   getActivityData();
 
   $("#personal_datatable_cancel").click(function(){
-      $("#ActivityRecord").hide();
-      $("#flot-placeholder").hide();
       $("#PersonalDataAndFlot").hide();
   });
   $("#time_select").change(function(){
@@ -149,7 +158,13 @@ $(document).ready(function(){
   });
 });
 
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
+
 function click_row(row){
+  topFunction();
   $.ajax({
     type: "GET",
     url: "../apiv1/activity/getbyid/" + row,
@@ -158,12 +173,10 @@ function click_row(row){
     },
     success: function(data) {
       //顯示個人資料表
-      $("#ActivityRecord").show();
-      $("#flot-placeholder").show();
       $("#PersonalDataAndFlot").show();
       //繪製圖表
       LoadActivityFlotChart(row,data);
-      //將bp的資料做分解
+      //將bp和data的資料做分解
       var bp_data = JSON.parse(data.bp);
       //計算運動時間 hour:3,600,000 & minute:60,000 & second:1000
       var time2 = new Date(data.end_time);
@@ -176,12 +189,17 @@ function click_row(row){
       //填入各項資訊
       document.getElementById('personal_name').value = '姓名：' + data.fname + ' ' + data.lname;
       document.getElementById('age').value = '年齡：' + data.age + '歲';
-      document.getElementById('before_dbp').value = '前測 舒張壓：' + bp_data.before.dbp.toFixed(2) + 'mmhg';
-      document.getElementById('before_sbp').value = '收縮壓：' + bp_data.before.sbp.toFixed(2) + 'mmhg';
-      document.getElementById('after_dbp').value = '後測 舒張壓：' + bp_data.after.dbp.toFixed(2) + 'mmhg';
-      document.getElementById('after_sbp').value = '收縮壓：' + bp_data.after.sbp.toFixed(2) + 'mmhg';
+      document.getElementById('before_sbp').value = '  收縮壓：' + bp_data.before.sbp.toFixed(2) + ' mmhg';
+      document.getElementById('before_dbp').value = '  舒張壓：' +  bp_data.before.dbp.toFixed(2) + ' mmhg';
+      document.getElementById('before_spo2').value = '  血氧：' + bp_data.before.spo2.toFixed(2) + ' %';
+      document.getElementById('before_hr').value = '  心率：' + bp_data.before.hr.toFixed(2) + ' 下/分';
+
+      document.getElementById('after_sbp').value = '  收縮壓：' + bp_data.after.sbp.toFixed(2) + ' mmhg';
+      document.getElementById('after_dbp').value = '  舒張壓：' + bp_data.after.dbp.toFixed(2) + ' mmhg';
+      document.getElementById('after_spo2').value = '  血氧：' + bp_data.after.spo2.toFixed(2) + ' %';
+      document.getElementById('after_hr').value = '  心率：' + bp_data.after.hr.toFixed(2) + ' 下/分';
       document.getElementById('exercise_time').value = '運動時間：' + minute_int + '分' + second_int + '秒';
-      document.getElementById('h_i_time').value = '高強度運動時間：' + data.h_i_time + '分';
+      document.getElementById('h_i_time').value = '中高強度運動時間：' + data.h_i_time + '分';
     }
   })
 }
@@ -197,8 +215,6 @@ function getActivityData() {
       LoadActivityDataToTable(result);
     },
     error: function(jqXHR) {
-      $("#ActivityRecord").hide();
-      $("#flot-placeholder").hide();
       $("#PersonalDataAndFlot").hide();
 
       $("#activityTable").hide();
@@ -268,9 +284,9 @@ function getData(hr_data,spo2_data) {
 	        text: 'COPD 管理系統活動紀錄'
 	    },
 
-	    subtitle: {
+	    /*subtitle: {
 	        text: '心率和SPO2'
-	    },
+	    },*/
 
 	    xAxis: {
 		    type: 'datetime'

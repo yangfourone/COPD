@@ -62,6 +62,11 @@ else{
     })
   });
 
+  function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  } 
+
   function getPatientData() {
     $.ajax({
       type : 'GET',
@@ -204,6 +209,7 @@ else{
   }
 
   function click_row(row){
+    topFunction();
     $.ajax({
       type: "GET",
       url: "../apiv1/user/getbyid/" + row,
@@ -288,71 +294,78 @@ else{
   <?php require('module.php'); ?>
 
   <!-- center -->
-  <div class="content-wrapper" style="padding-left: 5px">
+  <div class="content-wrapper">
     <div class="container-fluid">
-      <div class="download_table" align="right">
-            <button onclick="window.location.href='Download_Patient_PDF.php'">PDF 下載</button>
-            <button onclick="window.location.href='Download_Patient_Excel.php'">EXCEL 下載</button>&nbsp;
+      <div class="col-xs-12 col-md-12 col-lg-12" align="right">
+            <button onclick="window.location.href='Download_Patient_PDF.php'">PDF</button>
+            <button onclick="window.location.href='Download_Patient_Excel.php'">EXCEL</button>&nbsp;
             &nbsp;<button id="NewPatient">新增資料</button>
       </div>
+      <br>
 	    <!-- /.container-fluid-->
-	    <!-- PatientManage-->
-      <div class="edit_table" id="PatientManage" style="display:none; width: 100%">
-        <div class="row">
-          <div class="column" align="right" style="padding: 0px 10px 0px 5px; width: 25%;"><br>
-            <h5 align="left" style="font-weight: bold; padding-left: 20px;">病患資料表</h5>
-            <label for="fname">姓氏：</label>
-            <input type="text" id="fname"> <br>
+      <!-- PatientManage-->
+      <div class="row" id="PatientManage" style="display: none; padding: 0px 10px 0px 10px;">
+        <div class="col-xs-12 col-md-12 col-lg-4">
+          <div class="card">
+            <div class="card-header">
+              <i class="fa fa-pencil-square-o"></i>&nbsp;&nbsp;病患資料表
+            </div>
+            <div class="card-body" align="right" style="margin: auto">
+              <label for="fname">姓氏：</label>
+              <input type="text" id="fname"> <br>
 
-            <label for="lname">名字：</label>
-            <input type="text" id="lname"> <br>
+              <label for="lname">名字：</label>
+              <input type="text" id="lname"> <br>
 
-            <label for="age">年齡：</label>
-            <input type="text" id="age"> <br>
+              <label for="age">年齡：</label>
+              <input type="text" id="age"> <br>
 
-            <label for="sex">性別：</label>
-            <select id="sex" style="width: 178px;">
-              <option value="1">男</option>
-              <option value="0">女</option>
-            </select> <br>
+              <label for="sex">性別：</label>
+              <select id="sex" style="width: 178px;">
+                <option value="1">男</option>
+                <option value="0">女</option>
+              </select> <br>
 
-            <label for="updateid" id="pid_label">帳號：</label>
-            <input type="text" id="updateid" disabled>
+              <label for="updateid" id="pid_label">帳號：</label>
+              <input type="text" id="updateid" disabled>
 
-            <label for="addid" id="newid_label">帳號：</label>
-            <input type="text" id="addid"> <br>
+              <label for="addid" id="newid_label">帳號：</label>
+              <input type="text" id="addid"> <br>
 
-            <label for="pwd">密碼：</label>
-            <input type="password" id="pwd"> <br>
+              <label for="pwd">密碼：</label>
+              <input type="password" id="pwd"> <br>
 
-            <label for="bmi">BMI：</label>
-            <input type="text" id="bmi"> <br>
+              <label for="bmi">BMI：</label>
+              <input type="text" id="bmi"> <br>
 
-            <label for="env_id">環境ID：</label>
-            <input type="text" id="env_id"> <br>
-            
-            <label for="ble_id">藍芽ID：</label>
-            <input type="text" id="ble_id"> <br>
+              <label for="env_id">環境ID：</label>
+              <input type="text" id="env_id"> <br>
+              
+              <label for="ble_id">藍芽ID：</label>
+              <input type="text" id="ble_id"> <br>
 
-            <label for="watch_id">手錶ID：</label>
-            <input type="text" id="watch_id"> <br><br>
-	      
-    	      <h6 style="color: red;">[備註] 帳號若包含英文字母需小寫</h6>
-    	      <h6 style="color: red;">     (輸入大寫會自動轉為小寫)</h6>
-	      
+              <label for="watch_id">手錶ID：</label>
+              <input type="text" id="watch_id"> <br><br>
+          
+              <h6 style="color: red;">[備註] 帳號若包含英文字母需小寫</h6>
+              <h6 style="color: red;">     (輸入大寫會自動轉為小寫)</h6>
+            </div>
+            <div class="card-footer"></div>
           </div>
-          <div class="column" align="left" style="padding: 0px 10px 0px 5px; width: 50%">
-          <br>
-            <div style="padding: 0px 10px 0px 40px;">
-              <h5 style="font-weight: bold;">藥物勾選清單</h5>
-
+        </div>
+        <div class="col-xs-12 col-md-12 col-lg-5">
+          <div class="card">
+            <div class="card-header">
+              <i class="fa fa-list-ol"></i>&nbsp;&nbsp;藥物勾選清單
+            </div>
+            <div class="card-body" align="left" style="margin: auto">
               <h6>吸入型藥物：</h6>
               <input name="medicine" type="checkbox" value="Berotec"> 備勞喘噴霧劑：(Berotec, Fenoterol)<br>
               <input name="medicine" type="checkbox" value="BerodualN"> 備喘全噴霧劑：(Berodual N, Fenoterol + Ipratropium)<br>
               <input name="medicine" type="checkbox" value="Combivent"> 冠喘衛噴霧劑：(Combivent, Salbutamol + Ipratropium)<br>
-              <input name="medicine" type="checkbox" value="Seretide"> 使肺泰乾粉吸入劑：(Seretide, Fluticasone propionate + Salmeterol)<br>
               <input name="medicine" type="checkbox" value="Spiriva"> 適喘樂吸入劑：(Spiriva, Tiotropium)<br>
               <input name="medicine" type="checkbox" value="Atrovent"> 定喘樂吸入劑：(Atrovent Nebuliser Soln, Ipratropium)<br>
+              <input name="medicine" type="checkbox" value="Seretide"> 使肺泰乾粉吸入劑：(Seretide, Fluticasone propionate + Salmeterol)<br>
               <br>
               <h6>口服型類固醇：</h6>
               <input name="medicine" type="checkbox" value="Prednisone"> 強的松/去氫可的松 (Prednisone)<br>
@@ -362,15 +375,17 @@ else{
               <input name="medicine" type="checkbox" value="Dexamethasone"> 地塞米松 (Dexamethasone)<br>
               <br>
               <h6>其它藥物：</h6>
-              <textarea type="text" id="drug_other" rows="3" cols="40"></textarea>
-              <br>
+              <textarea type="text" id="drug_other" rows="3" cols="25"></textarea>
             </div>
+            <div class="card-footer"></div>
           </div>
-          <div class="column" align="right" style="padding: 0px 10px 0px 5px; width: 25%;">
-          <br>
-            <div style="padding: 0px 10px 0px 40px;" align="left">
-              <h5 style="font-weight: bold;">疾病史</h5>
-            
+        </div>
+        <div class="col-xs-12 col-md-12 col-lg-3">
+          <div class="card">
+            <div class="card-header">
+              <i class="fa fa-heartbeat"></i>&nbsp;&nbsp;疾病史
+            </div>
+            <div class="card-body" align="left" style="margin: auto">
               <input name="case" type="checkbox" value="HeartDisease"> 心臟病<br>
               <input name="case" type="checkbox" value="Hypertension"> 高血壓<br>
               <input name="case" type="checkbox" value="Diabetes"> 糖尿病<br>
@@ -378,64 +393,59 @@ else{
               <input name="case" type="checkbox" value="HeartFailure"> 心衰竭<br>
               <input name="case" type="checkbox" value="Stroke"> 中風<br><br>
               <h6>其他疾病：</h6>
-              <textarea type="text" id="history_other" rows="7" cols="25"></textarea>
+              <textarea type="text" id="history_other" rows="5" cols="25"></textarea>
+              <textarea type="text" id="history" rows="3" cols="40" style="display: none;"></textarea>
+              <textarea type="text" id="drug" rows="3" cols="40" style="display: none;"></textarea>
+              <div align="right" >
+                <h5 id="patient_Result" align="right" style="color:red"></h5>&nbsp;&nbsp;
+                <button  class="button2" id="patient_save">儲存</button>
+                <button  class="button2" id="patient_delete">刪除</button>
+                <button  class="button2" id="patient_update">更新</button>
+                <button  class="button2" id="patient_close">取消</button>
+              </div>
             </div>
-            <br><br>
-            <div align="right" >
-              <button  class="button2" id="patient_save">儲存</button>
-              <button  class="button2" id="patient_delete">刪除</button>
-              <button  class="button2" id="patient_update">更新</button>
-              <button  class="button2" id="patient_close">取消</button>
-            </div>
+            <div class="card-footer"></div>
           </div>
         </div>
-        <div class="row" align="right">
-          <textarea type="text" id="history" rows="3" cols="40" style="display: none;"></textarea>
-          <textarea type="text" id="drug" rows="3" cols="40" style="display: none;"></textarea>
-          <!-- <textarea type="text" id="history_other_post" rows="3" cols="40" style="display: none;"></textarea>
-          <textarea type="text" id="drug_other_post" rows="3" cols="40" style="display: none;"></textarea> -->
-        </div>
-        <p>
-        <h5 id="patient_Result" align="right" style="color:red"></h5>
       </div>
       <br>
-    </div>
-    <!-- PatientDataTable-->
-    <div id="datatable_patient_visible" style="width: 98%; margin: auto;">
-      <table id="patientTable" class="display" cellspacing="0" width="100%" >
-        <thead>
-          <tr>
-            <th>帳號</th>
-            <th>姓氏</th>
-            <th>名字</th>
-            <th>年齡</th>
-            <th>性別</th>
-            <th>BMI</th>
-            <th>環境ID</th>
-            <th>藍芽ID</th>
-            <th>手錶ID</th>
-          </tr>
-        </thead>
-      </table>
-    </div>
-    <!-- /.content-wrapper-->
-    <!-- Logout Button + Footer -->
-    <?php require('footer_and_logout.php'); ?>
+      <!-- PatientDataTable-->
+      <div id="datatable_patient_visible" style="width: 98%; margin: auto;">
+        <table id="patientTable" class="display" cellspacing="0" width="100%" >
+          <thead>
+            <tr>
+              <th>帳號</th>
+              <th>姓氏</th>
+              <th>名字</th>
+              <th>年齡</th>
+              <th>性別</th>
+              <th>BMI</th>
+              <th>環境ID</th>
+              <th>藍芽ID</th>
+              <th>手錶ID</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      <!-- /.content-wrapper-->
+      <!-- Logout Button + Footer -->
+      <?php require('footer_and_logout.php'); ?>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/popper/popper.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-    <!-- Page level plugin JavaScript-->
-    <script src="vendor/chart.js/Chart.min.js"></script>
-    <script src="vendor/datatables/jquery.dataTables.js"></script>
-    <!-- <script src="vendor/datatables/dataTables.bootstrap4.js"></script> -->
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin.min.js"></script>
-    <!-- Custom scripts for this page-->
-    <script src="js/sb-admin-datatables.min.js"></script>
+      <!-- Bootstrap core JavaScript-->
+      <script src="vendor/jquery/jquery.min.js"></script>
+      <script src="vendor/popper/popper.min.js"></script>
+      <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+      <!-- Core plugin JavaScript-->
+      <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+      <!-- Page level plugin JavaScript-->
+      <script src="vendor/chart.js/Chart.min.js"></script>
+      <script src="vendor/datatables/jquery.dataTables.js"></script>
+      <!-- <script src="vendor/datatables/dataTables.bootstrap4.js"></script> -->
+      <!-- Custom scripts for all pages-->
+      <script src="js/sb-admin.min.js"></script>
+      <!-- Custom scripts for this page-->
+      <script src="js/sb-admin-datatables.min.js"></script>
+    </div>
   </div>
 </body>
 
