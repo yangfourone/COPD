@@ -37,7 +37,7 @@ foreach($download_date as $value){
 	if(mysqli_num_rows($check_result) == 0) {
 		$empty_check = $empty_check + 1;
 		if($empty_check==$day){
-			header("Location: Download_Env_Empty.php");
+			header("Location: Download_Empty.php");
 		} 
 	}
 	else{

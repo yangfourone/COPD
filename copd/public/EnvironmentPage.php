@@ -29,42 +29,18 @@ else{
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
 
-  <!-- Bootstrap core JavaScript-->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/popper/popper.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-  <!-- Core plugin JavaScript-->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-  <!-- Page level plugin JavaScript-->
-  <script src="vendor/chart.js/Chart.min.js"></script>
-  <script src="vendor/datatables/jquery.dataTables.js"></script>
-  <!-- <script src="vendor/datatables/dataTables.bootstrap4.js"></script> -->
-  <!-- Custom scripts for all pages-->
-  <script src="js/sb-admin.min.js"></script>
-  <!-- Custom scripts for this page-->
-  <script src="js/sb-admin-datatables.min.js"></script>
-
   <script src="js/jquery-1.11.3.min.js"></script>
   <link rel="stylesheet" href="css\myStyle.css">
   <link rel="stylesheet" href="..\DataTables\DataTables-1.10.16\css\jquery.dataTables.min.css">
   <script type="text/JavaScript" src="..\DataTables\DataTables-1.10.16\js\jquery.dataTables.min.js"></script>
-
-  <script src="js/rowReorder.min.js"></script>
-  <script src="js/responsive.min.js"></script>
-  <link rel="stylesheet" href="css\responsive.dataTables.min.css">
-  <link rel="stylesheet" href="css\rowReorder.dataTables.min.css">
 </head>
 
 <script type="text/JavaScript">
 	$(document).ready(function(){
     initial_date();
-    
+
 	  var envDataTable = $('#evnTable').DataTable({
-      "order": [[ 6, "desc" ]],
-      rowReorder: {
-        selector: 'td:nth-child(2)'
-      },
-      responsive: true
+      "order": [[ 6, "desc" ]]
     });
 	  getEnvData();
 
@@ -147,33 +123,20 @@ else{
 	 
   function initial_date(){
     var today = new Date();
-    var today_date;
     if ((today.getMonth()+1)<10){
       if(today.getDate()<10){
-        today_date = today.getFullYear() + "-0" + (today.getMonth()+1) + "-0" + today.getDate();
-        document.getElementById('env_date').value = today_date;
-        document.getElementById('download_start_time').value = today_date;
-        document.getElementById('download_end_time').value = today_date;
+        document.getElementById('env_date').value = today.getFullYear() + "-0" + (today.getMonth()+1) + "-0" + today.getDate();
       }
       else{
-        today_date = today.getFullYear() + "-0" + (today.getMonth()+1) + "-" + today.getDate();
-        document.getElementById('env_date').value = today_date;
-        document.getElementById('download_start_time').value = today_date;
-        document.getElementById('download_end_time').value = today_date;
+        document.getElementById('env_date').value = today.getFullYear() + "-0" + (today.getMonth()+1) + "-" + today.getDate();
       }
     }
     else{
       if(today.getDate()<10){
-        today_date = today.getFullYear() + "-" + (today.getMonth()+1) + "-0" + today.getDate();
-        document.getElementById('env_date').value = today_date;
-        document.getElementById('download_start_time').value = today_date;
-        document.getElementById('download_end_time').value = today_date;
+        document.getElementById('env_date').value = today.getFullYear() + "-" + (today.getMonth()+1) + "-0" + today.getDate();
       }
       else{
-        today_date = today.getFullYear() + "-" + (today.getMonth()+1) + "-" + today.getDate();
-        document.getElementById('env_date').value = today_date;
-        document.getElementById('download_start_time').value = today_date;
-        document.getElementById('download_end_time').value = today_date;
+        document.getElementById('env_date').value = today.getFullYear() + "-" + (today.getMonth()+1) + "-" + today.getDate();
       }
     }
     document.getElementById('start_time').value = $("#env_date").val() + " 00:00:00";
@@ -187,15 +150,13 @@ else{
   <?php require('module.php') ?>
 
   <!-- center -->
-  <div class="content-wrapper">
+  <div class="content-wrapper" style="padding-left: 5px">
     <div class="container-fluid">
-      <div class="col-lg-12" align="right">
+      <div align="right">
         <label id="error_msg" style="color: red; display: none;"></label>&nbsp;&nbsp;&nbsp;&nbsp;
-        <button data-toggle="modal" data-target="#Download_Table">下載</button>
-      </div>
-      <div class="col-lg-12" align="right" style="padding-top: 10px">
         <!-- 時間篩選 -->
-        顯示資料日期：<input type="date" id="env_date">
+        顯示資料日期：<input type="date" id="env_date">&nbsp;&nbsp;
+        <button data-toggle="modal" data-target="#Download_Table">下載</button>
         <input type="text" id="start_time" style="display: none;">
         <input type="text" id="end_time" style="display: none;">
       </div>
@@ -240,6 +201,21 @@ else{
     <!-- /.content-wrapper-->
     <!-- Logout Button + Footer -->
     <?php require('footer_and_logout.php'); ?>
+    
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/popper/popper.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <!-- Page level plugin JavaScript-->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="vendor/datatables/jquery.dataTables.js"></script>
+    <!-- <script src="vendor/datatables/dataTables.bootstrap4.js"></script> -->
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin.min.js"></script>
+    <!-- Custom scripts for this page-->
+    <script src="js/sb-admin-datatables.min.js"></script>
   </div>
 </body>
 
