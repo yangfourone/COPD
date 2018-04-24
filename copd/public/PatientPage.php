@@ -28,17 +28,38 @@ else{
   <!--   <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">   -->
   <!-- Custom styles for this template-->
   <link href="css/sb-admin.css" rel="stylesheet">
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="vendor/jquery/jquery.min.js"></script>
+  <script src="vendor/popper/popper.min.js"></script>
+  <!-- Page level plugin JavaScript-->
+  <script src="vendor/chart.js/Chart.min.js"></script>
+  <!-- <script src="vendor/datatables/jquery.dataTables.js"></script>-->
+  <script src="vendor/datatables/dataTables.bootstrap4.js"></script> 
+  <!-- Custom scripts for this page-->
+  <script src="js/sb-admin-datatables.min.js"></script>
+
+  <script src="js/jquery-1.11.3.min.js"></script>
+  <link rel="stylesheet" href="css\myStyle.css">
+  <link rel="stylesheet" href="..\DataTables\DataTables-1.10.16\css\jquery.dataTables.min.css">
+  <script type="text/JavaScript" src="..\DataTables\DataTables-1.10.16\js\jquery.dataTables.min.js"></script>
+
+  <!-- DataTable for Mobile -->
+  <script src="js/rowReorder.min.js"></script>
+  <script src="js/responsive.min.js"></script>
+  <link rel="stylesheet" href="css\responsive.dataTables.min.css">
+  <link rel="stylesheet" href="css\rowReorder.dataTables.min.css">
 </head>
 
-<script src="js/jquery-1.11.3.min.js"></script>
-<link rel="stylesheet" href="css\myStyle.css">
-<link rel="stylesheet" href="..\DataTables\DataTables-1.10.16\css\jquery.dataTables.min.css">
-<script type="text/JavaScript" src="..\DataTables\DataTables-1.10.16\js\jquery.dataTables.min.js"></script>
 
 <script type="text/JavaScript">
-
   $(document).ready(function(){
-    var patientDataTable = $('#patientTable').DataTable();
+    var patientDataTable = $('#patientTable').DataTable({
+      rowReorder: {
+        selector: 'td:nth-child(2)'
+      },
+      responsive: true
+    });
     getPatientData();
     
     $("#NewPatient").click(function(){
@@ -56,10 +77,14 @@ else{
     $("#patient_delete").click(function() {
       delete_data();
     })
-    $(document).on("click", "tr[class='odd'],tr[class='even']", function(){
+    $('#patientTable').on('click', 'tr', function(){
+      var row = $(this).children('td:first-child').text();
+      row==''? '':click_row(row);
+    });
+    /*$(document).on("click", "tr[class='odd'],tr[class='even']", function(){
       var row = $(this).children('td:first-child').text();
       click_row(row);
-    })
+    })*/
   });
 
   function topFunction() {
@@ -90,10 +115,10 @@ else{
         patientData[i].lname,
         patientData[i].age,
         patientData[i].sex==1?'男':(patientData[i].sex==0?'女':null),
+        patientData[i].height,
+        patientData[i].weight,
         patientData[i].bmi,
-        patientData[i].env_id,
-        patientData[i].ble_id,
-        patientData[i].watch_id
+        patientData[i].env_id
       ]).draw(false);
     }
     patientDataTable.columns.adjust().draw();
@@ -117,6 +142,7 @@ else{
   }
 
   function post_data($action){
+    var save_bmi = $("#weight").val() / (($("#height").val()/100) * ($("#height").val()/100));
     get_medicine();
     get_case();
     $.ajax({
@@ -130,7 +156,9 @@ else{
         lname: $("#lname").val(),
         age: $("#age").val(),
         sex: $("#sex").val(),
-        bmi: $("#bmi").val(),
+        height: $("#height").val(),
+        weight: $("#weight").val(),
+        bmi: save_bmi.toFixed(2),
         history: $("#history").val(),
         drug: $("#drug").val(),
         env_id: $("#env_id").val(),
@@ -209,7 +237,7 @@ else{
   }
 
   function click_row(row){
-    topFunction();
+    //topFunction();
     $.ajax({
       type: "GET",
       url: "../apiv1/user/getbyid/" + row,
@@ -223,6 +251,8 @@ else{
         document.getElementById('lname').value = data.lname;
         document.getElementById('age').value = data.age;
         document.getElementById('sex').value = data.sex;
+        document.getElementById('height').value = data.height;
+        document.getElementById('weight').value = data.weight;
         document.getElementById('bmi').value = data.bmi;
         document.getElementById('env_id').value = data.env_id;
         document.getElementById('ble_id').value = data.ble_id;
@@ -268,6 +298,8 @@ else{
     document.getElementById('lname').value = '';
     document.getElementById('age').value = '';
     document.getElementById('sex').value = '';
+    document.getElementById('height').value = '';
+    document.getElementById('weight').value = '';
     document.getElementById('bmi').value = '';
     document.getElementById('env_id').value = '';
     document.getElementById('ble_id').value = '';
@@ -321,7 +353,7 @@ else{
               <input type="text" id="age"> <br>
 
               <label for="sex">性別：</label>
-              <select id="sex" style="width: 178px;">
+              <select id="sex" style="width: 72%;">
                 <option value="1">男</option>
                 <option value="0">女</option>
               </select> <br>
@@ -335,8 +367,14 @@ else{
               <label for="pwd">密碼：</label>
               <input type="password" id="pwd"> <br>
 
+              <label for="height">身高：</label>
+              <input type="text" id="height"> <br>
+
+              <label for="weight">體重：</label>
+              <input type="text" id="weight"> <br>
+
               <label for="bmi">BMI：</label>
-              <input type="text" id="bmi"> <br>
+              <input type="text" id="bmi" disabled> <br>
 
               <label for="env_id">環境ID：</label>
               <input type="text" id="env_id"> <br>
@@ -419,10 +457,10 @@ else{
               <th>名字</th>
               <th>年齡</th>
               <th>性別</th>
+              <th>身高(cm)</th>
+              <th>體重(kg)</th>
               <th>BMI</th>
               <th>環境ID</th>
-              <th>藍芽ID</th>
-              <th>手錶ID</th>
             </tr>
           </thead>
         </table>
@@ -430,23 +468,12 @@ else{
       <!-- /.content-wrapper-->
       <!-- Logout Button + Footer -->
       <?php require('footer_and_logout.php'); ?>
-
-      <!-- Bootstrap core JavaScript-->
-      <script src="vendor/jquery/jquery.min.js"></script>
-      <script src="vendor/popper/popper.min.js"></script>
-      <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-      <!-- Core plugin JavaScript-->
-      <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-      <!-- Page level plugin JavaScript-->
-      <script src="vendor/chart.js/Chart.min.js"></script>
-      <script src="vendor/datatables/jquery.dataTables.js"></script>
-      <!-- <script src="vendor/datatables/dataTables.bootstrap4.js"></script> -->
-      <!-- Custom scripts for all pages-->
-      <script src="js/sb-admin.min.js"></script>
-      <!-- Custom scripts for this page-->
-      <script src="js/sb-admin-datatables.min.js"></script>
     </div>
   </div>
+  <!-- 左邊縮排需要的.js -->
+  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="js/sb-admin.min.js"></script>
 </body>
 
 </html>

@@ -71,12 +71,14 @@ while($row = mysqli_fetch_array($result)) {
 		->setCellValue('C'.$_cnt , $row['lname'])
 		->setCellValue('D'.$_cnt , $row['age'])
 		->setCellValue('E'.$_cnt , $sex_chinese)
-		->setCellValue('F'.$_cnt , $row['bmi'])
-		->setCellValue('G'.$_cnt , $row['history'])
-		->setCellValue('H'.$_cnt , $row['drug'])
-		->setCellValue('I'.$_cnt , $row['env_id'])
-		->setCellValue('J'.$_cnt , $row['ble_id'])
-		->setCellValue('K'.$_cnt , $row['watch_id']);
+		->setCellValue('F'.$_cnt , $row['height'])
+		->setCellValue('G'.$_cnt , $row['weight'])
+		->setCellValue('H'.$_cnt , $row['bmi'])
+		->setCellValue('I'.$_cnt , $row['history'])
+		->setCellValue('J'.$_cnt , $row['drug'])
+		->setCellValue('K'.$_cnt , $row['env_id'])
+		->setCellValue('L'.$_cnt , $row['ble_id'])
+		->setCellValue('M'.$_cnt , $row['watch_id']);
 }
 
 // Set document properties
@@ -95,12 +97,14 @@ $objPHPExcel->setActiveSheetIndex(0)
             ->setCellValue('C1', '姓氏')
             ->setCellValue('D1', '年齡')
             ->setCellValue('E1', '性別')
-            ->setCellValue('F1', 'BMI')
-            ->setCellValue('G1', '病例')
-            ->setCellValue('H1', '藥物')
-            ->setCellValue('I1', 'Env_ID')
-            ->setCellValue('J1', 'BLE_ID')
-            ->setCellValue('K1', 'Watch_ID');
+            ->setCellValue('F1', '身高')
+            ->setCellValue('G1', '體重')
+            ->setCellValue('H1', 'BMI')
+            ->setCellValue('I1', '病例')
+            ->setCellValue('J1', '藥物')
+            ->setCellValue('K1', 'Env_ID')
+            ->setCellValue('L1', 'BLE_ID')
+            ->setCellValue('M1', 'Watch_ID');
 			
 $data_number = 0 ;
 

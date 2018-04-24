@@ -74,6 +74,8 @@ while($row = mysqli_fetch_array($result)) {
      		<td border=\"1\" align=\"center\" cellpadding=\"3\">{$row['lname']}</td>
      		<td border=\"1\" align=\"center\" cellpadding=\"3\">{$row['age']}</td>
      		<td border=\"1\" align=\"center\" cellpadding=\"3\">{$sex_chinese}</td>
+     		<td border=\"1\" align=\"center\" cellpadding=\"3\">{$row['height']}</td>
+     		<td border=\"1\" align=\"center\" cellpadding=\"3\">{$row['weight']}</td>
      		<td border=\"1\" align=\"center\" cellpadding=\"3\">{$row['bmi']}</td>
      		<td border=\"1\" align=\"center\" cellpadding=\"3\">{$row['history']}</td>
      		<td border=\"1\" align=\"center\" cellpadding=\"3\">{$row['drug']}</td>
@@ -91,6 +93,8 @@ $table = "
 		<td>姓氏</td>
 		<td>年齡</td>
 		<td>性別</td>
+		<td>身高</td>
+		<td>體重</td>
 		<td>BMI</td>
 		<td>病例</td>
 		<td>藥物</td>
