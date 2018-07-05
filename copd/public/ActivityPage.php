@@ -30,14 +30,9 @@ else{
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/popper/popper.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-  <!-- Core plugin JavaScript
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>-->
   <!-- Page level plugin JavaScript-->
   <script src="vendor/datatables/jquery.dataTables.js"></script>
   <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
-  <!-- Custom scripts for all pages-->
-  <script src="js/sb-admin.min.js"></script>
   <!-- Custom scripts for this page-->
   <script src="js/sb-admin-datatables.min.js"></script>
   <script src="js/jquery-1.11.3.min.js" type='text/javascript'></script>
@@ -50,6 +45,7 @@ else{
   <link rel="stylesheet" href="..\DataTables\DataTables-1.10.16\css\jquery.dataTables.min.css">
   <script type="text/JavaScript" src="..\DataTables\DataTables-1.10.16\js\jquery.dataTables.min.js"></script>
 
+  <!-- DataTable for Mobile -->
   <script src="js/rowReorder.min.js"></script>
   <script src="js/responsive.min.js"></script>
   <link rel="stylesheet" href="css\responsive.dataTables.min.css">
@@ -142,6 +138,10 @@ else{
     <!-- Logout Button + Footer -->
     <?php require('footer_and_logout.php'); ?>
   </div>
+  <!-- 左邊縮排需要的.js -->
+  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="js/sb-admin.min.js"></script>
 </body>
 
 <script type="text/JavaScript">
