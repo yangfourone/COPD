@@ -1,1 +1,0 @@
-Based on Bootstrap's project.

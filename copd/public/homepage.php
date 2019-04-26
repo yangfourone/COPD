@@ -29,16 +29,7 @@ else{
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/popper/popper.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-  <!-- Core plugin JavaScript-->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-  <!-- Page level plugin JavaScript-->
-  <script src="vendor/datatables/jquery.dataTables.js"></script>
-  <!-- <script src="vendor/datatables/dataTables.bootstrap4.js"></script> -->
   <!-- Custom scripts for all pages-->
-  <script src="js/sb-admin.min.js"></script>
-  <!-- Custom scripts for this page-->
-  <script src="js/sb-admin-datatables.min.js"></script>
 
   <!--   <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">   -->
   <!-- Custom styles for this template-->
@@ -60,9 +51,15 @@ else{
       <h4>The development of a smart health self-management system and device for patients with chronic illnesses: Chronic obstruction pulmonary disease</h4><br>
       <img class="img-fluid" src="pic/main background for management.jpg" height="1440" width="1920" style="border-radius: 5px;">
     </div>
+    <!-- /.content-wrapper-->
+
     <!-- Logout Button + Footer -->
     <?php require('footer_and_logout.php'); ?>
   </div>
+  <!-- 左邊縮排需要的.js -->
+  <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="js/sb-admin.min.js"></script>
 </body>
 
 </html>

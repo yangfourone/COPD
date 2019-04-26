@@ -28,8 +28,7 @@ class UserHandler extends SimpleRest{
 					$user_id = new User();
 					echo $this->set_status_code($user_id->getById($this->id));
 					break;
-				}
-				else if($this->action == 'checkid'){
+				}else if($this->action == 'checkid'){
 					$user_id = new User();
 					echo $this->set_status_code($user_id->checkId($this->id));
 					break;

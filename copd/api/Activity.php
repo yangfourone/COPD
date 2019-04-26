@@ -8,7 +8,6 @@ class Activity{
 		mysqli_select_db($con,"activity");
 
 		//query data by method
-		//SELECT * FROM activity order by start_time desc
 		$getAll_sql = "SELECT * FROM activity";
 		$getAll_result = mysqli_query($con,$getAll_sql);
 		
@@ -31,7 +30,6 @@ class Activity{
 			$endtime_week = date ("Y-m-d H:i:s" , mktime(date('H')+7, date('i'), date('s'), date('m'), date('d')-7, date('Y'))) ;
 
 			//query data by method
-			//SELECT * FROM activity WHERE start_time >='$endtime_week' AND start_time <='$starttime_week' order by start_time desc
 			$getbyweek_sql = "SELECT * FROM activity WHERE start_time >='$endtime_week' AND start_time <='$starttime_week'";
 			$getbyweek_result = mysqli_query($con,$getbyweek_sql);
 
@@ -49,7 +47,6 @@ class Activity{
 			$endtime_month = date ("Y-m-d H:i:s" , mktime(0, 0, 0, date('m'), 1, date('Y'))) ;
 
 			//query data by method
-			//SELECT * FROM activity WHERE start_time >='$endtime_month' AND start_time <='$starttime_month' order by start_time desc
 			$getbymonth_sql = "SELECT * FROM activity WHERE start_time >='$endtime_month' AND start_time <='$starttime_month'";
 			$getbymonth_result = mysqli_query($con,$getbymonth_sql);
 

@@ -21,7 +21,7 @@ class AdminHandler extends SimpleRest{
 			case 'post':
 				if($this->action == 'login'){
 					$admin_login = new Admin();
-					echo $this->set_status_code($admin_login->login($this->input));
+					echo $this->set_status_code($admin_login->login());
 					break;
 				}
 			default:

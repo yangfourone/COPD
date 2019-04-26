@@ -396,24 +396,30 @@ else{
             <div class="card-header">
               <i class="fa fa-list-ol"></i>&nbsp;&nbsp;藥物勾選清單
             </div>
-            <div class="card-body" align="left" style="margin: auto">
-              <h6>吸入型藥物：</h6>
-              <input name="medicine" type="checkbox" value="Berotec"> 備勞喘噴霧劑：(Berotec, Fenoterol)<br>
-              <input name="medicine" type="checkbox" value="BerodualN"> 備喘全噴霧劑：(Berodual N, Fenoterol + Ipratropium)<br>
-              <input name="medicine" type="checkbox" value="Combivent"> 冠喘衛噴霧劑：(Combivent, Salbutamol + Ipratropium)<br>
-              <input name="medicine" type="checkbox" value="Spiriva"> 適喘樂吸入劑：(Spiriva, Tiotropium)<br>
-              <input name="medicine" type="checkbox" value="Atrovent"> 定喘樂吸入劑：(Atrovent Nebuliser Soln, Ipratropium)<br>
-              <input name="medicine" type="checkbox" value="Seretide"> 使肺泰乾粉吸入劑：(Seretide, Fluticasone propionate + Salmeterol)<br>
-              <br>
-              <h6>口服型類固醇：</h6>
-              <input name="medicine" type="checkbox" value="Prednisone"> 強的松/去氫可的松 (Prednisone)<br>
-              <input name="medicine" type="checkbox" value="Donison"> 康速龍 (Donison, Prednisone)<br>
-              <input name="medicine" type="checkbox" value="Methylprednisolone"> 甲基培尼皮質醇 (Methylprednisolone)<br>
-              <input name="medicine" type="checkbox" value="Hydrocortisone"> 氫化可體松 (Hydrocortisone)<br>
-              <input name="medicine" type="checkbox" value="Dexamethasone"> 地塞米松 (Dexamethasone)<br>
-              <br>
-              <h6>其它藥物：</h6>
-              <textarea type="text" id="drug_other" rows="3" cols="25"></textarea>
+            <div class="card-body" align="left" style="margin: auto 0; padding-left: 30px;">
+                <h6>短效  支氣管擴張劑：</h6>
+                <input name="medicine" type="checkbox" value="Berotec"> 備勞喘 (Berotec)<br>
+                <input name="medicine" type="checkbox" value="Ventolin"> 范得林 (Ventolin)<br>
+                <input name="medicine" type="checkbox" value="Atrovent"> 定喘樂 (Atrovent)<br>
+                <input name="medicine" type="checkbox" value="Berodual"> 備喘全 (Berodual)<br>
+
+                <br><h6>長效  支氣管擴張劑：</h6>
+                <input name="medicine" type="checkbox" value="IncruseEllipta"> 英克賜易利達 (Incruse Ellipta)<br>
+                <input name="medicine" type="checkbox" value="OnbrezBreezhaler"> 樂昂舒 (Onbrez Breezhaler)<br>
+                <input name="medicine" type="checkbox" value="Spiriva"> 適喘樂 (Spiriva)<br>
+                <input name="medicine" type="checkbox" value="StriverdiRespimat"> 適維樂舒沛噴 (Striverdi Respimat)<br>
+                <input name="medicine" type="checkbox" value="SpioltoRespimat"> 適倍樂舒沛 (Spiolto Respimat)<br>
+                <input name="medicine" type="checkbox" value="AnoroEllipta"> 安肺樂易利達 (Anoro Ellipta)<br>
+                <input name="medicine" type="checkbox" value="UltibroBreezhaler"> 昂帝博 (Ultibro Breezhaler)<br>
+
+                <br><h6>類固醇  噴劑：</h6>
+                <input name="medicine" type="checkbox" value="Alvesco"> 治喘樂 (Alvesco)<br>
+                <input name="medicine" type="checkbox" value="FlixotideAccuhaler"> 輔舒酮準納 (Flixotide Accuhaler)<br>
+                <input name="medicine" type="checkbox" value="FlixotideEvohaler"> 輔舒酮優氟 (Flixotide Evohaler)<br>
+                <input name="medicine" type="checkbox" value="Duasma"> 適喘樂 (Duasma)<br>
+
+                <br><h6>其它藥物：</h6>
+                <textarea type="text" id="drug_other" rows="3" cols="25"></textarea>
             </div>
             <div class="card-footer"></div>
           </div>
@@ -423,7 +429,7 @@ else{
             <div class="card-header">
               <i class="fa fa-heartbeat"></i>&nbsp;&nbsp;疾病史
             </div>
-            <div class="card-body" align="left" style="margin: auto">
+            <div class="card-body" align="left" style="margin: auto 0; padding-left: 30px;">
               <input name="case" type="checkbox" value="HeartDisease"> 心臟病<br>
               <input name="case" type="checkbox" value="Hypertension"> 高血壓<br>
               <input name="case" type="checkbox" value="Diabetes"> 糖尿病<br>

@@ -8,7 +8,7 @@ class Env{
 		mysqli_select_db($con,"env");
 
 		//query data by method
-		$getAll_sql = "SELECT * FROM env";
+		$getAll_sql = "SELECT * FROM env ORDER BY datetime DESC";
 		$getAll_result = mysqli_query($con,$getAll_sql);
 		
 		if(mysqli_num_rows($getAll_result) == 0) {
@@ -91,15 +91,19 @@ class Env{
 		}
 	}
 	function getById($id){
+		
+		$user_deviceid = strtoupper($id);
+
 		//connet db
 		require 'connect.php';
 		mysqli_select_db($con,"env");
 		
 		//make time
-		$starttime_week = date ("Y-m-d H:i:s" , mktime(date('H')+7, date('i'), date('s'), date('m'), date('d'), date('Y'))) ;
-		$endtime_week = date ("Y-m-d H:i:s" , mktime(date('H')+7, date('i'), date('s'), date('m'), date('d')-3, date('Y'))) ;
+		$starttime_week = date ("Y-m-d H:i:s" , mktime(date('H')+7, date('i'), date('s'), date('m'), date('d')-1, date('Y'))) ;
+		$endtime_week = date ("Y-m-d H:i:s" , mktime(date('H')+7, date('i'), date('s'), date('m'), date('d'), date('Y'))) ;
 		//query data by method
-		$getById_sql = "SELECT * FROM env WHERE (deviceid = 'A002' OR deviceid = 'A003') AND datetime >='$endtime_week' AND datetime <='$starttime_week'";
+		//$getById_sql = "SELECT * FROM env WHERE (deviceid = 'A001' OR deviceid = 'A002' OR deviceid = 'A003' OR deviceid = 'A004' OR deviceid = 'A005') AND datetime >='$starttime_week' AND datetime <='$endtime_week'";
+		$getById_sql = "SELECT * FROM env WHERE (deviceid = '$user_deviceid') AND datetime >='$starttime_week' AND datetime <='$endtime_week'";
 		$getById_result = mysqli_query($con,$getById_sql);
 
 		if(mysqli_num_rows($getById_result) == 0) {
